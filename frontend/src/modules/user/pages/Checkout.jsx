@@ -148,16 +148,16 @@ const Checkout = () => {
     // --- 1. Login View (If not logged in) ---
     if (!user) {
         return (
-            <div className="container mx-auto px-4 py-12 flex justify-center items-center min-h-[60vh]">
-                <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center max-w-md w-full">
-                    <div className="w-16 h-16 bg-[#FDFBF7] rounded-full flex items-center justify-center mx-auto mb-6">
-                        <Lock className="w-8 h-8 text-[#5D4037]" strokeWidth={1.5} />
+            <div className="container mx-auto px-4 py-8 md:py-12 flex justify-center items-center min-h-[50vh] md:min-h-[60vh]">
+                <div className="bg-white p-6 md:p-8 rounded-2xl md:rounded-xl shadow-lg border border-gray-100 text-center max-w-md w-full">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-[#FDFBF7] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                        <Lock className="w-6 h-6 md:w-8 md:h-8 text-[#5D4037]" strokeWidth={1.5} />
                     </div>
 
-                    <h2 className="text-2xl font-serif font-bold text-[#3E2723] mb-2">
+                    <h2 className="text-xl md:text-2xl font-serif font-bold text-[#3E2723] mb-1.5 md:mb-2">
                         {loginStep === 1 ? 'Login to Checkout' : 'Verify Phone Number'}
                     </h2>
-                    <p className="text-gray-500 mb-8 text-sm">
+                    <p className="text-gray-500 mb-6 md:mb-8 text-xs md:text-sm">
                         {loginStep === 1
                             ? 'Please enter your phone number to proceed'
                             : `Enter the 4-digit code sent to +91 ${phoneNumber}`
@@ -165,28 +165,30 @@ const Checkout = () => {
                     </p>
 
                     {loginStep === 1 ? (
-                        <form onSubmit={handleSendOtp} className="space-y-6">
-                            <div className="relative">
-                                <span className="absolute left-4 top-3.5 text-gray-500 font-medium">+91</span>
+                        <form onSubmit={handleSendOtp} className="space-y-4 md:space-y-6">
+                            <div className="flex border border-gray-300 rounded-lg overflow-hidden transition-all focus-within:ring-1 focus-within:ring-[#8D6E63] focus-within:border-[#8D6E63]">
+                                <div className="bg-gray-50 px-4 flex items-center border-r border-gray-100">
+                                    <span className="text-gray-500 font-medium text-sm md:text-base">+91</span>
+                                </div>
                                 <input
                                     type="tel"
                                     value={phoneNumber}
                                     onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                                    className="w-full border border-gray-300 rounded-lg py-3 pl-12 pr-4 focus:ring-[#8D6E63] focus:border-[#8D6E63] tracking-widest text-lg outline-none"
+                                    className="flex-1 py-3 px-4 text-base outline-none bg-white"
                                     placeholder="Enter Phone Number"
                                     required
                                 />
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-[#5D4037] text-white py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all shadow-md"
+                                className="w-full bg-[#5D4037] text-white py-3 md:py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all shadow-md text-sm md:text-base"
                             >
                                 Send OTP
                             </button>
                         </form>
                     ) : (
-                        <form onSubmit={handleVerifyOtp} className="space-y-6">
-                            <div className="flex justify-center gap-4">
+                        <form onSubmit={handleVerifyOtp} className="space-y-4 md:space-y-6">
+                            <div className="flex justify-center gap-3 md:gap-4">
                                 {otp.map((data, index) => (
                                     <input
                                         key={index}
@@ -195,20 +197,20 @@ const Checkout = () => {
                                         value={data}
                                         onChange={(e) => handleOtpChange(e.target, index)}
                                         onFocus={(e) => e.target.select()}
-                                        className="w-12 h-12 border border-gray-300 rounded-lg text-center text-xl font-bold focus:ring-[#8D6E63] focus:border-[#8D6E63] outline-none"
+                                        className="w-10 h-10 md:w-12 md:h-12 border border-gray-300 rounded-lg text-center text-lg md:text-xl font-bold focus:ring-[#8D6E63] focus:border-[#8D6E63] outline-none"
                                     />
                                 ))}
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-[#5D4037] text-white py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all shadow-md"
+                                className="w-full bg-[#5D4037] text-white py-3 md:py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all shadow-md text-sm md:text-base"
                             >
                                 Verify & Proceed
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setLoginStep(1)}
-                                className="text-xs text-gray-500 hover:text-[#5D4037] underline block mx-auto mt-4"
+                                className="text-[10px] md:text-xs text-gray-500 hover:text-[#5D4037] underline block mx-auto mt-3 md:mt-4"
                             >
                                 Change Phone Number
                             </button>
@@ -221,17 +223,17 @@ const Checkout = () => {
 
     // --- 2. Checkout View (If logged in) ---
     return (
-        <div className="container mx-auto px-4 py-8 max-w-6xl">
-            <h1 className="text-3xl font-serif font-bold text-[#3E2723] mb-8 text-center">Checkout</h1>
+        <div className="container mx-auto px-4 py-4 md:py-8 max-w-6xl">
+            <h1 className="text-xl md:text-3xl font-serif font-bold text-[#3E2723] mb-4 md:mb-8 text-center uppercase tracking-widest">Checkout</h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
                 {/* Left Column: Form */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="lg:col-span-2 space-y-6 md:space-y-8">
                     {/* Shipping Address */}
-                    <div className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-xl font-medium text-gray-800 flex items-center gap-2">
-                                <span className="w-8 h-8 rounded-full bg-[#5D4037] text-white flex items-center justify-center text-sm">1</span>
+                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <div className="flex justify-between items-center mb-4 md:mb-6">
+                            <h2 className="text-base md:text-xl font-medium text-gray-800 flex items-center gap-2">
+                                <span className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#5D4037] text-white flex items-center justify-center text-[10px] md:text-sm">1</span>
                                 Shipping Details
                             </h2>
                         </div>
@@ -300,123 +302,123 @@ const Checkout = () => {
                             </div>
                         )}
 
-                        <form id="checkout-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <form id="checkout-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                             <div className="md:col-span-2">
-                                <p className="text-sm font-bold text-[#8D6E63] uppercase tracking-widest mb-2">
+                                <p className="text-[11px] md:text-sm font-bold text-[#8D6E63] uppercase tracking-widest mb-3 md:mb-2">
                                     {addressSelection === 'new' || addresses.length === 0 ? 'Delivery Address' : 'Selected Address Details'}
                                 </p>
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">First Name</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">First Name</label>
                                 <input
                                     required
                                     type="text"
                                     name="firstName"
                                     value={formData.firstName}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">Last Name</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Last Name</label>
                                 <input
                                     required
                                     type="text"
                                     name="lastName"
                                     value={formData.lastName}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
 
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">Email Address</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Email Address</label>
                                 <input
                                     required
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">Phone Number</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Phone Number</label>
                                 <input
                                     required
                                     type="tel"
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
 
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">Flat / House / Building</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Flat / House / Building</label>
                                 <input
                                     required
                                     type="text"
                                     name="flatNo"
                                     value={formData.flatNo}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">Area / Street / Sector</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Area / Street / Sector</label>
                                 <input
                                     required
                                     type="text"
                                     name="area"
                                     value={formData.area}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
 
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">City</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">City</label>
                                 <input
                                     required
                                     type="text"
                                     name="city"
                                     value={formData.city}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">District</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">District</label>
                                 <input
                                     required
                                     type="text"
                                     name="district"
                                     value={formData.district}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">State</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">State</label>
                                 <input
                                     required
                                     type="text"
                                     name="state"
                                     value={formData.state}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-sm font-medium text-gray-700">Pincode</label>
+                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Pincode</label>
                                 <input
                                     required
                                     type="text"
                                     name="pincode"
                                     value={formData.pincode}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors"
+                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
                                 />
                             </div>
                             {(addressSelection === 'new' || addresses.length === 0) && (
@@ -435,49 +437,49 @@ const Checkout = () => {
                     </div>
 
                     {/* Payment Method */}
-                    <div className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
-                        <h2 className="text-xl font-medium text-gray-800 mb-6 flex items-center gap-2">
-                            <span className="w-8 h-8 rounded-full bg-[#5D4037] text-white flex items-center justify-center text-sm">2</span>
+                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h2 className="text-base md:text-xl font-medium text-gray-800 mb-4 md:mb-6 flex items-center gap-2">
+                            <span className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#5D4037] text-white flex items-center justify-center text-[10px] md:text-sm">2</span>
                             Payment Method
                         </h2>
 
-                        <div className="space-y-4">
-                            <label className={`flex items-center gap-4 border p-4 rounded-lg cursor-pointer transition-all ${paymentMethod === 'online' ? 'border-[#5D4037] bg-stone-50' : 'border-gray-200 hover:border-stone-300'}`}>
+                        <div className="space-y-3 md:space-y-4">
+                            <label className={`flex items-center gap-3 md:gap-4 border p-3 md:p-4 rounded-xl cursor-pointer transition-all ${paymentMethod === 'online' ? 'border-[#5D4037] bg-stone-50' : 'border-gray-200 hover:border-stone-300'}`}>
                                 <input
                                     type="radio"
                                     name="payment"
                                     value="online"
                                     checked={paymentMethod === 'online'}
                                     onChange={(e) => setPaymentMethod(e.target.value)}
-                                    className="w-4 h-4 text-[#5D4037] focus:ring-[#5D4037]"
+                                    className="w-3.5 h-3.5 text-[#5D4037] focus:ring-[#5D4037]"
                                 />
                                 <div className="flex items-center gap-3">
-                                    <div className="bg-blue-50 p-2 rounded-full text-blue-600">
-                                        <CreditCard size={20} />
+                                    <div className="bg-blue-50 p-1.5 md:p-2 rounded-full text-blue-600">
+                                        <CreditCard size={18} className="md:w-5 md:h-5" />
                                     </div>
                                     <div>
-                                        <p className="font-medium text-gray-900">Credit/Debit Card / UPI / NetBanking</p>
-                                        <p className="text-sm text-gray-500">Fast and secure online payment</p>
+                                        <p className="font-medium text-xs md:text-base text-gray-900">Credit/Debit Card / UPI / NetBanking</p>
+                                        <p className="text-[10px] md:text-sm text-gray-500">Fast and secure online payment</p>
                                     </div>
                                 </div>
                             </label>
 
-                            <label className={`flex items-center gap-4 border p-4 rounded-lg cursor-pointer transition-all ${paymentMethod === 'cod' ? 'border-[#5D4037] bg-stone-50' : 'border-gray-200 hover:border-stone-300'}`}>
+                            <label className={`flex items-center gap-3 md:gap-4 border p-3 md:p-4 rounded-xl cursor-pointer transition-all ${paymentMethod === 'cod' ? 'border-[#5D4037] bg-stone-50' : 'border-gray-200 hover:border-stone-300'}`}>
                                 <input
                                     type="radio"
                                     name="payment"
                                     value="cod"
                                     checked={paymentMethod === 'cod'}
                                     onChange={(e) => setPaymentMethod(e.target.value)}
-                                    className="w-4 h-4 text-[#5D4037] focus:ring-[#5D4037]"
+                                    className="w-3.5 h-3.5 text-[#5D4037] focus:ring-[#5D4037]"
                                 />
                                 <div className="flex items-center gap-3">
-                                    <div className="bg-green-50 p-2 rounded-full text-green-600">
-                                        <Banknote size={20} />
+                                    <div className="bg-green-50 p-1.5 md:p-2 rounded-full text-green-600">
+                                        <Banknote size={18} className="md:w-5 md:h-5" />
                                     </div>
                                     <div>
-                                        <p className="font-medium text-gray-900">Cash on Delivery</p>
-                                        <p className="text-sm text-gray-500">Pay when you receive your order</p>
+                                        <p className="font-medium text-xs md:text-base text-gray-900">Cash on Delivery</p>
+                                        <p className="text-[10px] md:text-sm text-gray-500">Pay when you receive your order</p>
                                     </div>
                                 </div>
                             </label>
@@ -487,8 +489,8 @@ const Checkout = () => {
 
                 {/* Right Column: Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white p-6 rounded-lg border border-gray-200 sticky top-24 shadow-sm">
-                        <h2 className="font-serif font-bold text-xl text-gray-900 mb-6">Order Summary</h2>
+                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 sticky top-24 shadow-sm">
+                        <h2 className="font-serif font-bold text-lg md:text-xl text-gray-900 mb-4 md:mb-6">Order Summary</h2>
 
                         {/* Mini Cart in Summary */}
                         <div className="max-h-60 overflow-y-auto mb-6 pr-2 space-y-4 custom-scrollbar">
@@ -506,7 +508,7 @@ const Checkout = () => {
                             ))}
                         </div>
 
-                        <div className="space-y-3 text-sm text-gray-600 mb-6 py-6 border-t border-gray-100">
+                        <div className="space-y-2 md:space-y-3 text-xs md:text-sm text-gray-600 mb-4 md:mb-6 py-4 md:py-6 border-t border-gray-100">
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
                                 <span>₹{subtotal.toLocaleString()}</span>
@@ -517,12 +519,12 @@ const Checkout = () => {
                             </div>
                         </div>
 
-                        <div className="border-t border-gray-200 pt-4 mb-6">
+                        <div className="border-t border-gray-200 pt-4 mb-4 md:mb-6">
                             <div className="flex justify-between items-center">
-                                <span className="font-bold text-lg text-gray-900">Total</span>
-                                <span className="font-bold text-xl text-[#5D4037]">₹{total.toLocaleString()}</span>
+                                <span className="font-bold text-base md:text-lg text-gray-900">Total</span>
+                                <span className="font-bold text-lg md:text-xl text-[#5D4037]">₹{total.toLocaleString()}</span>
                             </div>
-                            <p className="text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
+                            <p className="text-[10px] md:text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
                         </div>
 
                         <div className="bg-gray-50 p-3 rounded text-xs text-gray-500 mb-6 flex gap-2">
@@ -534,14 +536,14 @@ const Checkout = () => {
                             form="checkout-form"
                             type="submit"
                             disabled={loading}
-                            className={`w-full bg-[#5D4037] text-white py-3.5 rounded-md font-medium hover:bg-[#4E342E] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                            className={`w-full bg-[#5D4037] text-white py-3 md:py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg text-sm md:text-base ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
                         >
                             {loading ? (
                                 <span className="flex items-center gap-2">
-                                    {paymentMethod === 'online' ? 'Redirecting to Razorpay...' : 'Processing...'}
+                                    {paymentMethod === 'online' ? 'Redirecting...' : 'Processing...'}
                                 </span>
                             ) : (
-                                <span>{paymentMethod === 'online' ? 'Pay Now & Place Order' : 'Place Order (COD)'}</span>
+                                <span>{paymentMethod === 'online' ? 'Pay Now' : 'Place Order (COD)'}</span>
                             )}
                         </button>
                     </div>

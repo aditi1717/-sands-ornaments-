@@ -7,6 +7,15 @@
     --font-serif: 'Cormorant Garamond', serif;
 }
 
+/* Disable Zooming on Mobile & Horizontal Scroll */
+html,
+body {
+    touch-action: pan-y;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    width: 100%;
+}
+
 /* Custom Animations */
 @keyframes fadeInUp {
     from {
@@ -85,4 +94,27 @@
 
 .delay-600 {
     animation-delay: 0.6s;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+@keyframes slowZoom {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.animate-slow-zoom {
+    animation: slowZoom 8s linear infinite alternate;
 }

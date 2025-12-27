@@ -27,13 +27,65 @@ export const ShopProvider = ({ children }) => {
     });
     const [supportTickets, setSupportTickets] = useState(() => {
         const saved = localStorage.getItem('supportTickets');
-        return saved ? JSON.parse(saved) : [];
+        if (saved) return JSON.parse(saved);
+
+        // Initial Dummy Data to show the flow
+        return [
+            {
+                id: 'TKT-827415',
+                userName: 'Aditi Singh',
+                userEmail: 'aditi.s@gmail.com',
+                subject: 'Polishing issue with Silver Necklace',
+                category: 'Product Feedback',
+                orderId: '1735921',
+                message: 'The necklace I bought last week seems to be losing its shine already. Is this normal or can I get it polished?',
+                date: new Date(Date.now() - 86400000).toISOString(),
+                status: 'In Progress',
+                replies: [
+                    {
+                        from: 'admin',
+                        text: 'Hello Aditi! We are sorry to hear that. 925 Silver can sometimes tarnish due to humidity, but it shouldn\'t happen so soon. Please bring it to our store or ship it back, and we will polish it for free!',
+                        date: new Date(Date.now() - 43200000).toISOString()
+                    }
+                ]
+            },
+            {
+                id: 'TKT-192837',
+                userName: 'Rahul Verma',
+                userEmail: 'rahul.v@yahoo.com',
+                subject: 'Tracking showing "Returned to Origin"',
+                category: 'Order Tracking',
+                orderId: '1735123',
+                message: 'My order tracking says the package is being sent back to the warehouse. I was at home all day!',
+                date: new Date(Date.now() - 172800000).toISOString(),
+                status: 'Open',
+                replies: []
+            }
+        ];
     });
     const [defaultAddressId, setDefaultAddressId] = useState(() => {
         return localStorage.getItem('defaultAddressId') || null;
     });
 
     const [notification, setNotification] = useState(null);
+
+    // Notification Preferences & List
+    const [notificationsEnabled, setNotificationsEnabled] = useState(() => {
+        return localStorage.getItem('notificationsEnabled') === 'true';
+    });
+
+    const [userNotifications, setUserNotifications] = useState(() => {
+        const saved = localStorage.getItem('userNotifications');
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const toggleNotificationSettings = () => {
+        setNotificationsEnabled(prev => !prev);
+    };
+
+    const deleteUserNotification = (id) => {
+        setUserNotifications(prev => prev.filter(n => n.id !== id));
+    };
 
     // Auto-hide notification after 3 seconds
     useEffect(() => {
@@ -117,7 +169,6 @@ export const ShopProvider = ({ children }) => {
             }
             return [...prev, { ...product, quantity: 1 }];
         });
-        showNotification(`Added ${product.name} to bag`);
     };
 
     const updateQuantity = (productId, amount) => {
@@ -132,21 +183,17 @@ export const ShopProvider = ({ children }) => {
 
     const addToWishlist = (product) => {
         if (wishlist.find(item => item.id === product.id)) {
-            showNotification("Already in wishlist");
             return;
         }
         setWishlist((prev) => [...prev, product]);
-        showNotification(`Added ${product.name} to wishlist`);
     };
 
     const removeFromCart = (productId) => {
         setCart((prev) => prev.filter(item => item.id !== productId));
-        showNotification("Item removed from bag");
     };
 
     const removeFromWishlist = (productId) => {
         setWishlist((prev) => prev.filter(item => item.id !== productId));
-        showNotification("Item removed from wishlist");
     };
 
     const clearCart = () => {
@@ -179,14 +226,42 @@ export const ShopProvider = ({ children }) => {
 
     const createTicket = (ticketData) => {
         const newTicket = {
-            id: 'TKT-' + Date.now(),
+            id: 'TKT-' + Date.now().toString().slice(-6),
             date: new Date().toISOString(),
             status: 'Open',
+            replies: [],
             ...ticketData
         };
         setSupportTickets(prev => [newTicket, ...prev]);
         showNotification("Support ticket created. We will get back to you soon!");
         return newTicket.id;
+    };
+
+    const updateTicketStatus = (ticketId, newStatus) => {
+        setSupportTickets(prev => prev.map(t =>
+            t.id === ticketId ? { ...t, status: newStatus } : t
+        ));
+    };
+
+    const addTicketReply = (ticketId, reply) => {
+        setSupportTickets(prev => prev.map(t => {
+            if (t.id === ticketId) {
+                return {
+                    ...t,
+                    status: reply.from === 'admin' ? 'In Progress' : t.status,
+                    replies: [...(t.replies || []), {
+                        ...reply,
+                        date: new Date().toISOString()
+                    }]
+                };
+            }
+            return t;
+        }));
+    };
+
+    const deleteTicket = (ticketId) => {
+        setSupportTickets(prev => prev.filter(t => t.id !== ticketId));
+        showNotification("Ticket removed successfully.");
     };
 
     const deleteAccount = () => {
@@ -201,13 +276,24 @@ export const ShopProvider = ({ children }) => {
         showNotification("Account deleted successfully.");
     };
 
+    // Persist Notifications
+    useEffect(() => {
+        localStorage.setItem('notificationsEnabled', notificationsEnabled);
+    }, [notificationsEnabled]);
+
+    useEffect(() => {
+        localStorage.setItem('userNotifications', JSON.stringify(userNotifications));
+    }, [userNotifications]);
+
     return (
         <ShopContext.Provider value={{
             cart, wishlist, user, orders, addresses, supportTickets,
             login, logout, placeOrder, addToCart, addToWishlist,
             removeFromCart, removeFromWishlist, updateQuantity, clearCart,
             addAddress, removeAddress, updateAddress, setDefaultAddress,
-            defaultAddressId, createTicket, showNotification, deleteAccount
+            defaultAddressId, createTicket, updateTicketStatus, addTicketReply, deleteTicket,
+            showNotification, deleteAccount,
+            notificationsEnabled, userNotifications, toggleNotificationSettings, deleteUserNotification
         }}>
             {children}
 

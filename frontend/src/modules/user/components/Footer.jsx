@@ -18,7 +18,7 @@ const Footer = () => {
     if (isOrderSuccess) return null;
 
     return (
-        <div className="bg-[#FDFBF7]">
+        <div className="bg-[#FDFBF7] hidden md:block">
             <WhyChooseUs />
 
             {/* Main Footer */}

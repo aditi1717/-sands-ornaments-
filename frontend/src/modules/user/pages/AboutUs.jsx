@@ -1,11 +1,22 @@
 import React from 'react';
-import { Truck, ThumbsUp, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Truck, ThumbsUp, Lock, ArrowLeft } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const AboutUs = () => {
+    const navigate = useNavigate();
     return (
         <div className="bg-[#FDFBF7] min-h-screen text-[#5D4037] font-sans pb-20">
+            {/* Back Button */}
+            <div className="container mx-auto px-4 pt-8">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="flex items-center gap-2 text-[#8D6E63] hover:text-[#3E2723] transition-all group font-bold uppercase tracking-widest text-[10px]"
+                >
+                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                    Back
+                </button>
+            </div>
             {/* Hero Section */}
             <section className="container mx-auto px-4 py-20">
                 <div className="flex flex-col lg:flex-row items-center gap-16">

@@ -67,7 +67,7 @@ const Login = () => {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden bg-[#FDFBF7]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 overflow-hidden bg-[#FDFBF7]">
             {/* Background with Blur Effect */}
             {/* Dynamic Background */}
             <div className="absolute inset-0 z-0 overflow-hidden">
@@ -94,7 +94,129 @@ const Login = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
             </button>
 
-            <div className="w-full max-w-5xl bg-[#EFEBE9] rounded-2xl overflow-hidden shadow-2xl flex flex-col-reverse lg:flex-row relative z-10 min-h-[550px] animate-in slide-in-from-bottom-8 fade-in duration-700">
+            {/* Mobile View - Premium App Style with Frosted Background */}
+            <div className="md:hidden absolute inset-0 z-50 overflow-hidden flex flex-col justify-center">
+
+                {/* Background Image Layer */}
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop"
+                        alt="Luxury Background"
+                        className="w-full h-full object-cover"
+                    />
+                    {/* Premium Overlays - Darkened for Card Contrast */}
+                    <div className="absolute inset-0 bg-black/30"></div>
+                </div>
+
+                <div className="relative z-10 w-full px-5 flex flex-col justify-center h-full items-center">
+
+                    {/* Glass/White Card for Readability */}
+                    <div className="bg-white/95 backdrop-blur-md px-5 py-4 rounded-[2rem] shadow-2xl w-full max-w-sm border border-white/20">
+
+                        {/* Mobile Branding - Dark Theme for Light Page */}
+                        <div className="text-center mb-2 w-full">
+                            <Crown className="w-6 h-6 mx-auto mb-1 text-[#3E2723]" />
+                            <h1 className="font-display text-xl font-bold tracking-[0.2em] text-[#3E2723]">SANDS</h1>
+                        </div>
+
+                        <div className="w-8 h-1 bg-gray-200 rounded-full mx-auto mb-3"></div>
+
+                        <div className="flex-1">
+                            <h2 className="text-lg font-display font-bold text-[#3E2723] mb-0.5">
+                                {loginStep === 1 ? (isSignup ? 'Create Account' : 'Welcome Back') : 'Verify OTP'}
+                            </h2>
+                            <p className="text-[#8D6E63] text-[10px] mb-3">
+                                {loginStep === 1
+                                    ? (isSignup ? 'Sign up to start your journey.' : 'Please login to your account.')
+                                    : `Enter code sent to +91 ${phoneNumber}`
+                                }
+                            </p>
+
+                            {loginStep === 1 ? (
+                                <form onSubmit={handleSendOtp} className="space-y-2.5">
+                                    {isSignup && (
+                                        <div className="space-y-0.5">
+                                            <label className="text-[9px] font-bold text-[#8D6E63] uppercase tracking-widest pl-1">Full Name</label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={fullName}
+                                                onChange={(e) => setFullName(e.target.value)}
+                                                className="w-full h-11 xs:h-14 bg-gray-50 border-0 rounded-xl px-4 xs:px-5 text-[#3E2723] font-medium placeholder:text-gray-400 focus:ring-1 focus:ring-[#3E2723] outline-none transition-all text-sm xs:text-base"
+                                                placeholder="Enter your name"
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-bold text-[#8D6E63] uppercase tracking-widest pl-1">Mobile Number</label>
+                                        <div className="flex bg-gray-50 rounded-xl overflow-hidden h-11 xs:h-14 items-center">
+                                            <div className="h-full px-3 xs:px-4 flex items-center gap-2 text-[#3E2723] font-bold border-r border-gray-200">
+                                                <span>🇮🇳</span>
+                                                <span>+91</span>
+                                            </div>
+                                            <input
+                                                type="tel"
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                                placeholder="98765 43210"
+                                                className="flex-1 h-full bg-transparent border-0 px-3 xs:px-4 text-[#3E2723] font-bold text-base xs:text-xl placeholder:text-gray-300 focus:ring-0"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-[#3E2723] text-white py-3.5 xs:py-4 rounded-xl font-bold uppercase tracking-widest text-xs xs:text-sm shadow-lg shadow-[#3E2723]/25 active:scale-95 transition-transform mt-4"
+                                    >
+                                        Get OTP
+                                    </button>
+                                </form>
+                            ) : (
+                                <form onSubmit={handleVerifyOtp} className="space-y-6 xs:space-y-8">
+                                    <div className="flex justify-between gap-2 xs:gap-3 px-1 xs:px-2">
+                                        {otp.map((data, index) => (
+                                            <input
+                                                key={index}
+                                                type="text"
+                                                maxLength="1"
+                                                value={data}
+                                                onChange={(e) => handleOtpChange(e.target, index)}
+                                                onFocus={(e) => e.target.select()}
+                                                className="w-12 h-14 xs:w-14 xs:h-16 bg-transparent border-b-2 border-[#3E2723]/30 focus:border-[#3E2723] text-center text-2xl xs:text-3xl font-bold text-[#3E2723] outline-none transition-all rounded-none p-0"
+                                            />
+                                        ))}
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-[#3E2723] text-white py-3.5 xs:py-4 rounded-xl font-bold uppercase tracking-widest text-xs xs:text-sm shadow-lg shadow-[#3E2723]/25 active:scale-95 transition-transform"
+                                    >
+                                        Verify & Proceed
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setLoginStep(1)}
+                                        className="w-full text-center text-[10px] xs:text-xs font-bold text-[#8D6E63] uppercase tracking-wider py-2"
+                                    >
+                                        Change Mobile Number
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+
+                        <div className="mt-6 text-center">
+                            <p className="text-xs text-[#8D6E63] font-medium">
+                                {isSignup ? 'Already Member?' : 'New here?'}
+                                <Link to={isSignup ? "/login" : "/signup"} className="ml-1 text-[#3E2723] font-bold border-b border-[#3E2723]">
+                                    {isSignup ? 'Login' : 'Join Now'}
+                                </Link>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Desktop View (Hidden on Mobile) */}
+            <div className="w-full max-w-5xl bg-[#EFEBE9] rounded-2xl overflow-hidden shadow-2xl hidden md:flex flex-col-reverse lg:flex-row relative z-10 min-h-[550px] animate-in slide-in-from-bottom-8 fade-in duration-700">
 
                 {/* Left Side (Desktop) - Form */}
                 <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center p-8 lg:p-16 relative">
@@ -206,7 +328,7 @@ const Login = () => {
                             </p>
                         </div>
                     </div>
-                </div>
+                </div >
 
                 <div
                     className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center items-center relative overflow-hidden bg-cover bg-center"
@@ -222,8 +344,8 @@ const Login = () => {
                         <p className="font-serif italic text-white/80 text-sm tracking-wider">India's Premium Silver Jewellery Brand</p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

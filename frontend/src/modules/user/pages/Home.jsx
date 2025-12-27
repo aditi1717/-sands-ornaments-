@@ -1,13 +1,68 @@
-import React, { useState } from 'react';
-import { ArrowRight, Play, ShoppingBag, ChevronDown, MoveRight, Plus, Minus } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, Play, ShoppingBag, ChevronDown, MoveRight, Plus, Minus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { banners, categories, products } from '../assets/data';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Home = () => {
     const featuredProducts = products.slice(0, 3);
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [activeFaq, setActiveFaq] = useState(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [activeTrendingIndex, setActiveTrendingIndex] = useState(0);
+
+    const trendingSlides = [
+        {
+            id: 1,
+            subtitle: "Heritage Collection",
+            title: "Timeless",
+            titleItalic: "Elegance",
+            desc: "No longer search for \"authentic silver jewelry\". You've found it.",
+            image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+            id: 2,
+            subtitle: "Modern Statement",
+            title: "Empowering",
+            titleItalic: "Style",
+            desc: "From bold statements to subtle whispers, find pieces that celebrate you.",
+            image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80"
+        }
+    ];
+
+    const heroSlides = [
+        {
+            image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=1600",
+            badge: "New Collection 2024",
+            title: "Adorn Your Soul with Silver",
+            description: "Handcrafted luxury that blends traditional artistry with modern grace.",
+            btnText: "Discover Our Bag",
+            link: "/shop"
+        },
+        {
+            image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1600&q=80",
+            badge: "Wedding Specials",
+            title: "Bridal Elegance Redefined",
+            description: "Timeless silver pieces for your most special moments.",
+            btnText: "Shop Bridal",
+            link: "/category/rings"
+        },
+        {
+            image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&w=1600&q=80",
+            badge: "Daily Essentials",
+            title: "Minimalist Grace Every Day",
+            description: "Statement pieces designed for your everyday lifestyle.",
+            btnText: "Explore Now",
+            link: "/shop"
+        }
+    ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [heroSlides.length]);
 
     const newArrivals = [
         {
@@ -58,8 +113,8 @@ const Home = () => {
 
     // Animation Variants
     const fadeUp = {
-        hidden: { opacity: 0, y: 100 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
     };
 
     const slideInLeft = {
@@ -106,43 +161,89 @@ const Home = () => {
     return (
         <div className="bg-[#FDFBF7] font-body text-[#5D4037] relative selection:bg-[#8D6E63] selection:text-white">
 
-            {/* Hero Section - Exact Viewport Fit (Micro-adjusted) */}
-            <section className="relative">
-                <div className="relative h-[calc(100vh-153px)] overflow-hidden shadow-2xl group">
-                    <img
-                        src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=1600"
-                        alt="Luxury Collection"
-                        className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-[2000ms]"
-                    />
-                    {/* Enhanced Gradient Overlay for Text Clarity */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#2c1d18]/80 via-[#5D4037]/50 to-transparent flex items-center">
-                        <div className="container mx-auto px-8 md:px-16">
-                            <div className="max-w-xl text-white space-y-8">
-                                {/* Soft Aesthetic Badge */}
-                                <div className="flex items-center space-x-3 text-xs uppercase tracking-[0.2em] bg-white/10 backdrop-blur-md w-fit px-6 py-2 rounded-full border border-white/20 shadow-lg animate-fade-in-up opacity-0" style={{ animationFillMode: 'forwards' }}>
-                                    <span className="w-2 h-2 rounded-full bg-[#EFEBE9] animate-pulse"></span>
-                                    <span className="text-[#EFEBE9] font-medium">New Collection 2024</span>
-                                </div>
 
-                                {/* Pyaara Typography */}
-                                <h1 className="text-5xl md:text-7xl font-display font-medium leading-tight drop-shadow-md animate-fade-in-up delay-200 opacity-0" style={{ animationFillMode: 'forwards' }}>
-                                    Adorn Your <br />
-                                    <span className="font-serif italic font-light text-[#EFEBE9]">Soul with Silver</span>
-                                </h1>
+            {/* Hero Section - Optimized Slider */}
+            <section className="relative overflow-hidden">
+                <div className="relative h-[75vh] md:h-[calc(100vh-153px)]">
+                    <AnimatePresence>
+                        <motion.div
+                            key={currentSlide}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }}
+                            className="absolute inset-0"
+                        >
+                            <img
+                                src={heroSlides[currentSlide].image}
+                                alt={heroSlides[currentSlide].title}
+                                className="w-full h-full object-cover transform scale-100 animate-slow-zoom"
+                            />
+                            {/* Enhanced Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#2c1d18]/95 via-[#2c1d18]/40 to-transparent flex items-end md:items-center pb-20 md:pb-0">
+                                <div className="container mx-auto px-6 md:px-16">
+                                    <div className="max-w-xl text-white space-y-4 md:space-y-6 text-center md:text-left">
+                                        {/* Soft Aesthetic Badge */}
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -30 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ duration: 1.0, ease: "easeOut", delay: 0.1 }}
+                                            className="flex items-center space-x-2 md:space-x-3 text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em] bg-white/10 backdrop-blur-md w-fit px-3 py-1 md:px-5 md:py-2 rounded-full border border-white/20 shadow-lg mx-auto md:mx-0"
+                                        >
+                                            <span className="w-1.5 h-1.5 rounded-full bg-[#EFEBE9] animate-pulse"></span>
+                                            <span className="text-[#EFEBE9] font-medium">{heroSlides[currentSlide].badge}</span>
+                                        </motion.div>
 
-                                <p className="text-[#EFEBE9] text-lg md:text-xl font-light max-w-md leading-relaxed drop-shadow-sm animate-fade-in-up delay-400 opacity-0" style={{ animationFillMode: 'forwards' }}>
-                                    Discover handcrafted pieces that blend traditional artistry with modern grace. Perfect for the woman who shines from within.
-                                </p>
+                                        {/* Typography */}
+                                        <motion.h1
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 1.0, ease: "easeOut", delay: 0.2 }}
+                                            className="text-3xl md:text-7xl font-display font-medium leading-tight drop-shadow-md"
+                                        >
+                                            {currentSlide === 0 ? (
+                                                <>Adorn Your <br /> <span className="font-serif italic font-light text-[#EFEBE9]">Soul with Silver</span></>
+                                            ) : heroSlides[currentSlide].title}
+                                        </motion.h1>
 
-                                {/* Interactive Buttons */}
-                                <div className="flex items-center space-x-6 pt-6 animate-scale-in delay-600 opacity-0" style={{ animationFillMode: 'forwards' }}>
-                                    <Link to="/shop" className="bg-white text-[#5D4037] px-10 py-4 rounded-full font-medium hover:bg-[#FDFBF7] transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 group/btn">
-                                        <span>Shop Now</span>
-                                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                                    </Link>
+                                        <motion.p
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 1.0, ease: "easeOut", delay: 0.3 }}
+                                            className="text-[#EFEBE9]/90 text-sm md:text-xl font-light max-w-sm md:max-w-md mx-auto md:mx-0 leading-relaxed drop-shadow-sm"
+                                        >
+                                            {heroSlides[currentSlide].description}
+                                        </motion.p>
+
+                                        {/* Interactive Buttons */}
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 1.0, ease: "easeOut", delay: 0.4 }}
+                                            className="flex items-center justify-center md:justify-start space-x-6 pt-2 md:pt-4"
+                                        >
+                                            <Link to={heroSlides[currentSlide].link} className="bg-white text-[#5D4037] w-full md:w-auto px-6 py-3 md:px-10 md:py-4 rounded-full font-medium hover:bg-[#FDFBF7] transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 group/btn text-sm md:text-base">
+                                                <span>{heroSlides[currentSlide].btnText}</span>
+                                                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                                            </Link>
+                                        </motion.div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
+                    </AnimatePresence>
+
+                    {/* Pagination Dots - EXACTLY CENTERED */}
+                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+                        {heroSlides.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setCurrentSlide(idx)}
+                                className={`h-1.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'w-10 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'
+                                    }`}
+                                aria-label={`Go to slide ${idx + 1}`}
+                            />
+                        ))}
                     </div>
 
                     {/* Floating Card Overlay */}
@@ -187,6 +288,22 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Mobile App Style Category Stories - VISIBLE ONLY ON MOBILE (Now below Banner) */}
+            <div className="md:hidden bg-white border-y border-[#EFEBE9] py-5 overflow-hidden">
+                <div className="flex gap-6 overflow-x-auto px-4 scrollbar-hide">
+                    {categories.map((cat) => (
+                        <Link key={cat.id} to={`/category/${cat.path}`} className="flex-shrink-0 flex flex-col items-center space-y-2 group">
+                            <div className="w-16 h-16 rounded-full p-0.5 border-2 border-[#D7CCC8]/60 group-active:scale-90 transition-all duration-300 shadow-sm">
+                                <div className="w-full h-full rounded-full overflow-hidden border-2 border-white bg-gray-50">
+                                    <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
+                                </div>
+                            </div>
+                            <span className="text-[10px] font-bold text-[#5D4037] uppercase tracking-tighter text-center w-16 truncate">{cat.name}</span>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
             {/* Choose The Type / Categories - Redesigned as Editorial Grid */}
             {/* Bohemain Bloom Style Section */}
             <section className="py-10 bg-[#FFF8F0]">
@@ -195,277 +312,318 @@ const Home = () => {
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, amount: 0.1 }}
+                        viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
-                        className="text-center mb-16 space-y-4"
+                        className="text-center mb-4 md:mb-12"
                     >
-                        <div className="flex justify-center mb-6">
-                            {/* Simple Sunburst SVG */}
-                            <svg className="w-12 h-12 text-[#D7CCC8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                <circle cx="12" cy="12" r="4" />
-                                <path d="M12 2v2" /><path d="M12 20v2" /><path d="M4.93 4.93l1.41 1.41" /><path d="M17.66 17.66l1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="M6.34 17.66l-1.41 1.41" /><path d="M19.07 4.93l-1.41 1.41" />
-                            </svg>
+                        <div className="flex items-center justify-center gap-3 mb-2 md:mb-4">
+                            <div className="h-[1px] w-8 md:w-16 bg-[#D7CCC8]"></div>
+                            <span className="text-[#8D6E63] text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.3em]">Our Favorites</span>
+                            <div className="h-[1px] w-8 md:w-16 bg-[#D7CCC8]"></div>
                         </div>
-                        <h2 className="text-4xl md:text-6xl font-serif italic text-[#5D4037]">Curated Collections</h2>
-                        <p className="text-[#8D6E63] italic max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                        <h2 className="text-3xl md:text-6xl font-serif italic text-[#5D4037] mb-2 md:mb-4">Curated Collections</h2>
+                        <p className="text-[#8D6E63] italic text-xs md:text-base leading-relaxed max-w-2xl mx-auto">
                             Step into a world of organic elegance and modern minimalism as you explore our exclusive jewellery pieces.
                         </p>
                     </motion.div>
 
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.1 }}
-                        variants={staggerContainer}
-                        className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12"
-                    >
+                    <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-12">
                         {categories.slice(0, 5).map((cat, idx) => (
                             <motion.div
                                 key={cat.id}
-                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.2 }}
+                                variants={idx % 2 === 0 ? slideInLeft : slideInRight}
                                 className="group flex flex-col items-center"
                             >
                                 {/* Arch Image Container */}
-                                <Link to={`/category/${cat.path}`} className="relative w-full aspect-[3/4] rounded-t-[10rem] overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500 bg-white">
-                                    <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
+                                <Link to={`/category/${cat.path}`} className="relative w-full aspect-[2/3] md:aspect-[3/4] rounded-t-[10rem] overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500 bg-white">
+                                    <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transform md:group-hover:scale-105 transition-transform duration-1000" />
 
                                     {/* Solid Box Label - Bottom of Arch */}
-                                    <div className="absolute bottom-0 left-0 w-full bg-[#5D4037] text-[#EFEBE9] py-3 px-2 text-center">
-                                        <h3 className="font-serif text-lg tracking-wide">{cat.name}</h3>
+                                    <div className="absolute bottom-0 left-0 w-full bg-[#5D4037] text-[#EFEBE9] py-2 md:py-3 px-2 text-center">
+                                        <h3 className="font-serif text-sm md:text-xl tracking-wide truncate">{cat.name}</h3>
                                     </div>
                                 </Link>
 
                                 {/* Bottom Link */}
-                                <Link to={`/category/${cat.path}`} className="mt-4 text-[#5D4037] text-xs font-bold uppercase tracking-widest border-b border-transparent group-hover:border-[#5D4037] transition-all flex items-center gap-2">
-                                    {cat.name} <ArrowRight className="w-3 h-3" />
+                                <Link to={`/category/${cat.path}`} className="mt-2 text-[#5D4037] text-[10px] md:text-sm font-display font-medium uppercase tracking-widest border-b border-transparent group-hover:border-[#5D4037] transition-all flex items-center gap-1">
+                                    Explore <ArrowRight className="w-3 h-3" />
                                 </Link>
                             </motion.div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
             </section>
 
             {/* Trendy Products / Editorial Split Section - Staggered Dark Cards */}
-            <section className="py-10 bg-[#FFF8F0] overflow-hidden">
+            <section className="py-2 md:py-10 bg-[#FFF8F0] overflow-hidden">
                 <div className="container mx-auto px-4">
 
                     {/* Section Header */}
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, amount: 0.1 }}
+                        viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
-                        className="text-center mb-16 relative"
+                        className="text-center max-w-2xl mx-auto mb-8 md:mb-16 space-y-2 md:space-y-4 px-4"
                     >
-                        <span className="text-[#8D6E63] text-sm font-bold uppercase tracking-[0.3em] pl-1">MOST POPULAR</span>
-                        <h2 className="text-4xl md:text-5xl font-display text-[#5D4037] mt-3 mb-4 uppercase">TRENDING NOW</h2>
-                        <div className="flex justify-center items-center gap-2 text-[#D7CCC8]/60">
-                            <div className="h-[1px] w-12 bg-current"></div>
-                            <div className="w-2 h-2 rounded-full bg-current"></div>
-                            <div className="h-[1px] w-12 bg-current"></div>
-                        </div>
+                        <span className="text-[#8D6E63] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Timeless Beauty</span>
+                        <h2 className="text-3xl md:text-5xl font-display text-[#5D4037]">Trending Now</h2>
+                        <div className="h-0.5 w-16 md:w-24 bg-[#D7CCC8] mx-auto mt-2 md:mt-6"></div>
                     </motion.div>
 
-                    {/* Card 1: Timeless Elegance - Overlapping Editorial Layout (Dark Left) */}
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                        variants={slideInLeft}
-                        className="relative w-full mb-16 md:mb-20"
+                    {/* Mobile: Swipeable Lifestyle Cards (Giva/Palmonas Style) */}
+                    <div
+                        className="md:hidden flex overflow-x-auto overflow-y-hidden gap-4 px-4 pb-4 snap-x scrollbar-hide"
+                        onScroll={(e) => {
+                            const slideWidth = e.target.offsetWidth * 0.90;
+                            const index = Math.round(e.target.scrollLeft / slideWidth);
+                            setActiveTrendingIndex(Math.min(Math.max(0, index), trendingSlides.length - 1));
+                        }}
                     >
-                        {/* 1. Background Split Layer */}
-                        <div className="absolute inset-0 flex pointer-events-none">
-                            <div className="w-[35%] bg-[#3E2723] h-full rounded-l-[1.5rem] relative overflow-hidden">
-                            </div>
-                            <div className="w-[65%] bg-white h-full rounded-r-[2rem] border border-[#EFEBE9] border-l-0 shadow-sm"></div>
-                        </div>
-
-                        {/* 2. Content Layer */}
-                        <div className="relative z-10 flex flex-col md:flex-row items-center p-6 md:p-12 gap-8 md:gap-16">
-
-                            {/* Overlapping Image - Positioned to bridge the background split */}
-                            <div className="w-full md:w-[40%] flex-shrink-0">
-                                <div className="relative aspect-square md:aspect-[4/4] h-[300px] md:h-[350px] w-full rounded-lg overflow-hidden shadow-xl ml-auto md:mr-[-2rem] border-[4px] border-white">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80"
-                                        alt="Timeless Elegance"
-                                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Text Content - Sitting in the Light Area */}
-                            <div className="w-full md:w-[50%] md:pl-12 pt-4 md:pt-0">
-                                <div className="border-l-[3px] border-[#D7CCC8] pl-6 md:pl-8 space-y-4">
-                                    <span className="text-[#8D6E63] text-xs font-bold uppercase tracking-[0.2em] block mb-2">Heritage Collection</span>
-                                    <h3 className="text-3xl md:text-5xl font-display text-[#3E2723] leading-tight">
-                                        Timeless <span className="font-serif italic text-[#8D6E63]">Elegance</span>
+                        {trendingSlides.map((slide) => (
+                            <motion.div
+                                key={slide.id}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.2 }}
+                                variants={fadeUp}
+                                className="min-w-[85vw] h-[50vh] relative rounded-3xl overflow-hidden snap-center shadow-lg"
+                            >
+                                <img
+                                    src={slide.image}
+                                    alt={slide.title}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                                <div className="absolute bottom-0 left-0 w-full p-6 text-center space-y-3">
+                                    <span className="text-white/80 text-[10px] font-bold uppercase tracking-[0.2em]">{slide.subtitle}</span>
+                                    <h3 className="text-3xl font-display text-white leading-tight">
+                                        {slide.title} <span className="font-serif italic text-[#D7CCC8]">{slide.titleItalic}</span>
                                     </h3>
-                                    <p className="text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md">
-                                        No longer search for "authentic silver jewelry". You've found it. We serve the modern woman reflecting our belief that true style transcends trends.
+                                    <p className="text-white/90 font-serif text-[10px] leading-relaxed line-clamp-2">
+                                        {slide.desc}
                                     </p>
-                                    <p className="text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md pt-2">
-                                        Our journey is fueled by a lifelong passion and dedicated to enhancing the natural glow of every individual who wears our pieces.
-                                    </p>
-                                    <div className="pt-6">
-                                        <Link to="/shop" className="group inline-flex items-center gap-2 text-[#3E2723] font-bold uppercase tracking-widest text-xs hover:text-[#8D6E63] transition-colors">
-                                            Discover More
-                                            <span className="bg-[#3E2723] text-white rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-[#8D6E63] transition-colors">
-                                                <ArrowRight className="w-3 h-3" />
-                                            </span>
-                                        </Link>
+                                    <Link to="/shop" className="inline-block px-6 py-2 bg-white text-[#3E2723] rounded-full text-[10px] font-bold uppercase tracking-widest mt-2">
+                                        Shop Collection
+                                    </Link>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                    {/* Pagination Dots (Mobile Only) */}
+                    <div className="md:hidden flex justify-center gap-2 mb-6 mt-4">
+                        {trendingSlides.map((_, idx) => (
+                            <div
+                                key={idx}
+                                className={`h-2 rounded-full transition-all duration-300 ${idx === activeTrendingIndex ? 'w-6 bg-[#5D4037]' : 'w-2 bg-[#D7CCC8]'}`}
+                            ></div>
+                        ))}
+                    </div>
+
+
+
+                    {/* Desktop: Original Editorial Split Layout */}
+                    <div className="hidden md:block">
+                        {/* Card 1: Timeless Elegance - Overlapping Editorial Layout (Dark Left) */}
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.2 }}
+                            variants={slideInLeft}
+                            className="relative w-full mb-16 md:mb-20"
+                        >
+                            {/* 1. Background Split Layer */}
+                            <div className="absolute inset-0 flex pointer-events-none">
+                                <div className="w-full md:w-[35%] bg-[#3E2723] h-full rounded-l-[1.5rem] md:rounded-l-[1.5rem] relative overflow-hidden">
+                                </div>
+                                <div className="hidden md:block w-[65%] bg-white h-full rounded-r-[2rem] border border-[#EFEBE9] border-l-0 shadow-sm"></div>
+                            </div>
+
+                            {/* 2. Content Layer */}
+                            <div className="relative z-10 flex flex-col md:flex-row items-center p-6 md:p-12 gap-8 md:gap-16">
+
+                                {/* Overlapping Image - Positioned to bridge the background split */}
+                                <div className="w-full md:w-[40%] flex-shrink-0">
+                                    <div className="relative aspect-square md:aspect-[4/4] h-[300px] md:h-[350px] w-full rounded-lg md:rounded-lg overflow-hidden shadow-xl ml-auto md:mr-[-2rem] border-[4px] border-white">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80"
+                                            alt="Timeless Elegance"
+                                            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Text Content - Sitting in the Light Area */}
+                                <div className="w-full md:w-[50%] md:pl-12 pt-4 md:pt-0">
+                                    <div className="md:border-l-[3px] border-[#D7CCC8] md:pl-8 space-y-4">
+                                        <span className="text-[#8D6E63] text-xs font-bold uppercase tracking-[0.2em] block mb-2 md:text-left text-center">Heritage Collection</span>
+                                        <h3 className="text-3xl md:text-5xl font-display text-white md:text-[#3E2723] leading-tight text-center md:text-left">
+                                            Timeless <span className="font-serif italic text-[#8D6E63] underline md:no-underline underline-offset-8">Elegance</span>
+                                        </h3>
+                                        <p className="text-white md:text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md text-center md:text-left">
+                                            No longer search for "authentic silver jewelry". You've found it. We serve the modern woman reflecting our belief that true style transcends trends.
+                                        </p>
+                                        <div className="pt-6 flex justify-center md:justify-start">
+                                            <Link to="/shop" className="group inline-flex items-center gap-2 text-[#EFEBE9] md:text-[#3E2723] font-bold uppercase tracking-widest text-[10px] md:text-xs">
+                                                Discover More
+                                                <span className="bg-white md:bg-[#3E2723] text-[#3E2723] md:text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                                    <ArrowRight className="w-3 h-3" />
+                                                </span>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
 
-                    {/* Card 2: Empowering Style - Overlapping Editorial Layout (Dark Right - Mirrored) */}
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                        variants={slideInRight}
-                        className="relative w-full mb-8"
-                    >
-                        {/* 1. Background Split Layer */}
-                        <div className="absolute inset-0 flex pointer-events-none">
-                            <div className="w-[65%] bg-white h-full rounded-l-[2rem] border border-[#EFEBE9] border-r-0 shadow-sm"></div>
-                            <div className="w-[35%] bg-[#3E2723] h-full rounded-r-[1.5rem] relative overflow-hidden">
+                        {/* Card 2: Empowering Style - Overlapping Editorial Layout (Dark Right - Mirrored) */}
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.2 }}
+                            variants={slideInRight}
+                            className="relative w-full mb-8"
+                        >
+                            {/* 1. Background Split Layer */}
+                            <div className="absolute inset-0 flex pointer-events-none">
+                                <div className="w-[65%] bg-white h-full rounded-l-[2rem] border border-[#EFEBE9] border-r-0 shadow-sm"></div>
+                                <div className="w-[35%] bg-[#3E2723] h-full rounded-r-[1.5rem] relative overflow-hidden">
+                                </div>
                             </div>
-                        </div>
 
-                        {/* 2. Content Layer */}
-                        <div className="relative z-10 flex flex-col md:flex-row items-center p-4 md:p-8 gap-6 md:gap-12">
+                            {/* 2. Content Layer */}
+                            <div className="relative z-10 flex flex-col md:flex-row items-center p-4 md:p-8 gap-6 md:gap-12">
 
-                            {/* Text Content - Left Side */}
-                            <div className="w-full md:w-[50%] md:pr-12 pt-4 md:pt-0 order-2 md:order-1 text-right">
-                                <div className="border-r-[3px] border-[#D7CCC8] pr-6 md:pr-8 space-y-4 flex flex-col items-end">
-                                    <span className="text-[#8D6E63] text-xs font-bold uppercase tracking-[0.2em] block mb-2">Modern Statement</span>
-                                    <h3 className="text-3xl md:text-5xl font-display text-[#3E2723] leading-tight">
-                                        Empowering <span className="font-serif italic text-[#8D6E63]">Style</span>
-                                    </h3>
-                                    <p className="text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md">
-                                        We know the power of simple, holistic design and the impact of a moment dedicated to only you.
-                                    </p>
-                                    <p className="text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md pt-2">
-                                        From bold statements to subtle whispers, find pieces that resonate with your unique journey and celebrate your individuality.
-                                    </p>
-                                    <div className="pt-6">
-                                        <Link to="/shop" className="group inline-flex items-center gap-2 text-[#3E2723] font-bold uppercase tracking-widest text-xs hover:text-[#8D6E63] transition-colors flex-row-reverse">
-                                            Explore Collection
-                                            <span className="bg-[#3E2723] text-white rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-[#8D6E63] transition-colors">
-                                                <ArrowRight className="w-3 h-3" />
-                                            </span>
-                                        </Link>
+                                {/* Text Content - Left Side */}
+                                <div className="w-full md:w-[50%] md:pr-12 pt-4 md:pt-0 order-2 md:order-1 text-right">
+                                    <div className="border-r-[3px] border-[#D7CCC8] pr-6 md:pr-8 space-y-4 flex flex-col items-end">
+                                        <span className="text-[#8D6E63] text-xs font-bold uppercase tracking-[0.2em] block mb-2">Modern Statement</span>
+                                        <h3 className="text-3xl md:text-5xl font-display text-[#3E2723] leading-tight">
+                                            Empowering <span className="font-serif italic text-[#8D6E63]">Style</span>
+                                        </h3>
+                                        <p className="text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md">
+                                            We know the power of simple, holistic design and the impact of a moment dedicated to only you.
+                                        </p>
+                                        <p className="text-[#5D4037]/80 font-serif leading-relaxed text-sm md:text-base max-w-md pt-2">
+                                            From bold statements to subtle whispers, find pieces that resonate with your unique journey and celebrate your individuality.
+                                        </p>
+                                        <div className="pt-6">
+                                            <Link to="/shop" className="group inline-flex items-center gap-2 text-[#3E2723] font-bold uppercase tracking-widest text-xs hover:text-[#8D6E63] transition-colors flex-row-reverse">
+                                                Explore Collection
+                                                <span className="bg-[#3E2723] text-white rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-[#8D6E63] transition-colors">
+                                                    <ArrowRight className="w-3 h-3" />
+                                                </span>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Overlapping Image - Right Side */}
-                            <div className="w-full md:w-[40%] flex-shrink-0 order-1 md:order-2">
-                                <div className="relative aspect-square md:aspect-[4/4] h-[300px] md:h-[350px] w-full rounded-lg overflow-hidden shadow-xl mr-auto md:ml-[-2rem] border-[4px] border-white">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80"
-                                        alt="Empowering Style"
-                                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                                    />
+                                {/* Overlapping Image - Right Side */}
+                                <div className="w-full md:w-[40%] flex-shrink-0 order-1 md:order-2">
+                                    <div className="relative aspect-square md:aspect-[4/4] h-[300px] md:h-[350px] w-full rounded-lg overflow-hidden shadow-xl mr-auto md:ml-[-2rem] border-[4px] border-white">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80"
+                                            alt="Empowering Style"
+                                            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
-                    </motion.div>
+                            </div>
+                        </motion.div>
+                    </div>
 
                 </div>
-            </section>
+            </section >
 
             {/* New Arrivals Collection Section */}
-            <section className="py-10 bg-[#FAF7F5] overflow-hidden border-y border-[#EFEBE9] relative">
+            < section className="py-10 bg-[#FAF7F5] overflow-hidden border-y border-[#EFEBE9] relative" >
                 {/* Decorative Background Element */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#D7CCC8]/10 rounded-full blur-3xl -z-0"></div>
+                < div className="absolute top-0 right-0 w-64 h-64 bg-[#D7CCC8]/10 rounded-full blur-3xl -z-0" ></div >
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-12">
+                    <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-12">
                         {/* Left Text Content */}
                         <motion.div
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.1 }}
                             variants={fadeUp}
-                            className="w-full lg:w-1/3 text-center lg:text-left space-y-6"
+                            className="w-full lg:w-1/3 text-center lg:text-left space-y-4 md:space-y-6 mb-2 lg:mb-0"
                         >
-                            <span className="text-[#8D6E63] text-xs font-bold uppercase tracking-[0.2em]">Just Arrived</span>
-                            <h2 className="text-4xl md:text-5xl font-display text-[#5D4037] leading-tight">
+                            <span className="text-[#8D6E63] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Just Arrived</span>
+                            <h2 className="text-3xl md:text-5xl font-display text-[#5D4037] leading-tight">
                                 Our New <br />
                                 <span className="italic font-serif text-[#8D6E63]">Collection</span>
                             </h2>
-                            <p className="text-[#8D6E63]/80 font-serif leading-relaxed text-sm md:text-base">
+                            <p className="text-[#8D6E63]/80 font-serif leading-relaxed text-xs md:text-base">
                                 Be the first to wear our latest handcrafted silver masterpieces. Designed for elegance, crafted for you.
                             </p>
                             <Link
                                 to="/products"
-                                className="inline-block px-8 py-3 bg-[#5D4037] text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#3E2723] transition-all transform hover:scale-105 shadow-md mt-4"
+                                className="hidden lg:inline-block px-6 py-2 md:px-8 md:py-3 bg-[#5D4037] text-white rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-[#3E2723] transition-all transform hover:scale-105 shadow-md mt-2 md:mt-4"
                             >
                                 See More
                             </Link>
                         </motion.div>
 
                         {/* Right Product Grid */}
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, amount: 0.1 }}
-                            variants={staggerContainer}
-                            className="w-full lg:w-2/3"
-                        >
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="w-full lg:w-2/3">
+                            <div className="flex overflow-x-auto overflow-y-hidden pb-4 gap-4 scrollbar-hide md:grid md:grid-cols-3 md:gap-6 snap-x">
                                 {newArrivals.map((product) => (
-                                    <motion.div
+                                    <div
                                         key={product.id}
-                                        variants={fadeUp}
-                                        className="group bg-white rounded-3xl p-4 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
+                                        className="min-w-[260px] md:min-w-0 snap-start group bg-white rounded-2xl md:rounded-3xl p-3 md:p-4 shadow-sm md:hover:shadow-xl transition-all duration-500 md:hover:-translate-y-2"
                                     >
                                         {/* Image Container with Hover Swap */}
-                                        <div className="relative aspect-[3/2] rounded-2xl overflow-hidden mb-4 bg-gray-100">
+                                        <div className="relative aspect-square md:aspect-[3/2] rounded-xl md:rounded-2xl overflow-hidden mb-2 md:mb-4 bg-gray-100">
                                             <img
                                                 src={product.image1}
                                                 alt={product.name}
-                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100 group-hover:opacity-0"
+                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100 md:group-hover:opacity-0"
                                             />
                                             <img
                                                 src={product.image2}
                                                 alt={`${product.name} Detail`}
-                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100 scale-110"
+                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 md:group-hover:opacity-100 md:scale-110"
                                             />
 
-                                            {/* Floating Icon */}
-                                            <div className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-[#5D4037] shadow-sm translate-y-[-150%] group-hover:translate-y-0 transition-transform duration-300">
-                                                <ShoppingBag className="w-4 h-4" />
+                                            {/* Floating Icon - Visible on hover on web, always visible or better toggle on mobile */}
+                                            <div className="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-[#5D4037] shadow-sm md:translate-y-[-150%] md:group-hover:translate-y-0 transition-transform duration-300">
+                                                <ShoppingBag className="w-3 h-3 md:w-4 md:h-4" />
                                             </div>
                                         </div>
 
                                         {/* Product Info */}
                                         <div className="text-center">
-                                            <h3 className="font-display text-[#5D4037] text-lg mb-1">{product.name}</h3>
-                                            <p className="font-serif text-[#8D6E63] text-sm italic mb-3">{product.price}</p>
+                                            <h3 className="font-display text-[#5D4037] text-xs md:text-lg mb-0.5 md:mb-1 truncate px-1 md:px-2">{product.name}</h3>
+                                            <p className="font-serif text-[#5D4037] text-sm md:text-lg font-medium mb-1 md:mb-3">{product.price}</p>
                                             <Link
                                                 to={`/product/${product.id}`}
-                                                className="text-[10px] font-bold uppercase tracking-widest text-[#5D4037] border-b border-[#5D4037]/30 pb-1 hover:text-[#8D6E63] hover:border-[#8D6E63] transition-colors"
+                                                className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-[#5D4037] border-b border-[#5D4037]/30 pb-0.5 md:pb-1 hover:text-[#8D6E63] hover:border-[#8D6E63] transition-colors"
                                             >
-                                                View Details
+                                                View
                                             </Link>
                                         </div>
-                                    </motion.div>
+                                    </div>
                                 ))}
                             </div>
-                        </motion.div>
+                            {/* Mobile Only 'See More' Button below list */}
+                            <div className="flex justify-end mt-2 lg:hidden pr-2">
+                                <Link to="/products" className="flex items-center gap-1 text-[#5D4037] font-bold uppercase tracking-widest text-[10px]">
+                                    See More <ChevronRight className="w-4 h-4" />
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* FAQ Section - Redesigned Editorial Style */}
-            <section className="py-10 bg-[#FFF8F0]">
+            < section className="hidden md:block py-10 bg-[#FFF8F0]" >
                 <div className="container mx-auto px-4">
                     {/* Top Header */}
                     <motion.div
@@ -562,7 +720,7 @@ const Home = () => {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
 
         </div >

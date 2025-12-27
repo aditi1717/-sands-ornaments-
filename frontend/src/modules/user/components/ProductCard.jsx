@@ -3,7 +3,7 @@ import { Heart, ShoppingBag, Star } from 'lucide-react';
 import { useShop } from '../../../context/ShopContext';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isWishlistPage = false }) => {
     const { addToCart, addToWishlist, removeFromWishlist, wishlist } = useShop();
     const [flying, setFlying] = useState(false);
     const [flyingType, setFlyingType] = useState('cart'); // 'cart' or 'heart'
@@ -70,9 +70,9 @@ const ProductCard = ({ product }) => {
                 />
             )}
 
-            <Link to={`/product/${product.id}`} className="group relative w-full bg-white rounded-2xl overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 block">
+            <Link to={`/product/${product.id}`} className="group relative w-full h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1">
                 {/* Image Container */}
-                <div className="relative aspect-square overflow-hidden bg-[#F5F5F5]">
+                <div className="relative aspect-square overflow-hidden bg-[#F5F5F5] shrink-0">
                     <div className="block w-full h-full">
                         <img
                             src={product.image}
@@ -83,11 +83,11 @@ const ProductCard = ({ product }) => {
 
                     {/* Dynamic Badges */}
                     {product.isNew ? (
-                        <span className="absolute top-3 left-3 bg-[#5D4037] text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm tracking-wider z-10">
+                        <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-[#5D4037] text-white text-[9px] md:text-[10px] font-bold px-1.5 py-0.5 md:px-2.5 md:py-1 rounded shadow-sm tracking-wider z-10">
                             NEW
                         </span>
                     ) : product.rating >= 4.5 ? (
-                        <span className="absolute top-3 left-3 bg-[#8D6E63] text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm tracking-wider z-10">
+                        <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-[#8D6E63] text-white text-[9px] md:text-[10px] font-bold px-1.5 py-0.5 md:px-2.5 md:py-1 rounded shadow-sm tracking-wider z-10">
                             TRENDING
                         </span>
                     ) : null}
@@ -95,48 +95,57 @@ const ProductCard = ({ product }) => {
                     {/* Wishlist Heart - Bottom Left */}
                     <button
                         onClick={handleWishlist}
-                        className={`absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-sm transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 z-20 ${isWishlisted ? 'text-red-500 hover:bg-red-50' : 'text-gray-800 hover:bg-[#5D4037] hover:text-white'}`}
+                        className={`absolute top-2 right-2 md:bottom-3 md:left-3 md:top-auto md:right-auto bg-white/90 backdrop-blur-sm p-1.5 md:p-2 rounded-full shadow-sm transition-all duration-300 z-20 ${isWishlisted ? 'text-red-500' : 'text-gray-400 md:text-gray-800 hover:bg-[#5D4037] hover:text-white'} opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 translate-y-0`}
                         title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                     >
-                        <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={2} />
+                        <Heart className={`w-3.5 h-3.5 md:w-4 md:h-4 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={2} />
                     </button>
 
-                    {/* Add to Bag - Bottom Right */}
+                    {/* Add to Bag - Desktop Only */}
                     <button
                         onClick={handleAddToCart}
-                        className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 text-[10px] font-bold px-4 py-2.5 rounded-full shadow-sm hover:bg-[#5D4037] hover:text-white transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 z-20 uppercase tracking-wide flex items-center gap-2"
+                        className="hidden md:flex absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 text-[10px] font-bold px-4 py-2.5 rounded-full shadow-sm hover:bg-[#5D4037] hover:text-white transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 z-20 uppercase tracking-wide items-center gap-2"
                         title="Add to Cart"
                     >
                         Add to Bag
                     </button>
                 </div>
 
-                {/* Product Details */}
-                <div className="p-4 text-left">
-                    <h3 className="text-gray-900 font-serif text-[16px] font-bold leading-tight hover:text-[#8D6E63] transition-colors line-clamp-2 mb-2">
+                <div className={`${isWishlistPage ? 'p-1.5 md:p-4' : 'p-2 md:p-4'} text-left flex flex-col flex-1`}>
+                    <h3 className={`text-[#5D4037] font-serif ${isWishlistPage ? 'text-[12px] md:text-xl mb-1 mt-0.5' : 'text-sm md:text-xl mb-1.5'} font-extrabold leading-tight hover:text-[#8D6E63] transition-colors line-clamp-1 md:line-clamp-2 tracking-wide`}>
                         {product.name}
                     </h3>
 
-                    <div className="flex items-center gap-1 mb-2">
+                    <div className="flex items-center gap-1 mb-1 text-[9px] md:text-base hidden md:flex">
                         <div className="flex text-yellow-400">
                             {[...Array(5)].map((_, i) => (
-                                <Star key={i} className={`w-3 h-3 ${i < (Math.round(product.rating || 4)) ? 'fill-current' : 'text-gray-200'}`} />
+                                <Star key={i} className={`w-2.5 h-2.5 md:w-3 md:h-3 ${i < (Math.round(product.rating || 4)) ? 'fill-current' : 'text-gray-200'}`} />
                             ))}
                         </div>
-                        <span className="text-gray-400 text-xs ml-1">({product.reviews || Math.floor(Math.random() * 50) + 1} reviews)</span>
+                        <span className="text-gray-400 ml-1">({product.reviews || 42})</span>
                     </div>
 
-                    <div className="flex items-baseline gap-2 mt-auto">
-                        <span className="text-gray-900 font-bold text-lg">₹{product.price.toLocaleString()}</span>
+                    <div className="flex flex-wrap items-baseline gap-1.5 md:gap-2 mt-auto">
+                        <span className={`text-gray-900 font-semibold ${isWishlistPage ? 'text-xs md:text-lg' : 'text-sm md:text-lg'}`}>₹{product.price.toLocaleString()}</span>
                         {product.originalPrice > product.price && (
                             <>
-                                <span className="text-gray-400 line-through text-xs font-medium">₹{product.originalPrice.toLocaleString()}</span>
-                                <span className="text-emerald-600 text-xs font-bold bg-emerald-50 px-1.5 py-0.5 rounded">
+                                <span className="text-gray-400 line-through text-[9px] md:text-xs font-medium">₹{product.originalPrice.toLocaleString()}</span>
+                                <span className="text-emerald-600 text-[9px] md:text-xs font-bold bg-emerald-50 px-1 py-0.5 rounded ml-auto md:ml-0">
                                     {discount}% OFF
                                 </span>
                             </>
                         )}
                     </div>
+
+                    {/* Mobile Add to Bag Button - Only show on Wishlist Page */}
+                    {isWishlistPage && (
+                        <button
+                            onClick={handleAddToCart}
+                            className="md:hidden mt-2 w-full bg-[#3E2723] text-white py-2 rounded-xl text-[9px] font-bold uppercase tracking-[0.1em] flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-brown-900/10"
+                        >
+                            <ShoppingBag className="w-3 h-3" /> Add to Bag
+                        </button>
+                    )}
                 </div>
             </Link>
         </>
