@@ -4,6 +4,22 @@ import { banners, categories, products } from '../assets/data';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import heroSlide1 from '../assets/hero_slide_1.png';
+import heroSlide2 from '../assets/hero_slide_2.png';
+import heroSlide3 from '../assets/hero_slide_3.png';
+import spotlightMain from '../assets/spotlight_silver_main.png';
+import spotlightHover from '../assets/spotlight_silver_hover.png';
+
+import trendingHeritage from '../assets/trending_heritage.png';
+import trendingModern from '../assets/trending_modern.png';
+
+// Product Images
+import prodEarringsMain from '../assets/prod_earrings_main.png';
+import prodEarringsHover from '../assets/prod_earrings_hover.png';
+import prodRingMain from '../assets/prod_ring_main.png';
+import prodRingHover from '../assets/cat_rings.png';
+import prodChainMain from '../assets/cat_pendant.png'; // Reusing as it fits
+
 const Home = () => {
     const featuredProducts = products.slice(0, 3);
     const [hoveredCategory, setHoveredCategory] = useState(null);
@@ -18,7 +34,7 @@ const Home = () => {
             title: "Timeless",
             titleItalic: "Elegance",
             desc: "No longer search for \"authentic silver jewelry\". You've found it.",
-            image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80"
+            image: trendingHeritage
         },
         {
             id: 2,
@@ -26,13 +42,13 @@ const Home = () => {
             title: "Empowering",
             titleItalic: "Style",
             desc: "From bold statements to subtle whispers, find pieces that celebrate you.",
-            image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80"
+            image: trendingModern
         }
     ];
 
     const heroSlides = [
         {
-            image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=1600",
+            image: heroSlide1,
             badge: "New Collection 2024",
             title: "Adorn Your Soul with Silver",
             description: "Handcrafted luxury that blends traditional artistry with modern grace.",
@@ -40,7 +56,7 @@ const Home = () => {
             link: "/shop"
         },
         {
-            image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1600&q=80",
+            image: heroSlide2,
             badge: "Wedding Specials",
             title: "Bridal Elegance Redefined",
             description: "Timeless silver pieces for your most special moments.",
@@ -48,7 +64,7 @@ const Home = () => {
             link: "/category/rings"
         },
         {
-            image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&w=1600&q=80",
+            image: heroSlide3,
             badge: "Daily Essentials",
             title: "Minimalist Grace Every Day",
             description: "Statement pieces designed for your everyday lifestyle.",
@@ -69,21 +85,21 @@ const Home = () => {
             id: 1,
             name: "Crystal Drop Earrings",
             price: "₹1,200",
-            image1: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80",
-            image2: "https://images.unsplash.com/photo-1615655114865-4cc1bda5901e?auto=format&fit=crop&w=600&q=80"
+            image1: prodEarringsMain,
+            image2: prodEarringsHover
         },
         {
             id: 2,
             name: "Boho Silver Ring",
             price: "₹850",
-            image1: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&w=600&q=80",
-            image2: "https://images.unsplash.com/photo-1605100804763-ebea466dd263?auto=format&fit=crop&w=600&q=80"
+            image1: prodRingMain,
+            image2: prodRingHover
         },
         {
             id: 3,
             name: "Layered Silver Chain",
             price: "₹1,500",
-            image1: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=600&q=80",
+            image1: prodChainMain,
             image2: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=600&q=80"
         }
     ];
@@ -159,7 +175,7 @@ const Home = () => {
     ];
 
     return (
-        <div className="bg-white font-body text-black relative selection:bg-[#B7A0BA] selection:text-white">
+        <div className="bg-white font-body text-black relative selection:bg-[#D39A9F] selection:text-white">
 
 
             {/* Hero Section - Optimized Slider */}
@@ -222,7 +238,7 @@ const Home = () => {
                                             transition={{ duration: 1.0, ease: "easeOut", delay: 0.4 }}
                                             className="flex items-center justify-center md:justify-start space-x-6 pt-2 md:pt-4"
                                         >
-                                            <Link to={heroSlides[currentSlide].link} className="bg-[#EBD3EC] text-black w-full md:w-auto px-6 py-3 md:px-10 md:py-4 rounded-full font-medium hover:bg-[#B7A0BA] hover:text-white transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 group/btn text-sm md:text-base">
+                                            <Link to={heroSlides[currentSlide].link} className="bg-[#EBCDD0] text-black w-full md:w-auto px-6 py-3 md:px-10 md:py-4 rounded-full font-medium hover:bg-[#D39A9F] hover:text-white transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 group/btn text-sm md:text-base">
                                                 <span>{heroSlides[currentSlide].btnText}</span>
                                                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                                             </Link>
@@ -269,19 +285,19 @@ const Home = () => {
                         <div className="relative h-40 rounded-2xl overflow-hidden mb-4 group/card cursor-pointer">
                             {/* Images change monthly based on logic below - currently showing Set {(new Date().getMonth() % 4) + 1} */}
                             <img
-                                src={spotlightImages[monthIndex % 4].main}
+                                src={spotlightMain}
                                 alt="Monthly Highlight"
                                 className="absolute inset-0 w-full h-full object-cover transform duration-700 opacity-100 group-hover/card:opacity-0"
                             />
                             <img
-                                src={spotlightImages[monthIndex % 4].hover}
+                                src={spotlightHover}
                                 alt="Highlight Detail"
                                 className="absolute inset-0 w-full h-full object-cover transform duration-700 opacity-0 group-hover/card:opacity-100"
                             />
                             <div className="absolute inset-0 bg-black/10 group-hover/card:bg-transparent transition-colors duration-500" />
                         </div>
                         <h5 className="font-display font-semibold text-lg text-black">Exquisite Details</h5>
-                        <Link to="/shop" className="text-xs font-bold text-[#B7A0BA] uppercase tracking-widest mt-2 inline-flex items-center hover:text-black group">
+                        <Link to="/shop" className="text-xs font-bold text-[#D39A9F] uppercase tracking-widest mt-2 inline-flex items-center hover:text-black group">
                             Explore Collection <ArrowRight className="w-3 h-3 ml-2 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
@@ -289,11 +305,11 @@ const Home = () => {
             </section>
 
             {/* Mobile App Style Category Stories - VISIBLE ONLY ON MOBILE (Now below Banner) */}
-            <div className="md:hidden bg-white border-y border-[#EBD3EC] py-5 overflow-hidden">
+            <div className="md:hidden bg-white border-y border-[#EBCDD0] py-5 overflow-hidden">
                 <div className="flex gap-6 overflow-x-auto px-4 scrollbar-hide">
                     {categories.map((cat) => (
                         <Link key={cat.id} to={`/category/${cat.path}`} className="flex-shrink-0 flex flex-col items-center space-y-2 group">
-                            <div className="w-16 h-16 rounded-full p-0.5 border-2 border-[#EBD3EC]/60 group-active:scale-90 transition-all duration-300 shadow-sm">
+                            <div className="w-16 h-16 rounded-full p-0.5 border-2 border-[#EBCDD0]/60 group-active:scale-90 transition-all duration-300 shadow-sm">
                                 <div className="w-full h-full rounded-full overflow-hidden border-2 border-white bg-gray-50">
                                     <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
                                 </div>
@@ -317,12 +333,12 @@ const Home = () => {
                         className="text-center mb-4 md:mb-12"
                     >
                         <div className="flex items-center justify-center gap-3 mb-2 md:mb-4">
-                            <div className="h-[1px] w-8 md:w-16 bg-[#EBD3EC]"></div>
-                            <span className="text-[#B7A0BA] text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.3em]">Our Favorites</span>
-                            <div className="h-[1px] w-8 md:w-16 bg-[#EBD3EC]"></div>
+                            <div className="h-[1px] w-8 md:w-16 bg-[#EBCDD0]"></div>
+                            <span className="text-[#D39A9F] text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.3em]">Our Favorites</span>
+                            <div className="h-[1px] w-8 md:w-16 bg-[#EBCDD0]"></div>
                         </div>
                         <h2 className="text-3xl md:text-6xl font-serif italic text-black mb-2 md:mb-4">Curated Collections</h2>
-                        <p className="text-[#B7A0BA] italic text-xs md:text-base leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-[#D39A9F] italic text-xs md:text-base leading-relaxed max-w-2xl mx-auto">
                             Step into a world of organic elegance and modern minimalism as you explore our exclusive jewellery pieces.
                         </p>
                     </motion.div>
@@ -342,13 +358,13 @@ const Home = () => {
                                     <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transform md:group-hover:scale-105 transition-transform duration-1000" />
 
                                     {/* Solid Box Label - Bottom of Arch */}
-                                    <div className="absolute bottom-0 left-0 w-full bg-[#EBD3EC] text-black py-2 md:py-3 px-2 text-center">
+                                    <div className="absolute bottom-0 left-0 w-full bg-[#EBCDD0] text-black py-2 md:py-3 px-2 text-center">
                                         <h3 className="font-serif text-sm md:text-xl tracking-wide truncate">{cat.name}</h3>
                                     </div>
                                 </Link>
 
                                 {/* Bottom Link */}
-                                <Link to={`/category/${cat.path}`} className="mt-2 text-black text-[10px] md:text-sm font-display font-medium uppercase tracking-widest border-b border-transparent group-hover:border-[#B7A0BA] transition-all flex items-center gap-1">
+                                <Link to={`/category/${cat.path}`} className="mt-2 text-black text-[10px] md:text-sm font-display font-medium uppercase tracking-widest border-b border-transparent group-hover:border-[#D39A9F] transition-all flex items-center gap-1">
                                     Explore <ArrowRight className="w-3 h-3" />
                                 </Link>
                             </motion.div>
@@ -369,9 +385,9 @@ const Home = () => {
                         variants={fadeUp}
                         className="text-center max-w-2xl mx-auto mb-8 md:mb-16 space-y-2 md:space-y-4 px-4"
                     >
-                        <span className="text-[#B7A0BA] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Timeless Beauty</span>
+                        <span className="text-[#D39A9F] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Timeless Beauty</span>
                         <h2 className="text-3xl md:text-5xl font-display text-black">Trending Now</h2>
-                        <div className="h-0.5 w-16 md:w-24 bg-[#EBD3EC] mx-auto mt-2 md:mt-6"></div>
+                        <div className="h-0.5 w-16 md:w-24 bg-[#EBCDD0] mx-auto mt-2 md:mt-6"></div>
                     </motion.div>
 
                     {/* Mobile: Swipeable Lifestyle Cards (Giva/Palmonas Style) */}
@@ -418,7 +434,7 @@ const Home = () => {
                         {trendingSlides.map((_, idx) => (
                             <div
                                 key={idx}
-                                className={`h-2 rounded-full transition-all duration-300 ${idx === activeTrendingIndex ? 'w-6 bg-[#5D4037]' : 'w-2 bg-[#EBD3EC]'}`}
+                                className={`h-2 rounded-full transition-all duration-300 ${idx === activeTrendingIndex ? 'w-6 bg-[#5D4037]' : 'w-2 bg-[#EBCDD0]'}`}
                             ></div>
                         ))}
                     </div>
@@ -437,9 +453,9 @@ const Home = () => {
                         >
                             {/* 1. Background Split Layer */}
                             <div className="absolute inset-0 flex pointer-events-none">
-                                <div className="w-full md:w-[35%] bg-[#B7A0BA] h-full rounded-l-[1.5rem] md:rounded-l-[1.5rem] relative overflow-hidden">
+                                <div className="w-full md:w-[35%] bg-[#D39A9F] h-full rounded-l-[1.5rem] md:rounded-l-[1.5rem] relative overflow-hidden">
                                 </div>
-                                <div className="hidden md:block w-[65%] bg-white h-full rounded-r-[2rem] border border-[#EBD3EC] border-l-0 shadow-sm"></div>
+                                <div className="hidden md:block w-[65%] bg-white h-full rounded-r-[2rem] border border-[#EBCDD0] border-l-0 shadow-sm"></div>
                             </div>
 
                             {/* 2. Content Layer */}
@@ -449,7 +465,7 @@ const Home = () => {
                                 <div className="w-full md:w-[40%] flex-shrink-0">
                                     <div className="relative aspect-square md:aspect-[4/4] h-[300px] md:h-[350px] w-full rounded-lg md:rounded-lg overflow-hidden shadow-xl ml-auto md:mr-[-2rem] border-[4px] border-white">
                                         <img
-                                            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80"
+                                            src={trendingHeritage}
                                             alt="Timeless Elegance"
                                             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                                         />
@@ -458,10 +474,10 @@ const Home = () => {
 
                                 {/* Text Content - Sitting in the Light Area */}
                                 <div className="w-full md:w-[50%] md:pl-12 pt-4 md:pt-0">
-                                    <div className="md:border-l-[3px] border-[#EBD3EC] md:pl-8 space-y-4">
-                                        <span className="text-[#B7A0BA] text-xs font-bold uppercase tracking-[0.2em] block mb-2 md:text-left text-center">Heritage Collection</span>
+                                    <div className="md:border-l-[3px] border-[#EBCDD0] md:pl-8 space-y-4">
+                                        <span className="text-[#D39A9F] text-xs font-bold uppercase tracking-[0.2em] block mb-2 md:text-left text-center">Heritage Collection</span>
                                         <h3 className="text-3xl md:text-5xl font-display text-white md:text-black leading-tight text-center md:text-left">
-                                            Timeless <span className="font-serif italic text-[#B7A0BA] underline md:no-underline underline-offset-8">Elegance</span>
+                                            Timeless <span className="font-serif italic text-[#D39A9F] underline md:no-underline underline-offset-8">Elegance</span>
                                         </h3>
                                         <p className="text-white md:text-black/80 font-serif leading-relaxed text-sm md:text-base max-w-md text-center md:text-left">
                                             No longer search for "authentic silver jewelry". You've found it. We serve the modern woman reflecting our belief that true style transcends trends.
@@ -469,7 +485,7 @@ const Home = () => {
                                         <div className="pt-6 flex justify-center md:justify-start">
                                             <Link to="/shop" className="group inline-flex items-center gap-2 text-[#EFEBE9] md:text-black font-bold uppercase tracking-widest text-[10px] md:text-xs">
                                                 Discover More
-                                                <span className="bg-white md:bg-[#B7A0BA] text-black md:text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                                <span className="bg-white md:bg-[#D39A9F] text-black md:text-white rounded-full w-6 h-6 flex items-center justify-center">
                                                     <ArrowRight className="w-3 h-3" />
                                                 </span>
                                             </Link>
@@ -489,8 +505,8 @@ const Home = () => {
                         >
                             {/* 1. Background Split Layer */}
                             <div className="absolute inset-0 flex pointer-events-none">
-                                <div className="w-[65%] bg-white h-full rounded-l-[2rem] border border-[#EBD3EC] border-r-0 shadow-sm"></div>
-                                <div className="w-[35%] bg-[#B7A0BA] h-full rounded-r-[1.5rem] relative overflow-hidden">
+                                <div className="w-[65%] bg-white h-full rounded-l-[2rem] border border-[#EBCDD0] border-r-0 shadow-sm"></div>
+                                <div className="w-[35%] bg-[#D39A9F] h-full rounded-r-[1.5rem] relative overflow-hidden">
                                 </div>
                             </div>
 
@@ -499,10 +515,10 @@ const Home = () => {
 
                                 {/* Text Content - Left Side */}
                                 <div className="w-full md:w-[50%] md:pr-12 pt-4 md:pt-0 order-2 md:order-1 text-right">
-                                    <div className="border-r-[3px] border-[#EBD3EC] pr-6 md:pr-8 space-y-4 flex flex-col items-end">
-                                        <span className="text-[#B7A0BA] text-xs font-bold uppercase tracking-[0.2em] block mb-2">Modern Statement</span>
+                                    <div className="border-r-[3px] border-[#EBCDD0] pr-6 md:pr-8 space-y-4 flex flex-col items-end">
+                                        <span className="text-[#D39A9F] text-xs font-bold uppercase tracking-[0.2em] block mb-2">Modern Statement</span>
                                         <h3 className="text-3xl md:text-5xl font-display text-black leading-tight">
-                                            Empowering <span className="font-serif italic text-[#B7A0BA]">Style</span>
+                                            Empowering <span className="font-serif italic text-[#D39A9F]">Style</span>
                                         </h3>
                                         <p className="text-black/80 font-serif leading-relaxed text-sm md:text-base max-w-md">
                                             We know the power of simple, holistic design and the impact of a moment dedicated to only you.
@@ -511,9 +527,9 @@ const Home = () => {
                                             From bold statements to subtle whispers, find pieces that resonate with your unique journey and celebrate your individuality.
                                         </p>
                                         <div className="pt-6">
-                                            <Link to="/shop" className="group inline-flex items-center gap-2 text-black font-bold uppercase tracking-widest text-xs hover:text-[#B7A0BA] transition-colors flex-row-reverse">
+                                            <Link to="/shop" className="group inline-flex items-center gap-2 text-black font-bold uppercase tracking-widest text-xs hover:text-[#D39A9F] transition-colors flex-row-reverse">
                                                 Explore Collection
-                                                <span className="bg-[#B7A0BA] text-white rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-[#8D6E63] transition-colors">
+                                                <span className="bg-[#D39A9F] text-white rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-[#8D6E63] transition-colors">
                                                     <ArrowRight className="w-3 h-3" />
                                                 </span>
                                             </Link>
@@ -525,7 +541,7 @@ const Home = () => {
                                 <div className="w-full md:w-[40%] flex-shrink-0 order-1 md:order-2">
                                     <div className="relative aspect-square md:aspect-[4/4] h-[300px] md:h-[350px] w-full rounded-lg overflow-hidden shadow-xl mr-auto md:ml-[-2rem] border-[4px] border-white">
                                         <img
-                                            src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80"
+                                            src={trendingModern}
                                             alt="Empowering Style"
                                             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                                         />
@@ -540,9 +556,9 @@ const Home = () => {
             </section >
 
             {/* New Arrivals Collection Section */}
-            < section className="py-10 bg-white overflow-hidden border-y border-[#EBD3EC] relative" >
+            < section className="py-10 bg-white overflow-hidden border-y border-[#EBCDD0] relative" >
                 {/* Decorative Background Element */}
-                < div className="absolute top-0 right-0 w-64 h-64 bg-[#EBD3EC]/10 rounded-full blur-3xl -z-0" ></div >
+                < div className="absolute top-0 right-0 w-64 h-64 bg-[#EBCDD0]/10 rounded-full blur-3xl -z-0" ></div >
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-12">
@@ -554,17 +570,17 @@ const Home = () => {
                             variants={fadeUp}
                             className="w-full lg:w-1/3 text-center lg:text-left space-y-4 md:space-y-6 mb-2 lg:mb-0"
                         >
-                            <span className="text-[#B7A0BA] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Just Arrived</span>
+                            <span className="text-[#D39A9F] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Just Arrived</span>
                             <h2 className="text-3xl md:text-5xl font-display text-black leading-tight">
                                 Our New <br />
-                                <span className="italic font-serif text-[#B7A0BA]">Collection</span>
+                                <span className="italic font-serif text-[#D39A9F]">Collection</span>
                             </h2>
-                            <p className="text-[#B7A0BA]/80 font-serif leading-relaxed text-xs md:text-base">
+                            <p className="text-[#D39A9F]/80 font-serif leading-relaxed text-xs md:text-base">
                                 Be the first to wear our latest handcrafted silver masterpieces. Designed for elegance, crafted for you.
                             </p>
                             <Link
                                 to="/products"
-                                className="hidden lg:inline-block px-6 py-2 md:px-8 md:py-3 bg-[#EBD3EC] text-black hover:bg-[#B7A0BA] rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-[#B7A0BA] transition-all transform hover:scale-105 shadow-md mt-2 md:mt-4"
+                                className="hidden lg:inline-block px-6 py-2 md:px-8 md:py-3 bg-[#EBCDD0] text-black hover:bg-[#D39A9F] rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-[#D39A9F] transition-all transform hover:scale-105 shadow-md mt-2 md:mt-4"
                             >
                                 See More
                             </Link>
@@ -603,7 +619,7 @@ const Home = () => {
                                             <p className="font-serif text-black text-sm md:text-lg font-medium mb-1 md:mb-3">{product.price}</p>
                                             <Link
                                                 to={`/product/${product.id}`}
-                                                className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-black border-b border-[#5D4037]/30 pb-0.5 md:pb-1 hover:text-[#B7A0BA] hover:border-[#8D6E63] transition-colors"
+                                                className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-black border-b border-[#5D4037]/30 pb-0.5 md:pb-1 hover:text-[#D39A9F] hover:border-[#8D6E63] transition-colors"
                                             >
                                                 View
                                             </Link>
@@ -633,11 +649,11 @@ const Home = () => {
                         variants={fadeUp}
                         className="text-center mb-16 max-w-2xl mx-auto"
                     >
-                        <span className="text-[#B7A0BA] text-sm font-bold uppercase tracking-[0.2em]">Support</span>
+                        <span className="text-[#D39A9F] text-sm font-bold uppercase tracking-[0.2em]">Support</span>
                         <h2 className="text-3xl md:text-4xl font-display text-black mt-3">
                             Frequently Asked Questions
                         </h2>
-                        <p className="text-[#B7A0BA] font-serif text-sm md:text-base leading-relaxed mt-3">
+                        <p className="text-[#D39A9F] font-serif text-sm md:text-base leading-relaxed mt-3">
                             Everything you need to know about our silver jewellery, care instructions, and policies.
                         </p>
                     </motion.div>
@@ -653,16 +669,16 @@ const Home = () => {
                                     viewport={{ once: true, amount: 0.1 }}
                                     variants={fadeUp}
                                     transition={{ delay: index * 0.1 }}
-                                    className="border-b border-[#EBD3EC]/60 last:border-0 relative"
+                                    className="border-b border-[#EBCDD0]/60 last:border-0 relative"
                                 >
                                     <button
                                         onClick={() => toggleFaq(index)}
                                         className="w-full flex items-start justify-between py-4 text-left group"
                                     >
-                                        <span className={`font-serif text-xl md:text-2xl transition-colors duration-300 ${activeFaq === index ? 'text-[#B7A0BA] italic' : 'text-black group-hover:text-[#B7A0BA]'}`}>
+                                        <span className={`font-serif text-xl md:text-2xl transition-colors duration-300 ${activeFaq === index ? 'text-[#D39A9F] italic' : 'text-black group-hover:text-[#D39A9F]'}`}>
                                             {faq.question}
                                         </span>
-                                        <div className={`mt-1 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${activeFaq === index ? 'bg-[#EBD3EC] text-black hover:bg-[#B7A0BA] rotate-180' : 'bg-[#EFEBE9] text-black'}`}>
+                                        <div className={`mt-1 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${activeFaq === index ? 'bg-[#EBCDD0] text-black hover:bg-[#D39A9F] rotate-180' : 'bg-[#EFEBE9] text-black'}`}>
                                             <ChevronDown className="w-5 h-5" />
                                         </div>
                                     </button>
@@ -686,7 +702,7 @@ const Home = () => {
                             variants={fadeUp}
                             className="lg:col-span-6 space-y-8"
                         >
-                            <div className="p-8 bg-white rounded-[2rem] shadow-xl shadow-[#8D6E63]/10 border border-[#EBD3EC] w-full sticky top-8">
+                            <div className="p-8 bg-white rounded-[2rem] shadow-xl shadow-[#8D6E63]/10 border border-[#EBCDD0] w-full sticky top-8">
                                 <h4 className="font-display text-2xl text-black mb-2">Ask a Question</h4>
                                 <p className="text-sm text-gray-500 mb-6">Can't find what you're looking for? We're here to help.</p>
 
@@ -712,7 +728,7 @@ const Home = () => {
                                             className="w-full bg-[#FAFAFA] border-b border-[#E0E0E0] p-3 text-black placeholder-[#BCAAA4] focus:outline-none focus:border-[#8D6E63] transition-colors font-serif resize-none"
                                         ></textarea>
                                     </div>
-                                    <button type="submit" className="px-8 py-3 bg-[#EBD3EC] text-black hover:bg-[#B7A0BA] rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[#B7A0BA] transition-colors w-full mt-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-300">
+                                    <button type="submit" className="px-8 py-3 bg-[#EBCDD0] text-black hover:bg-[#D39A9F] rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[#D39A9F] transition-colors w-full mt-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-300">
                                         Send Message
                                     </button>
                                 </form>

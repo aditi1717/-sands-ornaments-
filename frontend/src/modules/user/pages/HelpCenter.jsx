@@ -77,7 +77,7 @@ const SupportForm = ({ onCancel, initialOrder = '' }) => {
                 <div className="flex gap-3 md:gap-4">
                     <button
                         type="submit"
-                        className="flex-grow bg-[#EBD3EC] text-black py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#B7A0BA] hover:text-white transition-all shadow-sm text-sm md:text-base"
+                        className="flex-grow bg-[#EBCDD0] text-black py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#D39A9F] hover:text-white transition-all shadow-sm text-sm md:text-base"
                     >
                         <Send className="w-4 h-4" />
                         Submit Request
@@ -99,7 +99,7 @@ const TicketHistory = ({ tickets, onBack }) => {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
             <div className="flex items-center justify-between mb-8">
-                <button onClick={onBack} className="flex items-center gap-2 text-black hover:text-[#B7A0BA] transition-colors font-bold uppercase tracking-widest text-xs">
+                <button onClick={onBack} className="flex items-center gap-2 text-black hover:text-[#D39A9F] transition-colors font-bold uppercase tracking-widest text-xs">
                     <ArrowLeft className="w-4 h-4" /> Back to FAQ
                 </button>
                 <h2 className="text-2xl font-display font-bold text-black">My Support Tickets</h2>
@@ -117,7 +117,7 @@ const TicketHistory = ({ tickets, onBack }) => {
                             <div className="flex justify-between items-start">
                                 <div className="space-y-1">
                                     <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[#B7A0BA]"></div>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#D39A9F]"></div>
                                         {t.id}
                                     </span>
                                     <h3 className="text-xl font-bold text-black">{t.subject}</h3>
@@ -246,12 +246,12 @@ const HelpCenter = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white font-body pb-10 md:pb-20 selection:bg-[#B7A0BA] selection:text-white">
+        <div className="min-h-screen bg-white font-body pb-10 md:pb-20 selection:bg-[#D39A9F] selection:text-white">
             {/* Back Button */}
             <div className="container mx-auto px-4 pt-4 mb-2">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-black hover:text-[#B7A0BA] transition-all group font-bold uppercase tracking-widest text-[10px]"
+                    className="flex items-center gap-2 text-black hover:text-[#D39A9F] transition-all group font-bold uppercase tracking-widest text-[10px]"
                 >
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     Back
@@ -260,11 +260,11 @@ const HelpCenter = () => {
             {/* Hero Section */}
             <div className="bg-white border-b border-gray-100 py-10 md:py-20 px-4 relative overflow-hidden">
                 {/* Decorative */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-[#EBD3EC]/20 rounded-full -mr-48 -mt-48 blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#B7A0BA]/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-[#EBCDD0]/20 rounded-full -mr-48 -mt-48 blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D39A9F]/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
 
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <span className="text-[#B7A0BA] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Support Center</span>
+                    <span className="text-[#D39A9F] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Support Center</span>
                     <h1 className="text-3xl md:text-5xl font-display font-bold mb-6 text-black">How can we help you?</h1>
                     <div className="relative max-w-2xl mx-auto">
                         <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
@@ -273,7 +273,7 @@ const HelpCenter = () => {
                             placeholder="Search for topics, questions..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-full py-3 px-12 md:py-4 md:px-14 text-sm md:text-lg focus:outline-none focus:ring-2 focus:ring-[#B7A0BA] focus:border-transparent shadow-sm transition-all"
+                            className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-full py-3 px-12 md:py-4 md:px-14 text-sm md:text-lg focus:outline-none focus:ring-2 focus:ring-[#D39A9F] focus:border-transparent shadow-sm transition-all"
                         />
                     </div>
                 </div>
@@ -291,7 +291,7 @@ const HelpCenter = () => {
                             }}
                             className={`bg-white p-4 md:p-8 rounded-2xl shadow-sm border transition-all text-left group hover:shadow-lg hover:-translate-y-1 ${activeCategory === cat.id && view === 'home' ? 'border-black ring-1 ring-black' : 'border-gray-100'}`}
                         >
-                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-6 transition-colors ${activeCategory === cat.id && view === 'home' ? 'bg-black text-white' : 'bg-gray-50 text-black group-hover:bg-[#EBD3EC] group-hover:text-black'}`}>
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-6 transition-colors ${activeCategory === cat.id && view === 'home' ? 'bg-black text-white' : 'bg-gray-50 text-black group-hover:bg-[#EBCDD0] group-hover:text-black'}`}>
                                 {cat.icon}
                             </div>
                             <h3 className="text-sm md:text-lg font-bold text-black mb-1 md:mb-2 font-display">{cat.title}</h3>
@@ -361,7 +361,7 @@ const HelpCenter = () => {
                                             if (!user) return showNotification("Please login to contact support.");
                                             setView('contact');
                                         }}
-                                        className="w-full bg-white text-black py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 hover:bg-[#EBD3EC] transition-all shadow-lg active:scale-95 text-sm md:text-base"
+                                        className="w-full bg-white text-black py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 hover:bg-[#EBCDD0] transition-all shadow-lg active:scale-95 text-sm md:text-base"
                                     >
                                         <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
                                         Contact Support
@@ -399,7 +399,7 @@ const HelpCenter = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#B7A0BA]/20 rounded-full blur-3xl"></div>
+                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#D39A9F]/20 rounded-full blur-3xl"></div>
                         </div>
 
                         {/* Order Help Card */}
@@ -421,7 +421,7 @@ const HelpCenter = () => {
                                                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">{new Date(order.date).toLocaleDateString()}</span>
                                             </div>
                                             <p className="text-[10px] md:text-xs text-gray-600 line-clamp-1 mb-2 md:mb-3">{order.items[0].name}</p>
-                                            <button className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-[#B7A0BA] group-hover:underline group-hover:text-black">Need help?</button>
+                                            <button className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-[#D39A9F] group-hover:underline group-hover:text-black">Need help?</button>
                                         </div>
                                     ))}
                                 </div>

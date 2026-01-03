@@ -18,16 +18,16 @@ const Cart = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="max-w-md w-full text-center space-y-6 md:space-y-8 bg-[#FCF2FB] p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-[#EBD3EC]"
+                    className="max-w-md w-full text-center space-y-6 md:space-y-8 bg-[#FDF5F6] p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-[#EBCDD0]"
                 >
                     <div className="relative inline-block">
-                        <div className="w-20 h-20 md:w-24 md:h-24 bg-[#EBD3EC]/20 rounded-full flex items-center justify-center border border-[#EBD3EC] shadow-inner">
-                            <ShoppingBag className="w-8 h-8 md:w-10 md:h-10 text-[#B7A0BA]" strokeWidth={1.5} />
+                        <div className="w-20 h-20 md:w-24 md:h-24 bg-[#EBCDD0]/20 rounded-full flex items-center justify-center border border-[#EBCDD0] shadow-inner">
+                            <ShoppingBag className="w-8 h-8 md:w-10 md:h-10 text-[#D39A9F]" strokeWidth={1.5} />
                         </div>
                         <motion.div
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ repeat: Infinity, duration: 2 }}
-                            className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-[#B7A0BA] rounded-full border-4 border-white"
+                            className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-[#D39A9F] rounded-full border-4 border-white"
                         />
                     </div>
                     <div className="space-y-2 md:space-y-3">
@@ -38,7 +38,7 @@ const Cart = () => {
                     </div>
                     <Link
                         to="/shop"
-                        className="inline-flex items-center gap-2 md:gap-3 bg-black text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full hover:bg-[#B7A0BA] transition-all duration-300 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs shadow-lg shadow-black/10 active:scale-95"
+                        className="inline-flex items-center gap-2 md:gap-3 bg-black text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full hover:bg-[#D39A9F] transition-all duration-300 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs shadow-lg shadow-black/10 active:scale-95"
                     >
                         <ArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4" /> Start Shopping
                     </Link>
@@ -53,14 +53,14 @@ const Cart = () => {
             <div className="container mx-auto px-4 pt-6">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-[#B7A0BA] hover:text-black transition-all group font-bold uppercase tracking-widest text-[10px]"
+                    className="flex items-center gap-2 text-[#D39A9F] hover:text-black transition-all group font-bold uppercase tracking-widest text-[10px]"
                 >
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     Back
                 </button>
             </div>
             {/* Header */}
-            <div className="bg-[#FCF2FB]/50 border-b border-[#EBD3EC] mb-4 md:mb-8">
+            <div className="bg-[#FDF5F6]/50 border-b border-[#EBCDD0] mb-4 md:mb-8">
                 <div className="container mx-auto px-4 py-6 md:py-10">
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
@@ -68,7 +68,7 @@ const Cart = () => {
                         className="text-center space-y-2"
                     >
                         <h1 className="text-2xl md:text-4xl font-serif font-extrabold text-black">Shopping Bag</h1>
-                        <p className="text-[#B7A0BA] text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-70">
+                        <p className="text-[#D39A9F] text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-70">
                             {cart.length} {cart.length === 1 ? 'Design' : 'Designs'} Selected
                         </p>
                     </motion.div>
@@ -88,7 +88,7 @@ const Cart = () => {
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: 20 }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="group relative bg-[#FCF2FB] p-2.5 md:p-6 rounded-2xl md:rounded-3xl border border-[#EBD3EC] shadow-sm hover:shadow-md transition-all flex gap-3 md:gap-8 overflow-hidden"
+                                    className="group relative bg-[#FDF5F6] p-2.5 md:p-6 rounded-2xl md:rounded-3xl border border-[#EBCDD0] shadow-sm hover:shadow-md transition-all flex gap-3 md:gap-8 overflow-hidden"
                                 >
                                     {/* Image */}
                                     <div className="w-20 h-24 md:w-32 md:h-40 flex-shrink-0 bg-gray-50 rounded-xl md:rounded-2xl overflow-hidden border border-gray-50">
@@ -99,13 +99,13 @@ const Cart = () => {
                                     <div className="flex-grow flex flex-col py-0.5 md:py-1">
                                         <div className="flex justify-between items-start gap-2">
                                             <div className="space-y-0.5 md:space-y-1">
-                                                <h3 className="font-serif font-extrabold text-sm md:text-2xl text-black leading-tight group-hover:text-[#B7A0BA] transition-colors line-clamp-1 md:line-clamp-2">{item.name}</h3>
+                                                <h3 className="font-serif font-extrabold text-sm md:text-2xl text-black leading-tight group-hover:text-[#D39A9F] transition-colors line-clamp-1 md:line-clamp-2">{item.name}</h3>
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded-md border border-gray-100">
                                                         {item.category}
                                                     </span>
                                                     {item.selectedSize && (
-                                                        <span className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-black bg-white border border-[#EBD3EC] px-1.5 py-0.5 rounded-md">
+                                                        <span className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-black bg-white border border-[#EBCDD0] px-1.5 py-0.5 rounded-md">
                                                             Size: {item.selectedSize}
                                                         </span>
                                                     )}
@@ -150,8 +150,8 @@ const Cart = () => {
                         </AnimatePresence>
 
                         {/* Gift Wrap Offer */}
-                        <div className="bg-[#EBD3EC]/20 border border-[#EBD3EC] rounded-3xl p-4 md:p-6 flex items-center gap-4 md:gap-6 mt-4">
-                            <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-[#B7A0BA]">
+                        <div className="bg-[#EBCDD0]/20 border border-[#EBCDD0] rounded-3xl p-4 md:p-6 flex items-center gap-4 md:gap-6 mt-4">
+                            <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-[#D39A9F]">
                                 <Gift className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
                             </div>
                             <div className="flex-grow">
@@ -163,7 +163,7 @@ const Cart = () => {
 
                     {/* Summary Section */}
                     <div className="w-full lg:w-[420px] shrink-0">
-                        <div className="bg-[#FCF2FB] p-5 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-[#EBD3EC] shadow-sm sticky top-28 space-y-6 md:space-y-8">
+                        <div className="bg-[#FDF5F6] p-5 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-[#EBCDD0] shadow-sm sticky top-28 space-y-6 md:space-y-8">
                             <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-black pb-4 border-b border-gray-50 flex items-center justify-between">
                                 Summary
                                 <ShieldCheck className="w-6 h-6 text-emerald-500" />
@@ -182,9 +182,9 @@ const Cart = () => {
                                         <span className="text-black">₹{shipping}</span>
                                     )}
                                 </div>
-                                <div className="bg-gray-50 border-2 border-dashed border-[#EBD3EC] p-4 rounded-2xl flex items-center justify-between group cursor-pointer hover:border-[#B7A0BA] transition-colors">
+                                <div className="bg-gray-50 border-2 border-dashed border-[#EBCDD0] p-4 rounded-2xl flex items-center justify-between group cursor-pointer hover:border-[#D39A9F] transition-colors">
                                     <div className="flex items-center gap-3">
-                                        <Gift className="w-4 h-4 text-[#B7A0BA]" />
+                                        <Gift className="w-4 h-4 text-[#D39A9F]" />
                                         <span className="text-xs md:text-sm font-bold text-black uppercase tracking-wider">Apply Coupon</span>
                                     </div>
                                     <ArrowRight className="w-4 h-4 text-gray-300 group-hover:translate-x-1 transition-transform" />
@@ -202,14 +202,14 @@ const Cart = () => {
                             <div className="space-y-3 pt-2">
                                 <Link
                                     to="/checkout"
-                                    className="w-full bg-black text-white py-4 md:py-5 rounded-[1.25rem] md:rounded-2xl font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs hover:bg-[#B7A0BA] transition-all flex items-center justify-center gap-3 shadow-xl shadow-black/10 active:scale-95 group"
+                                    className="w-full bg-black text-white py-4 md:py-5 rounded-[1.25rem] md:rounded-2xl font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs hover:bg-[#D39A9F] transition-all flex items-center justify-center gap-3 shadow-xl shadow-black/10 active:scale-95 group"
                                 >
                                     Secure Checkout
                                     <ShieldCheck className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                 </Link>
                                 <Link
                                     to="/shop"
-                                    className="w-full flex items-center justify-center gap-2 text-xs md:text-sm font-bold text-[#B7A0BA] hover:text-black py-2 transition-colors group"
+                                    className="w-full flex items-center justify-center gap-2 text-xs md:text-sm font-bold text-[#D39A9F] hover:text-black py-2 transition-colors group"
                                 >
                                     <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
                                     Continue Shopping

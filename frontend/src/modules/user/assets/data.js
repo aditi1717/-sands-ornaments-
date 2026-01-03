@@ -1,96 +1,108 @@
+import catRings from './cat_rings.png';
+import catEarrings from './cat_earrings.png';
+import catPendant from './cat_pendant.png';
+import catBracelets from './cat_bracelets.png';
+import catAnklets from './cat_anklets.png';
+import trendingHeritage from './trending_heritage.png';
+import trendingModern from './trending_modern.png';
+import prodRingMain from './prod_ring_main.png';
+import prodEarringsMain from './prod_earrings_main.png';
+import spotlightMain from './spotlight_silver_main.png';
+import spotlightHover from './spotlight_silver_hover.png';
+
 export const categories = [
     {
         id: 1,
         name: "Rings",
         path: "rings",
-        image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=500",
+        image: catRings,
         subcategories: [
-            { name: "Solitaire", image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=400" },
-            { name: "Engagement", image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=400" },
-            { name: "Silver Bands", image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=300" },
-            { name: "Gemstone", image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=300" }
+            { name: "Solitaire", image: prodRingMain },
+            { name: "Engagement", image: catRings },
+            { name: "Silver Bands", image: catRings },
+            { name: "Gemstone", image: spotlightMain }
         ]
     },
     {
         id: 2,
         name: "Earrings",
         path: "earrings",
-        image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=500",
+        image: catEarrings,
         subcategories: [
-            { name: "Jhumkas", image: "https://images.unsplash.com/photo-1615655114865-4cc1bda5901e?auto=format&fit=crop&q=80&w=400" },
-            { name: "Hoops", image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=400" },
-            { name: "Drops", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400" }
+            { name: "Jhumkas", image: trendingHeritage },
+            { name: "Hoops", image: catEarrings },
+            { name: "Drops", image: prodEarringsMain }
         ]
     },
     {
         id: 4,
         name: "Chain Pendant",
         path: "chain-pendant",
-        image: "https://images.unsplash.com/photo-1618403088890-3d9ff6f4c8b1?auto=format&fit=crop&q=80&w=500",
+        image: catPendant,
         subcategories: [
-            { name: "Minimal", image: "https://images.unsplash.com/photo-1618403088890-3d9ff6f4c8b1?auto=format&fit=crop&q=80&w=400" },
-            { name: "Layered", image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&q=80&w=400" }
+            { name: "Minimal", image: catPendant },
+            { name: "Layered", image: trendingModern }
         ]
     },
     {
         id: 7,
         name: "Bracelets",
         path: "bracelets",
-        image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=500",
+        image: catBracelets,
         subcategories: [
-            { name: "Cuffs", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=400" },
-            { name: "Charms", image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=300" },
-            { name: "Bangles", image: "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=400" }
+            { name: "Cuffs", image: trendingModern },
+            { name: "Charms", image: catBracelets },
+            { name: "Bangles", image: catBracelets }
         ]
     },
     {
         id: 8,
         name: "Anklets",
         path: "anklets",
-        image: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&q=80&w=500",
+        image: catAnklets,
         subcategories: [
-            { name: "Silver", image: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&q=80&w=400" },
-            { name: "Beaded", image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=400" }
+            { name: "Silver", image: catAnklets },
+            { name: "Beaded", image: catAnklets }
         ]
     },
     {
         id: 9,
         name: "Toe Rings",
         path: "toe-rings",
-        image: "https://images.unsplash.com/photo-1618331835717-801e976710b2?auto=format&fit=crop&q=80&w=500",
+        image: catAnklets,
         subcategories: [
-            { name: "Plain", image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=400" },
-            { name: "Stone", image: "https://images.unsplash.com/photo-1605100804763-ebea466dd263?auto=format&fit=crop&q=80&w=400" }
+            { name: "Plain", image: catAnklets },
+            { name: "Stone", image: catAnklets }
         ]
     },
     {
         id: 3,
         name: "Studs",
         path: "studs",
-        image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=500",
+        image: catEarrings,
         subcategories: [
-            { name: "Silver Studs", image: "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=400" },
-            { name: "Stone Studs", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400" }
+            { name: "Silver Studs", image: catEarrings },
+            { name: "Stone Studs", image: prodEarringsMain }
         ]
     },
     {
         id: 5,
         name: "Pendants",
         path: "pendants",
-        image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=500",
+        image: trendingHeritage,
         subcategories: [
-            { name: "Religious", image: "https://images.unsplash.com/photo-1618403088890-3d9ff6f4c8b1?auto=format&fit=crop&q=80&w=400" },
-            { name: "Modern", image: "https://images.unsplash.com/photo-1602752250015-6cb3442359ef?auto=format&fit=crop&q=80&w=400" }
+            { name: "Religious", image: spotlightMain },
+            { name: "Modern", image: spotlightHover }
         ]
     },
     {
         id: 6,
         name: "Chains",
         path: "chains",
-        image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=500",
+        image: trendingModern,
         subcategories: [
-            { name: "Thick", image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=400" },
-            { name: "Thin", image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&q=80&w=400" }
+            { name: "Thick", image: trendingHeritage },
+            { name: "Thin", image: catPendant }
         ]
     }
 ];
@@ -102,11 +114,12 @@ export const products = [
         category: "Rings",
         price: 2499,
         originalPrice: 4999,
-        image: "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=800",
+        image: prodRingMain,
         images: [
-            "https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=800",
+            prodRingMain,
+            catRings,
+            spotlightMain,
+            spotlightHover,
             "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&q=80&w=800"
         ],
         rating: 4.5,
@@ -119,7 +132,7 @@ export const products = [
         category: "Earrings",
         price: 1899,
         originalPrice: 3500,
-        image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=800",
+        image: catEarrings,
         rating: 4.8,
         reviews: 85,
         isNew: false
@@ -130,7 +143,7 @@ export const products = [
         category: "Necklaces",
         price: 5999,
         originalPrice: 8999,
-        image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=800",
+        image: trendingModern,
         rating: 4.2,
         reviews: 45,
         isNew: true
@@ -141,7 +154,7 @@ export const products = [
         category: "Bracelets",
         price: 3200,
         originalPrice: 4500,
-        image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800",
+        image: catBracelets,
         rating: 4.6,
         reviews: 200,
         isNew: false
@@ -152,7 +165,7 @@ export const products = [
         category: "Anklets",
         price: 1500,
         originalPrice: 2200,
-        image: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&q=80&w=800",
+        image: catAnklets,
         rating: 4.3,
         reviews: 60,
         isNew: false
@@ -163,7 +176,7 @@ export const products = [
         category: "Pendants",
         price: 2100,
         originalPrice: 3000,
-        image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800",
+        image: spotlightMain,
         rating: 4.7,
         reviews: 95,
         isNew: true

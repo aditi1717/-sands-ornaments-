@@ -33,21 +33,21 @@ const TermsAndConditions = () => {
     ];
 
     return (
-        <div className="bg-white min-h-screen py-8 md:py-20 selection:bg-[#B7A0BA] selection:text-white">
+        <div className="bg-white min-h-screen py-8 md:py-20 selection:bg-[#D39A9F] selection:text-white">
             <div className="container mx-auto px-4 max-w-4xl">
                 {/* Back Button */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-black hover:text-[#B7A0BA] transition-all group font-bold uppercase tracking-widest text-[10px] mb-8"
+                    className="flex items-center gap-2 text-black hover:text-[#D39A9F] transition-all group font-bold uppercase tracking-widest text-[10px] mb-8"
                 >
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     Back
                 </button>
 
                 <div className="text-center mb-12 md:mb-20">
-                    <span className="text-[#B7A0BA] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-3 block">Legal Information</span>
+                    <span className="text-[#D39A9F] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-3 block">Legal Information</span>
                     <h1 className="text-4xl md:text-6xl font-display text-black mb-6">Terms & Conditions</h1>
-                    <div className="w-16 md:w-24 h-0.5 bg-[#EBD3EC] mx-auto mb-6"></div>
+                    <div className="w-16 md:w-24 h-0.5 bg-[#EBCDD0] mx-auto mb-6"></div>
                     <p className="text-gray-400 text-xs md:text-sm font-serif italic">Last Updated: December 2025</p>
                 </div>
 
@@ -59,7 +59,7 @@ const TermsAndConditions = () => {
                     <div className="space-y-6 md:space-y-8">
                         {sections.map((section, idx) => (
                             <div key={idx} className="flex gap-4 md:gap-8 group p-6 rounded-2xl transition-all hover:bg-gray-50 border border-transparent hover:border-[#F3F4F6]">
-                                <div className="bg-white p-4 rounded-xl h-fit text-black border border-[#EBD3EC] group-hover:bg-[#EBD3EC] transition-all duration-300 flex-shrink-0 shadow-sm">
+                                <div className="bg-white p-4 rounded-xl h-fit text-black border border-[#EBCDD0] group-hover:bg-[#EBCDD0] transition-all duration-300 flex-shrink-0 shadow-sm">
                                     {section.icon}
                                 </div>
                                 <div className="flex-1">
@@ -72,11 +72,11 @@ const TermsAndConditions = () => {
 
                     <div className="mt-12 md:mt-20 p-6 md:p-8 bg-gray-50 rounded-2xl border border-[#F3F4F6]">
                         <h4 className="font-bold text-black mb-3 md:mb-4 flex items-center gap-2 text-sm md:text-base font-display">
-                            <AlertCircle className="w-5 h-5 text-[#B7A0BA]" />
+                            <AlertCircle className="w-5 h-5 text-[#D39A9F]" />
                             Need clarification?
                         </h4>
                         <p className="text-xs md:text-sm text-gray-500 font-serif">
-                            If you have any questions regarding our terms, please reach out to our support team at <span className="font-bold text-black border-b border-[#EBD3EC]">support@sandsornaments.com</span> or visit our help center.
+                            If you have any questions regarding our terms, please reach out to our support team at <span className="font-bold text-black border-b border-[#EBCDD0]">support@sandsornaments.com</span> or visit our help center.
                         </p>
                     </div>
                 </div>

@@ -77,7 +77,7 @@ const ReturnActionModal = ({ isOpen, onClose, type, order, onSuccess }) => {
                         </h4>
                         <div className="space-y-2">
                             {order.items.map((item) => (
-                                <div key={item.id} onClick={() => handleToggleItem(item.id)} className={`flex items-center gap-3 p-2 rounded-lg border cursor-pointer transition-all ${selectedItems.includes(item.id) ? 'border-black bg-[#FCF2FB]' : 'border-gray-100 hover:border-gray-200'}`}>
+                                <div key={item.id} onClick={() => handleToggleItem(item.id)} className={`flex items-center gap-3 p-2 rounded-lg border cursor-pointer transition-all ${selectedItems.includes(item.id) ? 'border-black bg-[#FDF5F6]' : 'border-gray-100 hover:border-gray-200'}`}>
                                     <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${selectedItems.includes(item.id) ? 'bg-black border-black' : 'border-gray-300'}`}>
                                         {selectedItems.includes(item.id) && <Check className="w-2.5 h-2.5 text-white" />}
                                     </div>
@@ -138,7 +138,7 @@ const ReturnActionModal = ({ isOpen, onClose, type, order, onSuccess }) => {
                                 Exchange For
                             </h4>
                             <div className="space-y-2">
-                                <div className="p-3 rounded-lg bg-[#FCF2FB] border border-[#EBD3EC] text-[10px] text-black leading-relaxed mb-2">
+                                <div className="p-3 rounded-lg bg-[#FDF5F6] border border-[#EBCDD0] text-[10px] text-black leading-relaxed mb-2">
                                     We will arrange a pickup. Please specify what you want in exchange (e.g., Different Size).
                                 </div>
                                 <div>
@@ -260,7 +260,7 @@ const OrderCard = ({ order, isExpanded, onToggle }) => {
                 </div>
 
                 {returnRequest ? (
-                    <div className="bg-[#FCF2FB] p-4 rounded-xl border border-[#EBD3EC] flex justify-between items-center">
+                    <div className="bg-[#FDF5F6] p-4 rounded-xl border border-[#EBCDD0] flex justify-between items-center">
                         <div className="flex items-center gap-3">
                             <div className="bg-blue-50 text-blue-600 p-2 rounded-full">
                                 <RefreshCw className="w-4 h-4 animate-spin" />
@@ -315,7 +315,7 @@ const OrderCard = ({ order, isExpanded, onToggle }) => {
                             <button onClick={() => openAction('exchange')} className="flex-1 bg-[#FAFAFA] text-[#3E2723] py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-gray-100 active:scale-95 transition-transform">
                                 Exchange
                             </button>
-                            <Link to={`/order-tracking/${order.id}`} className="flex-1 bg-black text-white py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest text-center shadow-md shadow-black/5 active:scale-95 transition-transform hover:bg-[#B7A0BA]">
+                            <Link to={`/order-tracking/${order.id}`} className="flex-1 bg-black text-white py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest text-center shadow-md shadow-black/5 active:scale-95 transition-transform hover:bg-[#D39A9F]">
                                 Track
                             </Link>
                         </div>
@@ -325,7 +325,7 @@ const OrderCard = ({ order, isExpanded, onToggle }) => {
                 {/* Mobile Details View (Only if not tracking return, or simplified) */}
                 {showDetails && !returnRequest && (
                     <div className="pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                        <div className="space-y-3 bg-[#FCF2FB] p-3 rounded-xl border border-[#EBD3EC]">
+                        <div className="space-y-3 bg-[#FDF5F6] p-3 rounded-xl border border-[#EBCDD0]">
                             {order.items.map((item, idx) => (
                                 <div key={idx} className="flex items-center gap-3">
                                     <img src={item.image} className="w-12 h-12 rounded-lg object-cover border border-white shadow-sm" alt="" />
@@ -521,7 +521,7 @@ const Profile = () => {
                 <div className="mb-4 md:mb-6">
                     <button
                         onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 text-[#B7A0BA] hover:text-black transition-all group font-bold uppercase tracking-widest text-[10px]"
+                        className="flex items-center gap-2 text-[#D39A9F] hover:text-black transition-all group font-bold uppercase tracking-widest text-[10px]"
                     >
                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                         Back
@@ -532,11 +532,11 @@ const Profile = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
                     {/* Sidebar - Hidden on mobile if a tab is active */}
-                    <div className={`${tabParam ? 'hidden md:block' : 'block'} md:bg-white md:p-6 md:rounded-2xl md:shadow-sm h-fit border border-[#EBD3EC]`}>
+                    <div className={`${tabParam ? 'hidden md:block' : 'block'} md:bg-white md:p-6 md:rounded-2xl md:shadow-sm h-fit border border-[#EBCDD0]`}>
                         <div className="flex flex-col md:flex-row items-center md:items-center space-y-2 md:space-y-0 md:space-x-4 mb-4 md:mb-8 md:bg-transparent md:p-0 p-3 text-center md:text-left">
                             <div className="relative group">
-                                <div className="bg-white p-4 md:p-4 rounded-full flex-shrink-0 shadow-sm border border-[#EBD3EC]">
-                                    <User className="w-10 h-10 md:w-8 md:h-8 text-[#B7A0BA]" />
+                                <div className="bg-white p-4 md:p-4 rounded-full flex-shrink-0 shadow-sm border border-[#EBCDD0]">
+                                    <User className="w-10 h-10 md:w-8 md:h-8 text-[#D39A9F]" />
                                 </div>
                                 <button
                                     onClick={() => navigate('/profile/profile/edit')}
@@ -639,12 +639,12 @@ const Profile = () => {
                     <div className={`${!tabParam ? 'hidden md:block' : 'block'} md:col-span-2`}>
                         {activeTab === 'profile' ? (
                             <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-                                <div className="md:bg-white p-0 md:p-8 md:rounded-2xl md:shadow-sm relative border border-[#EBD3EC]">
+                                <div className="md:bg-white p-0 md:p-8 md:rounded-2xl md:shadow-sm relative border border-[#EBCDD0]">
                                     <div className="flex justify-center md:justify-between items-center mb-4 md:mb-6">
                                         <h2 className="text-xl md:text-2xl font-display font-bold text-black text-center md:text-left tracking-wide">Personal Information</h2>
                                         <button
                                             onClick={() => isEditing ? handleSave() : navigate('/profile/profile/edit')}
-                                            className={`hidden md:flex p-2 rounded-full transition-all duration-300 ${isEditing ? 'bg-black text-white' : 'bg-[#F3F4F6] text-[#B7A0BA]'} ml-2 flex-shrink-0`}
+                                            className={`hidden md:flex p-2 rounded-full transition-all duration-300 ${isEditing ? 'bg-black text-white' : 'bg-[#F3F4F6] text-[#D39A9F]'} ml-2 flex-shrink-0`}
                                         >
                                             {isEditing ? <Check className="w-5 h-5" /> : <Edit2 className="w-5 h-5" />}
                                         </button>
@@ -744,7 +744,7 @@ const Profile = () => {
                                     <div className="bg-white p-12 rounded-2xl shadow-sm text-center">
                                         <ShoppingBag className="w-12 h-12 text-gray-200 mx-auto mb-4" />
                                         <p className="text-gray-500 mb-6">No orders yet.</p>
-                                        <Link to="/shop" className="bg-black text-white px-8 py-3 rounded-full hover:bg-[#B7A0BA]">Start Shopping</Link>
+                                        <Link to="/shop" className="bg-black text-white px-8 py-3 rounded-full hover:bg-[#D39A9F]">Start Shopping</Link>
                                     </div>
                                 ) : orders.map(order => <OrderCard key={order.id} order={order} isExpanded={subId === order.id} onToggle={() => navigate(subId === order.id ? '/profile/orders' : `/profile/orders/${order.id}`)} />)}
                             </div>
@@ -754,12 +754,12 @@ const Profile = () => {
                                     <h2 className="text-xl md:text-2xl font-display font-bold text-black text-center md:text-left tracking-wide">Payment Methods</h2>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                                    <div className="md:bg-white p-4 md:p-6 md:rounded-2xl md:border border-[#EBD3EC]">
+                                    <div className="md:bg-white p-4 md:p-6 md:rounded-2xl md:border border-[#EBCDD0]">
                                         <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4"><div className="bg-blue-50 p-2 rounded-lg text-blue-600"><CreditCard className="w-4 h-4 md:w-5 md:h-5" /></div><h3 className="font-bold text-sm md:text-base text-black">Razorpay Secure</h3></div>
                                         <p className="text-[10px] md:text-xs text-gray-500 mb-3 md:mb-4">Cards, UPI, NetBanking. 100% Secure.</p>
                                         <div className="flex gap-2 opacity-50"><CreditCard className="w-4 h-4" /><ShieldCheck className="w-4 h-4" /></div>
                                     </div>
-                                    <div className="md:bg-white p-4 md:p-6 md:rounded-2xl md:border border-[#EBD3EC]">
+                                    <div className="md:bg-white p-4 md:p-6 md:rounded-2xl md:border border-[#EBCDD0]">
                                         <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4"><div className="bg-green-50 p-2 rounded-lg text-green-600"><Banknote className="w-4 h-4 md:w-5 md:h-5" /></div><h3 className="font-bold text-sm md:text-base text-black">Cash on Delivery</h3></div>
                                         <p className="text-[10px] md:text-xs text-gray-500 mb-3 md:mb-4">Pay in cash on delivery.</p>
                                         <div className="flex gap-2 opacity-50"><ShieldCheck className="w-4 h-4" /></div>
@@ -770,7 +770,7 @@ const Profile = () => {
                             <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
                                 <div className="flex justify-between items-center mb-4 md:mb-6">
                                     <h2 className="text-xl md:text-2xl font-display font-bold text-black tracking-wide">My Addresses</h2>
-                                    <button onClick={() => showAddressForm ? navigate('/profile/addresses') : navigate('/profile/addresses/add')} className="bg-black text-white px-4 py-2 rounded-lg text-sm hidden md:block hover:bg-[#B7A0BA]">
+                                    <button onClick={() => showAddressForm ? navigate('/profile/addresses') : navigate('/profile/addresses/add')} className="bg-black text-white px-4 py-2 rounded-lg text-sm hidden md:block hover:bg-[#D39A9F]">
                                         {showAddressForm ? 'Cancel' : 'Add New'}
                                     </button>
                                     <button onClick={() => showAddressForm ? navigate('/profile/addresses') : navigate('/profile/addresses/add')} className="md:hidden bg-black text-white p-2 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1">
@@ -841,14 +841,14 @@ const Profile = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     {addresses.map(addr => (
-                                        <div key={addr.id} className="bg-[#FCF2FB] p-4 md:p-6 rounded-2xl md:rounded-2xl shadow-sm relative border border-[#EBD3EC] md:border-transparent">
+                                        <div key={addr.id} className="bg-[#FDF5F6] p-4 md:p-6 rounded-2xl md:rounded-2xl shadow-sm relative border border-[#EBCDD0] md:border-transparent">
                                             <div className="flex justify-between mb-2">
                                                 <span className="text-[9px] md:text-[10px] font-bold uppercase py-1 px-2 bg-white md:bg-white rounded text-black tracking-wider shadow-sm">{addr.type}</span>
                                                 <button onClick={() => removeAddress(addr.id)} className="text-red-400 p-1 active:scale-90 transition-transform"><Trash2 className="w-4 h-4" /></button>
                                             </div>
                                             <h4 className="font-bold text-sm md:text-base text-black mb-1">{addr.name}</h4>
                                             <p className="text-xs md:text-sm text-gray-500 leading-relaxed mb-3">{addr.flatNo}, {addr.city} - {addr.pincode}</p>
-                                            {defaultAddressId !== addr.id && <button onClick={() => setDefaultAddress(addr.id)} className="text-[10px] md:text-xs underline font-bold text-[#B7A0BA] hover:text-black">Set Default</button>}
+                                            {defaultAddressId !== addr.id && <button onClick={() => setDefaultAddress(addr.id)} className="text-[10px] md:text-xs underline font-bold text-[#D39A9F] hover:text-black">Set Default</button>}
                                         </div>
                                     ))}
                                 </div>

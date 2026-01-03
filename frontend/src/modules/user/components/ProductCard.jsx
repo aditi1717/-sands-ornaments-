@@ -83,11 +83,11 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
 
                     {/* Dynamic Badges */}
                     {product.isNew ? (
-                        <span className="absolute top-4 right-0 bg-[#B7A0BA] text-white text-[10px] font-bold px-3 py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%)', paddingLeft: '16px' }}>
+                        <span className="absolute top-4 right-0 bg-[#D39A9F] text-white text-[10px] font-bold px-3 py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%)', paddingLeft: '16px' }}>
                             NEW
                         </span>
                     ) : product.rating >= 4.5 ? (
-                        <span className="absolute top-4 right-0 bg-[#B7A0BA] text-white text-[10px] font-bold px-3 py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%)', paddingLeft: '16px' }}>
+                        <span className="absolute top-4 right-0 bg-[#D39A9F] text-white text-[10px] font-bold px-3 py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%)', paddingLeft: '16px' }}>
                             TRENDING
                         </span>
                     ) : null}
@@ -95,7 +95,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                     {/* Wishlist Heart - Top Left */}
                     <button
                         onClick={handleWishlist}
-                        className={`absolute top-2 left-2 z-20 p-2 transition-all duration-300 hover:scale-110 rounded-full ${isWishlisted ? 'bg-transparent text-[#EBD3EC] fill-[#EBD3EC]' : 'bg-transparent text-[#EBD3EC]'}`}
+                        className={`absolute top-2 left-2 z-20 p-2 transition-all duration-300 hover:scale-110 rounded-full ${isWishlisted ? 'bg-transparent text-[#EBCDD0] fill-[#EBCDD0]' : 'bg-transparent text-[#EBCDD0]'}`}
                         title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                     >
                         <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={2} />
@@ -129,7 +129,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                 {/* Add to Cart Button - Full Width Flush Bottom */}
                 <button
                     onClick={handleAddToCart}
-                    className="w-full bg-[#EBD3EC] text-black py-3 text-sm font-bold hover:bg-[#B7A0BA] hover:text-white transition-colors uppercase tracking-widest mt-auto mb-0 rounded-none border-t border-transparent"
+                    className="w-full bg-[#EBCDD0] text-black py-3 text-sm font-bold hover:bg-[#D39A9F] hover:text-white transition-colors uppercase tracking-widest mt-auto mb-0 rounded-none border-t border-transparent"
                 >
                     Add to Cart
                 </button>

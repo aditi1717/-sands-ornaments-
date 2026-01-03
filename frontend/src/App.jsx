@@ -45,7 +45,7 @@ const AppContent = () => {
   const isAdminPath = location.pathname.startsWith('/admin');
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-[#FDFBF7]">
+    <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-[#FDF5F6]">
       {!isAdminPath && <Navbar />}
       {!isAdminPath && <CategoryNav />}
       <main className={`flex-grow ${!isAdminPath ? 'pb-16 md:pb-0' : ''}`}>

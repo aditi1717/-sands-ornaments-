@@ -63,7 +63,7 @@ const OrderTracking = () => {
         return (
             <div className="min-h-screen pt-32 pb-12 px-4 flex flex-col items-center justify-center bg-white">
                 <h2 className="text-2xl font-display text-black mb-4">Order Not Found</h2>
-                <Link to="/profile" className="text-black underline hover:text-[#B7A0BA]">Back to Profile</Link>
+                <Link to="/profile" className="text-black underline hover:text-[#D39A9F]">Back to Profile</Link>
             </div>
         );
     }
@@ -175,7 +175,7 @@ const OrderTracking = () => {
     // --- DETAILED VIEW ---
     if (view) {
         return (
-            <div className="min-h-screen bg-white font-sans pt-0 md:pt-12 pb-12 selection:bg-[#B7A0BA] selection:text-white">
+            <div className="min-h-screen bg-white font-sans pt-0 md:pt-12 pb-12 selection:bg-[#D39A9F] selection:text-white">
                 <div className="md:hidden bg-white shadow-sm p-4 sticky top-0 z-20 flex items-center gap-4">
                     <button onClick={() => navigate(`/order-tracking/${orderId}`)} className="p-2 -ml-2 text-black">
                         <ArrowLeft className="w-5 h-5" />
@@ -193,7 +193,7 @@ const OrderTracking = () => {
 
                     <div className="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-gray-100 min-h-[50vh]">
                         <div className="mb-8 md:mb-12 border-b border-gray-100 pb-6">
-                            <span className="block text-[10px] md:text-xs text-[#B7A0BA] uppercase tracking-widest font-bold mb-2">Current Activity</span>
+                            <span className="block text-[10px] md:text-xs text-[#D39A9F] uppercase tracking-widest font-bold mb-2">Current Activity</span>
                             <h2 className="text-2xl md:text-4xl font-display font-bold text-black mb-2">{activeStatusObj.status}</h2>
                             <p className="text-sm md:text-base text-gray-500 font-serif">{activeStatusObj.date}</p>
                         </div>
@@ -207,7 +207,7 @@ const OrderTracking = () => {
 
     // --- SUMMARY VIEW ---
     return (
-        <div className="min-h-screen bg-white font-sans pt-0 md:pt-12 pb-12 selection:bg-[#B7A0BA] selection:text-white">
+        <div className="min-h-screen bg-white font-sans pt-0 md:pt-12 pb-12 selection:bg-[#D39A9F] selection:text-white">
             <div className="md:hidden bg-white shadow-sm p-4 sticky top-0 z-20 flex items-center gap-4">
                 <Link to="/profile" className="p-2 -ml-2 text-black">
                     <ArrowLeft className="w-5 h-5" />
@@ -224,7 +224,7 @@ const OrderTracking = () => {
                 </div>
 
                 <h2 className="text-xl md:text-2xl font-display font-bold text-black mb-6 flex items-center gap-2">
-                    <Clock className="w-5 h-5 md:w-6 md:h-6 text-[#B7A0BA]" />
+                    <Clock className="w-5 h-5 md:w-6 md:h-6 text-[#D39A9F]" />
                     Order Journey
                 </h2>
 

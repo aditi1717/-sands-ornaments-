@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import loginHero from '../assets/login_hero_silver.png';
 import { useShop } from '../../../context/ShopContext';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Crown, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+import logo from '../assets/SANDS JEWELS PINK (1).png';
 
 const Login = () => {
     const { login } = useShop();
@@ -94,10 +97,8 @@ const Login = () => {
                 <div className="bg-white/90 backdrop-blur-xl px-6 py-8 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.1)] w-full max-w-sm mx-auto border border-white/50">
 
                     {/* Brand */}
-                    <div className="text-center mb-8">
-                        <Crown className="w-8 h-8 mx-auto mb-2 text-black" />
-                        <h1 className="font-display text-2xl font-bold tracking-[0.2em] text-black">SANDS</h1>
-                        <p className="text-[10px] text-[#B7A0BA] font-bold uppercase tracking-widest mt-1">Ornaments</p>
+                    <div className="text-center mb-8 flex flex-col items-center">
+                        <img src={logo} alt="Sands Jewels" className="w-32 h-auto object-contain mb-2 drop-shadow-sm" />
                     </div>
 
                     <div className="mb-6">
@@ -122,15 +123,15 @@ const Login = () => {
                                         required
                                         value={fullName}
                                         onChange={(e) => setFullName(e.target.value)}
-                                        className="w-full h-12 bg-white border border-[#EBD3EC] rounded-xl px-4 text-black font-medium placeholder:text-gray-300 focus:border-[#B7A0BA] focus:ring-1 focus:ring-[#B7A0BA] outline-none transition-all"
+                                        className="w-full h-12 bg-white border border-[#EBCDD0] rounded-xl px-4 text-black font-medium placeholder:text-gray-300 focus:border-[#D39A9F] focus:ring-1 focus:ring-[#D39A9F] outline-none transition-all"
                                         placeholder="Enter your name"
                                     />
                                 </div>
                             )}
                             <div className="space-y-1">
                                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Mobile Number</label>
-                                <div className="flex bg-white border border-[#EBD3EC] rounded-xl overflow-hidden h-12 items-center focus-within:border-[#B7A0BA] focus-within:ring-1 focus-within:ring-[#B7A0BA] transition-all">
-                                    <div className="h-full px-4 flex items-center gap-2 text-black font-bold border-r border-[#EBD3EC]">
+                                <div className="flex bg-white border border-[#EBCDD0] rounded-xl overflow-hidden h-12 items-center focus-within:border-[#D39A9F] focus-within:ring-1 focus-within:ring-[#D39A9F] transition-all">
+                                    <div className="h-full px-4 flex items-center gap-2 text-black font-bold border-r border-[#EBCDD0]">
                                         <span>+91</span>
                                     </div>
                                     <input
@@ -145,7 +146,7 @@ const Login = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-[#EBD3EC] text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-md mt-2"
+                                className="w-full bg-[#EBCDD0] text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#D39A9F] hover:text-white transition-all shadow-md mt-2"
                             >
                                 Get OTP
                             </button>
@@ -161,20 +162,20 @@ const Login = () => {
                                         value={data}
                                         onChange={(e) => handleOtpChange(e.target, index)}
                                         onFocus={(e) => e.target.select()}
-                                        className="w-14 h-16 bg-transparent border-b-2 border-[#EBD3EC] focus:border-[#B7A0BA] text-center text-3xl font-bold text-black outline-none transition-all p-0 rounded-none"
+                                        className="w-14 h-16 bg-transparent border-b-2 border-[#EBCDD0] focus:border-[#D39A9F] text-center text-3xl font-bold text-black outline-none transition-all p-0 rounded-none"
                                     />
                                 ))}
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-[#EBD3EC] text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-md"
+                                className="w-full bg-[#EBCDD0] text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#D39A9F] hover:text-white transition-all shadow-md"
                             >
                                 Verify & Proceed
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setLoginStep(1)}
-                                className="w-full text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest py-2 hover:text-[#B7A0BA] transition-colors"
+                                className="w-full text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest py-2 hover:text-[#D39A9F] transition-colors"
                             >
                                 Change Mobile Number
                             </button>
@@ -184,7 +185,7 @@ const Login = () => {
                     <div className="mt-8 text-center">
                         <p className="text-xs text-gray-500 font-medium font-serif">
                             {isSignup ? 'Already a Member?' : 'New here?'}
-                            <Link to={isSignup ? "/login" : "/signup"} className="ml-1 text-black font-bold border-b border-black hover:text-[#B7A0BA] hover:border-[#B7A0BA] transition-colors">
+                            <Link to={isSignup ? "/login" : "/signup"} className="ml-1 text-black font-bold border-b border-black hover:text-[#D39A9F] hover:border-[#D39A9F] transition-colors">
                                 {isSignup ? 'Login' : 'Join Now'}
                             </Link>
                         </p>
@@ -196,14 +197,19 @@ const Login = () => {
             <div className="w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-2xl hidden md:flex flex-col-reverse lg:flex-row relative z-10 min-h-[600px] animate-in slide-in-from-bottom-8 fade-in duration-700">
 
                 {/* Left Side (Desktop) - Form */}
-                <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center p-8 lg:p-16 relative">
-                    <div className="max-w-md mx-auto w-full">
-                        <span className="text-[#B7A0BA] text-xs font-bold uppercase tracking-[0.2em] mb-2 block">
+                <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center items-start p-6 lg:p-8 relative">
+
+                    <div className="max-w-md w-full mt-12 lg:mt-0 text-left">
+                        {/* Logo In-Flow */}
+                        <img src={logo} alt="Sands Jewels" className="block w-32 md:w-48 h-auto object-contain mb-6 -ml-3" />
+
+                        <span className="text-[#D39A9F] text-xs font-bold uppercase tracking-[0.2em] mb-2 block">
                             {isSignup ? 'Start Your Journey' : 'Welcome Back'}
                         </span>
                         <h2 className="text-4xl font-display text-black mb-2">
                             {isSignup ? 'Create Account' : 'Login'}
                         </h2>
+
                         <p className="text-gray-500 font-serif italic mb-8">Timeless Elegance, Crafted for You.</p>
 
                         {loginStep === 1 ? (
@@ -216,7 +222,7 @@ const Login = () => {
                                             required
                                             value={fullName}
                                             onChange={(e) => setFullName(e.target.value)}
-                                            className="w-full border-b border-gray-300 px-0 py-3 text-black placeholder:text-gray-300 focus:outline-none focus:border-[#B7A0BA] transition-all bg-transparent"
+                                            className="w-full border-b border-gray-300 px-0 py-3 text-black placeholder:text-gray-300 focus:outline-none focus:border-[#D39A9F] transition-all bg-transparent"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -224,7 +230,7 @@ const Login = () => {
 
                                 <div>
                                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Mobile Number</label>
-                                    <div className="flex border-b border-gray-300 focus-within:border-[#B7A0BA] transition-all">
+                                    <div className="flex border-b border-gray-300 focus-within:border-[#D39A9F] transition-all">
                                         <div className="py-3 pr-3 flex items-center gap-2 text-black font-bold">
                                             <span>+91</span>
                                         </div>
@@ -241,7 +247,7 @@ const Login = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#EBD3EC] text-black py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                    className="w-full bg-[#EBCDD0] text-black py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#D39A9F] hover:text-white transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                 >
                                     Get OTP
                                 </button>
@@ -259,7 +265,7 @@ const Login = () => {
                                                 value={data}
                                                 onChange={(e) => handleOtpChange(e.target, index)}
                                                 onFocus={(e) => e.target.select()}
-                                                className="w-14 h-14 border border-[#EBD3EC] rounded-xl text-center text-2xl font-bold focus:border-[#B7A0BA] focus:ring-2 focus:ring-[#B7A0BA]/20 outline-none transition-all text-black bg-[#FAFAFA]"
+                                                className="w-14 h-14 border border-[#EBCDD0] rounded-xl text-center text-2xl font-bold focus:border-[#D39A9F] focus:ring-2 focus:ring-[#D39A9F]/20 outline-none transition-all text-black bg-[#FAFAFA]"
                                             />
                                         ))}
                                     </div>
@@ -267,7 +273,7 @@ const Login = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#EBD3EC] text-black py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                    className="w-full bg-[#EBCDD0] text-black py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#D39A9F] hover:text-white transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                 >
                                     Verify & {isSignup ? 'Sign Up' : 'Login'}
                                 </button>
@@ -275,7 +281,7 @@ const Login = () => {
                                 <button
                                     type="button"
                                     onClick={() => setLoginStep(1)}
-                                    className="w-full text-center text-xs text-gray-400 hover:text-[#B7A0BA] transition-colors font-bold uppercase tracking-widest"
+                                    className="w-full text-center text-xs text-gray-400 hover:text-[#D39A9F] transition-colors font-bold uppercase tracking-widest"
                                 >
                                     Change Phone Number
                                 </button>
@@ -287,7 +293,7 @@ const Login = () => {
                                 {isSignup ? 'Already have an account?' : 'New to Sands?'}
                                 <Link
                                     to={isSignup ? "/login" : "/signup"}
-                                    className="ml-2 font-bold text-black border-b border-black/20 hover:border-black hover:text-[#B7A0BA] transition-all"
+                                    className="ml-2 font-bold text-black border-b border-black/20 hover:border-black hover:text-[#D39A9F] transition-all"
                                 >
                                     {isSignup ? 'Login' : 'Create Account'}
                                 </Link>
@@ -300,7 +306,7 @@ const Login = () => {
                 <div
                     className="w-full lg:w-1/2 p-12 flex flex-col justify-end items-start relative overflow-hidden bg-cover bg-center group"
                     style={{
-                        backgroundImage: "url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1000&auto=format&fit=crop')" // Clean Silver/Jewellery Image
+                        backgroundImage: `url(${loginHero})` // Custom Generated Hero Image
                     }}
                 >
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>

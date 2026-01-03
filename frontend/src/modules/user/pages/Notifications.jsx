@@ -29,9 +29,9 @@ const Notifications = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white font-body pb-12 selection:bg-[#B7A0BA] selection:text-white">
+        <div className="min-h-screen bg-white font-body pb-12 selection:bg-[#D39A9F] selection:text-white">
             {/* Header - Minimal & Clean */}
-            <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#EBD3EC]/50 px-4 py-4 md:py-5">
+            <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#EBCDD0]/50 px-4 py-4 md:py-5">
                 <div className="max-w-4xl mx-auto flex items-center justify-between">
                     <button
                         onClick={() => navigate(-1)}
@@ -61,7 +61,7 @@ const Notifications = () => {
                         </p>
                         <button
                             onClick={toggleNotificationSettings}
-                            className="bg-[#EBD3EC] text-black px-8 md:px-10 py-3 md:py-4 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-[#B7A0BA] hover:text-white transition-all transform hover:scale-105 shadow-md"
+                            className="bg-[#EBCDD0] text-black px-8 md:px-10 py-3 md:py-4 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-[#D39A9F] hover:text-white transition-all transform hover:scale-105 shadow-md"
                         >
                             Enable Notifications
                         </button>
@@ -82,7 +82,7 @@ const Notifications = () => {
                         </p>
                         <Link
                             to="/shop"
-                            className="inline-flex items-center gap-2 text-black font-bold text-xs md:text-sm uppercase tracking-widest hover:text-[#B7A0BA] group transition-colors"
+                            className="inline-flex items-center gap-2 text-black font-bold text-xs md:text-sm uppercase tracking-widest hover:text-[#D39A9F] group transition-colors"
                         >
                             Continue Shopping
                             <ShoppingBag className="w-4 h-4 group-hover:scale-110 transition-transform" />
@@ -99,7 +99,7 @@ const Notifications = () => {
                         className="space-y-4 md:space-y-6"
                     >
                         <div className="flex items-center justify-between mb-6 px-1">
-                            <span className="text-xs font-bold uppercase tracking-wider text-[#B7A0BA]">{userNotifications.length} Unread</span>
+                            <span className="text-xs font-bold uppercase tracking-wider text-[#D39A9F]">{userNotifications.length} Unread</span>
                             <span className="text-xs font-serif italic text-gray-400">Swipe to delete</span>
                         </div>
 
@@ -110,10 +110,10 @@ const Notifications = () => {
                                     layout
                                     variants={itemVariants}
                                     exit={{ opacity: 0, x: -100, transition: { duration: 0.3 } }}
-                                    className="group relative bg-white p-5 md:p-6 rounded-2xl border border-[#EBD3EC] hover:border-[#B7A0BA] shadow-sm hover:shadow-md transition-all duration-300"
+                                    className="group relative bg-white p-5 md:p-6 rounded-2xl border border-[#EBCDD0] hover:border-[#D39A9F] shadow-sm hover:shadow-md transition-all duration-300"
                                 >
                                     <div className="flex items-start gap-4 md:gap-6 pr-8">
-                                        <div className="p-3 bg-gray-50 rounded-xl text-[#B7A0BA] flex-shrink-0">
+                                        <div className="p-3 bg-gray-50 rounded-xl text-[#D39A9F] flex-shrink-0">
                                             <Bell className="w-5 h-5 md:w-6 md:h-6" />
                                         </div>
                                         <div className="flex-grow min-w-0">

@@ -183,7 +183,7 @@ const Checkout = () => {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full bg-black text-white py-4 rounded-xl font-bold tracking-widest uppercase text-sm hover:bg-[#B7A0BA] transition-all shadow-lg shadow-black/10 active:scale-95 transform"
+                                    className="w-full bg-black text-white py-4 rounded-xl font-bold tracking-widest uppercase text-sm hover:bg-[#D39A9F] transition-all shadow-lg shadow-black/10 active:scale-95 transform"
                                 >
                                     Send OTP
                                 </button>
@@ -205,7 +205,7 @@ const Checkout = () => {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full bg-black text-white py-4 rounded-xl font-bold tracking-widest uppercase text-sm hover:bg-[#B7A0BA] transition-all shadow-lg shadow-black/10 active:scale-95 transform"
+                                    className="w-full bg-black text-white py-4 rounded-xl font-bold tracking-widest uppercase text-sm hover:bg-[#D39A9F] transition-all shadow-lg shadow-black/10 active:scale-95 transform"
                                 >
                                     Verify & Proceed
                                 </button>
@@ -272,7 +272,7 @@ const Checkout = () => {
                                                 <div className="flex gap-2">
                                                     <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-gray-200 text-black rounded-sm">{addr.type}</span>
                                                     {defaultAddressId === addr.id && (
-                                                        <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-[#B7A0BA] text-white rounded-sm">Default</span>
+                                                        <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-[#D39A9F] text-white rounded-sm">Default</span>
                                                     )}
                                                 </div>
                                                 {(formData.flatNo === addr.flatNo && formData.area === addr.area) && <div className="bg-black text-white rounded-full p-0.5"><Check className="w-3 h-3" /></div>}
@@ -300,7 +300,7 @@ const Checkout = () => {
                                         }}
                                         className={`p-5 rounded-xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-gray-50 min-h-[140px] ${addressSelection === 'new' ? 'border-black bg-gray-50' : 'border-gray-200 text-gray-400'}`}
                                     >
-                                        <Plus className="w-6 h-6 mb-2 text-[#B7A0BA]" />
+                                        <Plus className="w-6 h-6 mb-2 text-[#D39A9F]" />
                                         <span className="text-xs font-bold uppercase tracking-widest text-black">New Address</span>
                                     </div>
                                 </div>
@@ -469,7 +469,7 @@ const Checkout = () => {
                                     <div className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
                                 </div>
                                 <div className="flex items-center gap-4 flex-1">
-                                    <div className="bg-[#EBD3EC] p-2.5 rounded-full text-black">
+                                    <div className="bg-[#EBCDD0] p-2.5 rounded-full text-black">
                                         <CreditCard size={20} />
                                     </div>
                                     <div>
@@ -492,7 +492,7 @@ const Checkout = () => {
                                     <div className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
                                 </div>
                                 <div className="flex items-center gap-4 flex-1">
-                                    <div className="bg-[#B7A0BA] p-2.5 rounded-full text-white">
+                                    <div className="bg-[#D39A9F] p-2.5 rounded-full text-white">
                                         <Banknote size={20} />
                                     </div>
                                     <div>
@@ -507,8 +507,8 @@ const Checkout = () => {
 
                 {/* Right Column: Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="bg-[#FDFBF7] p-6 md:p-8 rounded-2xl border border-[#EBD3EC] sticky top-24 shadow-sm">
-                        <h2 className="font-display font-bold text-xl text-black mb-6 uppercase tracking-widest border-b border-[#EBD3EC] pb-4">Order Summary</h2>
+                    <div className="bg-[#FDFBF7] p-6 md:p-8 rounded-2xl border border-[#EBCDD0] sticky top-24 shadow-sm">
+                        <h2 className="font-display font-bold text-xl text-black mb-6 uppercase tracking-widest border-b border-[#EBCDD0] pb-4">Order Summary</h2>
 
                         {/* Mini Cart in Summary */}
                         <div className="max-h-60 overflow-y-auto mb-6 pr-2 space-y-5 custom-scrollbar">
@@ -526,7 +526,7 @@ const Checkout = () => {
                             ))}
                         </div>
 
-                        <div className="space-y-3 text-sm text-gray-600 mb-6 pt-4 border-t border-[#EBD3EC]">
+                        <div className="space-y-3 text-sm text-gray-600 mb-6 pt-4 border-t border-[#EBCDD0]">
                             <div className="flex justify-between font-serif">
                                 <span>Subtotal</span>
                                 <span className="text-black font-medium">₹{subtotal.toLocaleString()}</span>
@@ -537,7 +537,7 @@ const Checkout = () => {
                             </div>
                         </div>
 
-                        <div className="border-t border-[#EBD3EC] pt-4 mb-6">
+                        <div className="border-t border-[#EBCDD0] pt-4 mb-6">
                             <div className="flex justify-between items-center">
                                 <span className="font-bold text-lg text-black font-display uppercase tracking-wide">Total</span>
                                 <span className="font-bold text-2xl text-black">₹{total.toLocaleString()}</span>
@@ -546,7 +546,7 @@ const Checkout = () => {
                         </div>
 
                         <div className="bg-white p-4 rounded-xl text-xs text-gray-500 mb-6 flex gap-3 border border-gray-100 shadow-sm">
-                            <ShieldCheck className="w-5 h-5 text-[#B7A0BA] flex-shrink-0" />
+                            <ShieldCheck className="w-5 h-5 text-[#D39A9F] flex-shrink-0" />
                             <p className="font-serif leading-relaxed">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
                         </div>
 
@@ -554,7 +554,7 @@ const Checkout = () => {
                             form="checkout-form"
                             type="submit"
                             disabled={loading}
-                            className={`w-full bg-[#EBD3EC] text-black py-4 rounded-xl font-bold hover:bg-[#B7A0BA] hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-lg uppercase tracking-widest text-sm ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                            className={`w-full bg-[#EBCDD0] text-black py-4 rounded-xl font-bold hover:bg-[#D39A9F] hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-lg uppercase tracking-widest text-sm ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
                         >
                             {loading ? (
                                 <span className="flex items-center gap-2">

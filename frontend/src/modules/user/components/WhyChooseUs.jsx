@@ -3,11 +3,11 @@ import { Truck, Star, Gift, Shield } from 'lucide-react';
 
 const WhyChooseUs = () => {
     return (
-        <section className="py-10 bg-white border-t border-[#EBD3EC]">
+        <section className="py-10 bg-white border-t border-[#EBCDD0]">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-display text-black mb-3">Why Choose Us</h2>
-                    <p className="text-[#B7A0BA] font-serif italic text-sm md:text-base">Experience the difference of authentic craftsmanship</p>
+                    <p className="text-[#D39A9F] font-serif italic text-sm md:text-base">Experience the difference of authentic craftsmanship</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                     {[
@@ -17,7 +17,7 @@ const WhyChooseUs = () => {
                         { icon: Shield, title: "Secure Payment", text: "100% secure checkout" }
                     ].map((item, index) => (
                         <div key={index} className="flex flex-col items-center text-center group hover:-translate-y-1 transition-transform duration-300">
-                            <div className="w-16 h-16 bg-[#EBD3EC] rounded-full flex items-center justify-center text-black mb-4 group-hover:bg-[#B7A0BA] group-hover:text-white transition-colors duration-300 shadow-sm">
+                            <div className="w-16 h-16 bg-[#EBCDD0] rounded-full flex items-center justify-center text-black mb-4 group-hover:bg-[#D39A9F] group-hover:text-white transition-colors duration-300 shadow-sm">
                                 <item.icon className="w-7 h-7" />
                             </div>
                             <h3 className="font-display text-lg font-semibold text-black mb-1">{item.title}</h3>
