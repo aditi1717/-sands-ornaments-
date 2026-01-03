@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { useNavigate } from 'react-router-dom';
-import { Truck, CreditCard, Banknote, ShieldCheck, Lock, Plus, Check, MapPin } from 'lucide-react';
+import { Truck, CreditCard, Banknote, ShieldCheck, Lock, Plus, Check, MapPin, ChevronRight, LayoutDashboard } from 'lucide-react';
 
 const Checkout = () => {
     const { cart, placeOrder, user, login, addresses, addAddress, defaultAddressId } = useShop();
@@ -142,80 +142,83 @@ const Checkout = () => {
     }, [cart, navigate]);
 
     if (cart.length === 0) {
-        return null;
+        return null; // Or redirect
     }
 
     // --- 1. Login View (If not logged in) ---
     if (!user) {
         return (
-            <div className="container mx-auto px-4 py-8 md:py-12 flex justify-center items-center min-h-[50vh] md:min-h-[60vh]">
-                <div className="bg-white p-6 md:p-8 rounded-2xl md:rounded-xl shadow-lg border border-gray-100 text-center max-w-md w-full">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-[#FDFBF7] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
-                        <Lock className="w-6 h-6 md:w-8 md:h-8 text-[#5D4037]" strokeWidth={1.5} />
+            <div className="container mx-auto px-4 py-12 md:py-24 flex justify-center items-center min-h-[70vh] bg-white animate-in fade-in duration-700">
+                <div className="w-full max-w-md">
+                    <div className="text-center mb-10">
+                        <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-gray-100">
+                            <Lock className="w-6 h-6 text-black" strokeWidth={1.5} />
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-display font-bold text-black mb-2">
+                            {loginStep === 1 ? 'Login to Checkout' : 'Verify Phone Number'}
+                        </h2>
+                        <p className="text-gray-500 text-sm font-serif">
+                            {loginStep === 1
+                                ? 'Please enter your phone number to proceed with your order'
+                                : `Enter the 4-digit code sent to +91 ${phoneNumber}`
+                            }
+                        </p>
                     </div>
 
-                    <h2 className="text-xl md:text-2xl font-serif font-bold text-[#3E2723] mb-1.5 md:mb-2">
-                        {loginStep === 1 ? 'Login to Checkout' : 'Verify Phone Number'}
-                    </h2>
-                    <p className="text-gray-500 mb-6 md:mb-8 text-xs md:text-sm">
-                        {loginStep === 1
-                            ? 'Please enter your phone number to proceed'
-                            : `Enter the 4-digit code sent to +91 ${phoneNumber}`
-                        }
-                    </p>
-
-                    {loginStep === 1 ? (
-                        <form onSubmit={handleSendOtp} className="space-y-4 md:space-y-6">
-                            <div className="flex border border-gray-300 rounded-lg overflow-hidden transition-all focus-within:ring-1 focus-within:ring-[#8D6E63] focus-within:border-[#8D6E63]">
-                                <div className="bg-gray-50 px-4 flex items-center border-r border-gray-100">
-                                    <span className="text-gray-500 font-medium text-sm md:text-base">+91</span>
-                                </div>
-                                <input
-                                    type="tel"
-                                    value={phoneNumber}
-                                    onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                                    className="flex-1 py-3 px-4 text-base outline-none bg-white"
-                                    placeholder="Enter Phone Number"
-                                    required
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full bg-[#5D4037] text-white py-3 md:py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all shadow-md text-sm md:text-base"
-                            >
-                                Send OTP
-                            </button>
-                        </form>
-                    ) : (
-                        <form onSubmit={handleVerifyOtp} className="space-y-4 md:space-y-6">
-                            <div className="flex justify-center gap-3 md:gap-4">
-                                {otp.map((data, index) => (
+                    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-black/5 border border-gray-100">
+                        {loginStep === 1 ? (
+                            <form onSubmit={handleSendOtp} className="space-y-6">
+                                <div className="flex border border-gray-200 rounded-xl overflow-hidden transition-all focus-within:ring-1 focus-within:ring-black focus-within:border-black bg-gray-50/50">
+                                    <div className="bg-gray-50 px-5 flex items-center border-r border-gray-200">
+                                        <span className="text-gray-500 font-bold text-sm">+91</span>
+                                    </div>
                                     <input
-                                        key={index}
-                                        type="text"
-                                        maxLength="1"
-                                        value={data}
-                                        onChange={(e) => handleOtpChange(e.target, index)}
-                                        onFocus={(e) => e.target.select()}
-                                        className="w-10 h-10 md:w-12 md:h-12 border border-gray-300 rounded-lg text-center text-lg md:text-xl font-bold focus:ring-[#8D6E63] focus:border-[#8D6E63] outline-none"
+                                        type="tel"
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                        className="flex-1 py-4 px-4 text-base outline-none bg-transparent placeholder-gray-400 font-medium"
+                                        placeholder="Enter Phone Number"
+                                        required
                                     />
-                                ))}
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full bg-[#5D4037] text-white py-3 md:py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all shadow-md text-sm md:text-base"
-                            >
-                                Verify & Proceed
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setLoginStep(1)}
-                                className="text-[10px] md:text-xs text-gray-500 hover:text-[#5D4037] underline block mx-auto mt-3 md:mt-4"
-                            >
-                                Change Phone Number
-                            </button>
-                        </form>
-                    )}
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="w-full bg-black text-white py-4 rounded-xl font-bold tracking-widest uppercase text-sm hover:bg-[#B7A0BA] transition-all shadow-lg shadow-black/10 active:scale-95 transform"
+                                >
+                                    Send OTP
+                                </button>
+                            </form>
+                        ) : (
+                            <form onSubmit={handleVerifyOtp} className="space-y-6">
+                                <div className="flex justify-center gap-3">
+                                    {otp.map((data, index) => (
+                                        <input
+                                            key={index}
+                                            type="text"
+                                            maxLength="1"
+                                            value={data}
+                                            onChange={(e) => handleOtpChange(e.target, index)}
+                                            onFocus={(e) => e.target.select()}
+                                            className="w-14 h-14 border border-gray-200 rounded-xl text-center text-xl font-bold focus:ring-black focus:border-black outline-none bg-gray-50/50 transition-all font-display"
+                                        />
+                                    ))}
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="w-full bg-black text-white py-4 rounded-xl font-bold tracking-widest uppercase text-sm hover:bg-[#B7A0BA] transition-all shadow-lg shadow-black/10 active:scale-95 transform"
+                                >
+                                    Verify & Proceed
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setLoginStep(1)}
+                                    className="text-xs text-gray-400 hover:text-black font-bold uppercase tracking-wider block mx-auto transition-colors"
+                                >
+                                    Change Phone Number
+                                </button>
+                            </form>
+                        )}
+                    </div>
                 </div>
             </div>
         );
@@ -223,25 +226,27 @@ const Checkout = () => {
 
     // --- 2. Checkout View (If logged in) ---
     return (
-        <div className="container mx-auto px-4 py-4 md:py-8 max-w-6xl">
-            <h1 className="text-xl md:text-3xl font-serif font-bold text-[#3E2723] mb-4 md:mb-8 text-center uppercase tracking-widest">Checkout</h1>
+        <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl animate-in fade-in duration-700 bg-white min-h-screen">
+            <h1 className="text-2xl md:text-4xl font-display font-bold text-black mb-8 md:mb-12 text-center uppercase tracking-widest">
+                Checkout
+            </h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
                 {/* Left Column: Form */}
-                <div className="lg:col-span-2 space-y-6 md:space-y-8">
+                <div className="lg:col-span-2 space-y-8">
                     {/* Shipping Address */}
-                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm">
-                        <div className="flex justify-between items-center mb-4 md:mb-6">
-                            <h2 className="text-base md:text-xl font-medium text-gray-800 flex items-center gap-2">
-                                <span className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#5D4037] text-white flex items-center justify-center text-[10px] md:text-sm">1</span>
+                    <div className="bg-white p-0 md:p-6 rounded-2xl md:border md:border-gray-100 md:shadow-sm">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-lg md:text-xl font-bold text-black flex items-center gap-3 font-display uppercase tracking-wide">
+                                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold">1</span>
                                 Shipping Details
                             </h2>
                         </div>
 
                         {/* Saved Addresses List */}
                         {addresses.length > 0 && (
-                            <div className="mb-8">
-                                <p className="text-sm font-bold text-[#8D6E63] uppercase tracking-widest mb-4">Saved Addresses</p>
+                            <div className="mb-8 p-1">
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Saved Addresses</p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {addresses.map((addr) => (
                                         <div
@@ -261,20 +266,20 @@ const Checkout = () => {
                                                 });
                                                 setAddressSelection('saved');
                                             }}
-                                            className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${formData.flatNo === addr.flatNo && formData.area === addr.area ? 'border-[#5D4037] bg-stone-50' : 'border-[#EFEBE9] hover:border-[#D7CCC8]'}`}
+                                            className={`p-5 rounded-xl border-2 cursor-pointer transition-all relative ${formData.flatNo === addr.flatNo && formData.area === addr.area ? 'border-black bg-gray-50' : 'border-gray-100 hover:border-black/30'}`}
                                         >
-                                            <div className="flex justify-between mb-2">
+                                            <div className="flex justify-between mb-3">
                                                 <div className="flex gap-2">
-                                                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-[#EFEBE9] text-[#5D4037] rounded-full">{addr.type}</span>
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-gray-200 text-black rounded-sm">{addr.type}</span>
                                                     {defaultAddressId === addr.id && (
-                                                        <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-[#3E2723] text-white rounded-full">Default</span>
+                                                        <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-[#B7A0BA] text-white rounded-sm">Default</span>
                                                     )}
                                                 </div>
-                                                {(formData.flatNo === addr.flatNo && formData.area === addr.area) && <Check className="w-4 h-4 text-[#5D4037]" />}
+                                                {(formData.flatNo === addr.flatNo && formData.area === addr.area) && <div className="bg-black text-white rounded-full p-0.5"><Check className="w-3 h-3" /></div>}
                                             </div>
-                                            <p className="font-bold text-[#3E2723] text-sm">{addr.name}</p>
-                                            <p className="text-xs text-[#8D6E63] mt-1 line-clamp-2">{addr.flatNo}, {addr.area}, {addr.city}</p>
-                                            <p className="text-xs text-[#8D6E63]">{addr.pincode}</p>
+                                            <p className="font-bold text-black text-sm mb-1">{addr.name}</p>
+                                            <p className="text-xs text-gray-500 leading-relaxed font-serif">{addr.flatNo}, {addr.area}, {addr.city}</p>
+                                            <p className="text-xs text-gray-500 font-serif">{addr.pincode}</p>
                                         </div>
                                     ))}
                                     <div
@@ -293,193 +298,206 @@ const Checkout = () => {
                                             });
                                             setAddressSelection('new');
                                         }}
-                                        className={`p-4 rounded-xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-stone-50 ${addressSelection === 'new' ? 'border-[#5D4037] bg-stone-50' : 'border-[#EFEBE9] text-[#8D6E63]'}`}
+                                        className={`p-5 rounded-xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-gray-50 min-h-[140px] ${addressSelection === 'new' ? 'border-black bg-gray-50' : 'border-gray-200 text-gray-400'}`}
                                     >
-                                        <Plus className="w-5 h-5 mb-1" />
-                                        <span className="text-xs font-bold uppercase tracking-widest">New Address</span>
+                                        <Plus className="w-6 h-6 mb-2 text-[#B7A0BA]" />
+                                        <span className="text-xs font-bold uppercase tracking-widest text-black">New Address</span>
                                     </div>
                                 </div>
                             </div>
                         )}
 
-                        <form id="checkout-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <form id="checkout-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 bg-gray-50/50 p-4 md:p-6 rounded-2xl border border-gray-100">
                             <div className="md:col-span-2">
-                                <p className="text-[11px] md:text-sm font-bold text-[#8D6E63] uppercase tracking-widest mb-3 md:mb-2">
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                                     {addressSelection === 'new' || addresses.length === 0 ? 'Delivery Address' : 'Selected Address Details'}
                                 </p>
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">First Name</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">First Name</label>
                                 <input
                                     required
                                     type="text"
                                     name="firstName"
                                     value={formData.firstName}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Last Name</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">Last Name</label>
                                 <input
                                     required
                                     type="text"
                                     name="lastName"
                                     value={formData.lastName}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Email Address</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">Email Address</label>
                                 <input
                                     required
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Phone Number</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">Phone Number</label>
                                 <input
                                     required
                                     type="tel"
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Flat / House / Building</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">Flat / House / Building</label>
                                 <input
                                     required
                                     type="text"
                                     name="flatNo"
                                     value={formData.flatNo}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Area / Street / Sector</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">Area / Street / Sector</label>
                                 <input
                                     required
                                     type="text"
                                     name="area"
                                     value={formData.area}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">City</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">City</label>
                                 <input
                                     required
                                     type="text"
                                     name="city"
                                     value={formData.city}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">District</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">District</label>
                                 <input
                                     required
                                     type="text"
                                     name="district"
                                     value={formData.district}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">State</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">State</label>
                                 <input
                                     required
                                     type="text"
                                     name="state"
                                     value={formData.state}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-[11px] md:text-sm font-medium text-gray-700">Pincode</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-700 uppercase tracking-widest">Pincode</label>
                                 <input
                                     required
                                     type="text"
                                     name="pincode"
                                     value={formData.pincode}
                                     onChange={handleInputChange}
-                                    className="w-full border border-gray-300 rounded-md px-3 md:px-4 py-2 md:py-2.5 focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] outline-none transition-colors text-xs md:text-base"
+                                    className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all text-sm bg-white"
                                 />
                             </div>
                             {(addressSelection === 'new' || addresses.length === 0) && (
-                                <div className="md:col-span-2 flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
-                                        id="save-address"
-                                        checked={saveNewAddress}
-                                        onChange={(e) => setSaveNewAddress(e.target.checked)}
-                                        className="w-4 h-4 text-[#5D4037] focus:ring-[#5D4037] border-gray-300 rounded cursor-pointer"
-                                    />
-                                    <label htmlFor="save-address" className="text-sm text-gray-600 cursor-pointer">Save this address to my profile</label>
+                                <div className="md:col-span-2 flex items-center gap-3 pt-2">
+                                    <div className="relative flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id="save-address"
+                                            checked={saveNewAddress}
+                                            onChange={(e) => setSaveNewAddress(e.target.checked)}
+                                            className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 shadow-sm checked:border-black checked:bg-black focus:outline-none"
+                                        />
+                                        <Check
+                                            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100"
+                                            size={12}
+                                            strokeWidth={3}
+                                        />
+                                    </div>
+                                    <label htmlFor="save-address" className="text-sm text-gray-600 cursor-pointer font-medium select-none">Save this address for future orders</label>
                                 </div>
                             )}
                         </form>
                     </div>
 
                     {/* Payment Method */}
-                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm">
-                        <h2 className="text-base md:text-xl font-medium text-gray-800 mb-4 md:mb-6 flex items-center gap-2">
-                            <span className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#5D4037] text-white flex items-center justify-center text-[10px] md:text-sm">2</span>
+                    <div className="bg-white p-0 md:p-6 rounded-2xl md:border md:border-gray-100 md:shadow-sm">
+                        <h2 className="text-lg md:text-xl font-bold text-black mb-6 flex items-center gap-3 font-display uppercase tracking-wide">
+                            <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold">2</span>
                             Payment Method
                         </h2>
 
-                        <div className="space-y-3 md:space-y-4">
-                            <label className={`flex items-center gap-3 md:gap-4 border p-3 md:p-4 rounded-xl cursor-pointer transition-all ${paymentMethod === 'online' ? 'border-[#5D4037] bg-stone-50' : 'border-gray-200 hover:border-stone-300'}`}>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="online"
-                                    checked={paymentMethod === 'online'}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                    className="w-3.5 h-3.5 text-[#5D4037] focus:ring-[#5D4037]"
-                                />
-                                <div className="flex items-center gap-3">
-                                    <div className="bg-blue-50 p-1.5 md:p-2 rounded-full text-blue-600">
-                                        <CreditCard size={18} className="md:w-5 md:h-5" />
+                        <div className="space-y-4">
+                            <label className={`flex items-center gap-4 border p-4 rounded-xl cursor-pointer transition-all ${paymentMethod === 'online' ? 'border-black bg-gray-50' : 'border-gray-100 hover:border-gray-300'}`}>
+                                <div className="relative flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        value="online"
+                                        checked={paymentMethod === 'online'}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        className="peer h-4 w-4 cursor-pointer appearance-none rounded-full border border-gray-300 checked:border-black checked:bg-black focus:outline-none"
+                                    />
+                                    <div className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <div className="flex items-center gap-4 flex-1">
+                                    <div className="bg-[#EBD3EC] p-2.5 rounded-full text-black">
+                                        <CreditCard size={20} />
                                     </div>
                                     <div>
-                                        <p className="font-medium text-xs md:text-base text-gray-900">Credit/Debit Card / UPI / NetBanking</p>
-                                        <p className="text-[10px] md:text-sm text-gray-500">Fast and secure online payment</p>
+                                        <p className="font-bold text-sm md:text-base text-black font-display uppercase tracking-wide">Prepaid (Cards / UPI)</p>
+                                        <p className="text-xs text-gray-500 font-serif">Fast and secure online payment</p>
                                     </div>
                                 </div>
                             </label>
 
-                            <label className={`flex items-center gap-3 md:gap-4 border p-3 md:p-4 rounded-xl cursor-pointer transition-all ${paymentMethod === 'cod' ? 'border-[#5D4037] bg-stone-50' : 'border-gray-200 hover:border-stone-300'}`}>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="cod"
-                                    checked={paymentMethod === 'cod'}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                    className="w-3.5 h-3.5 text-[#5D4037] focus:ring-[#5D4037]"
-                                />
-                                <div className="flex items-center gap-3">
-                                    <div className="bg-green-50 p-1.5 md:p-2 rounded-full text-green-600">
-                                        <Banknote size={18} className="md:w-5 md:h-5" />
+                            <label className={`flex items-center gap-4 border p-4 rounded-xl cursor-pointer transition-all ${paymentMethod === 'cod' ? 'border-black bg-gray-50' : 'border-gray-100 hover:border-gray-300'}`}>
+                                <div className="relative flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        value="cod"
+                                        checked={paymentMethod === 'cod'}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        className="peer h-4 w-4 cursor-pointer appearance-none rounded-full border border-gray-300 checked:border-black checked:bg-black focus:outline-none"
+                                    />
+                                    <div className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <div className="flex items-center gap-4 flex-1">
+                                    <div className="bg-[#B7A0BA] p-2.5 rounded-full text-white">
+                                        <Banknote size={20} />
                                     </div>
                                     <div>
-                                        <p className="font-medium text-xs md:text-base text-gray-900">Cash on Delivery</p>
-                                        <p className="text-[10px] md:text-sm text-gray-500">Pay when you receive your order</p>
+                                        <p className="font-bold text-sm md:text-base text-black font-display uppercase tracking-wide">Cash on Delivery</p>
+                                        <p className="text-xs text-gray-500 font-serif">Pay when you receive your order</p>
                                     </div>
                                 </div>
                             </label>
@@ -489,61 +507,61 @@ const Checkout = () => {
 
                 {/* Right Column: Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 sticky top-24 shadow-sm">
-                        <h2 className="font-serif font-bold text-lg md:text-xl text-gray-900 mb-4 md:mb-6">Order Summary</h2>
+                    <div className="bg-[#FDFBF7] p-6 md:p-8 rounded-2xl border border-[#EBD3EC] sticky top-24 shadow-sm">
+                        <h2 className="font-display font-bold text-xl text-black mb-6 uppercase tracking-widest border-b border-[#EBD3EC] pb-4">Order Summary</h2>
 
                         {/* Mini Cart in Summary */}
-                        <div className="max-h-60 overflow-y-auto mb-6 pr-2 space-y-4 custom-scrollbar">
+                        <div className="max-h-60 overflow-y-auto mb-6 pr-2 space-y-5 custom-scrollbar">
                             {cart.map((item) => (
-                                <div key={item.id} className="flex gap-3">
-                                    <div className="w-16 h-16 bg-gray-50 rounded overflow-hidden flex-shrink-0">
+                                <div key={item.id} className="flex gap-4">
+                                    <div className="w-16 h-16 bg-white rounded-lg overflow-hidden flex-shrink-0 border border-gray-100">
                                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1">
-                                        <p className="text-sm font-medium text-gray-900 line-clamp-2">{item.name}</p>
-                                        <p className="text-xs text-gray-500 mt-1">Qty: {item.quantity || 1}</p>
-                                        <p className="text-sm font-bold text-gray-800 mt-1">₹{(item.price * (item.quantity || 1)).toLocaleString()}</p>
+                                        <p className="text-sm font-bold text-black line-clamp-2 font-display uppercase tracking-wide text-[11px]">{item.name}</p>
+                                        <p className="text-xs text-gray-500 mt-1 font-serif">Qty: {item.quantity || 1}</p>
+                                        <p className="text-sm font-bold text-black mt-1">₹{(item.price * (item.quantity || 1)).toLocaleString()}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="space-y-2 md:space-y-3 text-xs md:text-sm text-gray-600 mb-4 md:mb-6 py-4 md:py-6 border-t border-gray-100">
-                            <div className="flex justify-between">
+                        <div className="space-y-3 text-sm text-gray-600 mb-6 pt-4 border-t border-[#EBD3EC]">
+                            <div className="flex justify-between font-serif">
                                 <span>Subtotal</span>
-                                <span>₹{subtotal.toLocaleString()}</span>
+                                <span className="text-black font-medium">₹{subtotal.toLocaleString()}</span>
                             </div>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between font-serif">
                                 <span>Shipping</span>
-                                <span>{shipping === 0 ? <span className="text-green-600">Free</span> : `₹${shipping}`}</span>
+                                <span>{shipping === 0 ? <span className="text-emerald-600 font-medium">Free</span> : `₹${shipping}`}</span>
                             </div>
                         </div>
 
-                        <div className="border-t border-gray-200 pt-4 mb-4 md:mb-6">
+                        <div className="border-t border-[#EBD3EC] pt-4 mb-6">
                             <div className="flex justify-between items-center">
-                                <span className="font-bold text-base md:text-lg text-gray-900">Total</span>
-                                <span className="font-bold text-lg md:text-xl text-[#5D4037]">₹{total.toLocaleString()}</span>
+                                <span className="font-bold text-lg text-black font-display uppercase tracking-wide">Total</span>
+                                <span className="font-bold text-2xl text-black">₹{total.toLocaleString()}</span>
                             </div>
-                            <p className="text-[10px] md:text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
+                            <p className="text-[10px] text-gray-400 mt-1 text-right font-medium uppercase tracking-wider">Inclusive of all taxes</p>
                         </div>
 
-                        <div className="bg-gray-50 p-3 rounded text-xs text-gray-500 mb-6 flex gap-2">
-                            <ShieldCheck className="w-4 h-4 text-green-600 flex-shrink-0" />
-                            <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
+                        <div className="bg-white p-4 rounded-xl text-xs text-gray-500 mb-6 flex gap-3 border border-gray-100 shadow-sm">
+                            <ShieldCheck className="w-5 h-5 text-[#B7A0BA] flex-shrink-0" />
+                            <p className="font-serif leading-relaxed">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
                         </div>
 
                         <button
                             form="checkout-form"
                             type="submit"
                             disabled={loading}
-                            className={`w-full bg-[#5D4037] text-white py-3 md:py-3.5 rounded-lg font-medium hover:bg-[#4E342E] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg text-sm md:text-base ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                            className={`w-full bg-[#EBD3EC] text-black py-4 rounded-xl font-bold hover:bg-[#B7A0BA] hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-lg uppercase tracking-widest text-sm ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
                         >
                             {loading ? (
                                 <span className="flex items-center gap-2">
                                     {paymentMethod === 'online' ? 'Redirecting...' : 'Processing...'}
                                 </span>
                             ) : (
-                                <span>{paymentMethod === 'online' ? 'Pay Now' : 'Place Order (COD)'}</span>
+                                <span>{paymentMethod === 'online' ? 'Pay Now' : 'Place Order'}</span>
                             )}
                         </button>
                     </div>

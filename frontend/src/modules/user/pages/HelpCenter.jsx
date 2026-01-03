@@ -23,38 +23,38 @@ const SupportForm = ({ onCancel, initialOrder = '' }) => {
     };
 
     return (
-        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-[#EFEBE9] animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 className="text-xl md:text-2xl font-serif font-bold text-[#3E2723] mb-4 md:mb-6">Create Support Ticket</h2>
+        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-gray-100 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h2 className="text-xl md:text-2xl font-display font-bold text-black mb-4 md:mb-6">Create Support Ticket</h2>
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
-                        <label className="block text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-1 md:mb-2">Subject</label>
+                        <label className="block text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 md:mb-2">Subject</label>
                         <input
                             required
                             type="text"
                             placeholder="Brief description of issue"
                             value={formData.subject}
                             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                            className="w-full border border-gray-100 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037]"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                         />
                     </div>
                     <div>
-                        <label className="block text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-1 md:mb-2">Order ID (Optional)</label>
+                        <label className="block text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 md:mb-2">Order ID (Optional)</label>
                         <input
                             type="text"
                             placeholder="e.g. 1735123456"
                             value={formData.orderId}
                             onChange={(e) => setFormData({ ...formData, orderId: e.target.value })}
-                            className="w-full border border-gray-100 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037]"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                         />
                     </div>
                 </div>
                 <div>
-                    <label className="block text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-1 md:mb-2">Category</label>
+                    <label className="block text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 md:mb-2">Category</label>
                     <select
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full border border-gray-100 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037]"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                     >
                         <option>General Enquiry</option>
                         <option>Order Tracking</option>
@@ -64,20 +64,20 @@ const SupportForm = ({ onCancel, initialOrder = '' }) => {
                     </select>
                 </div>
                 <div>
-                    <label className="block text-[10px] md:text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-1 md:mb-2">Detailed Message</label>
+                    <label className="block text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 md:mb-2">Detailed Message</label>
                     <textarea
                         required
                         rows="4"
                         placeholder="Please describe your problem in detail..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full border border-gray-100 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] resize-none"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-gray-900 focus:outline-none focus:border-black focus:ring-1 focus:ring-black resize-none transition-all"
                     ></textarea>
                 </div>
                 <div className="flex gap-3 md:gap-4">
                     <button
                         type="submit"
-                        className="flex-grow bg-[#3E2723] text-white py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#5D4037] transition-all shadow-lg shadow-[#3E2723]/20 text-sm md:text-base"
+                        className="flex-grow bg-[#EBD3EC] text-black py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#B7A0BA] hover:text-white transition-all shadow-sm text-sm md:text-base"
                     >
                         <Send className="w-4 h-4" />
                         Submit Request
@@ -85,7 +85,7 @@ const SupportForm = ({ onCancel, initialOrder = '' }) => {
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="px-6 md:px-8 py-3 md:py-4 rounded-xl border border-[#EFEBE9] font-bold text-[#8D6E63] hover:bg-[#FDFBF7] transition-all text-sm md:text-base"
+                        className="px-6 md:px-8 py-3 md:py-4 rounded-xl border border-gray-200 font-bold text-gray-500 hover:bg-gray-50 transition-all text-sm md:text-base"
                     >
                         Cancel
                     </button>
@@ -99,28 +99,28 @@ const TicketHistory = ({ tickets, onBack }) => {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
             <div className="flex items-center justify-between mb-8">
-                <button onClick={onBack} className="flex items-center gap-2 text-[#8D6E63] hover:text-[#3E2723] transition-colors font-bold uppercase tracking-widest text-xs">
+                <button onClick={onBack} className="flex items-center gap-2 text-black hover:text-[#B7A0BA] transition-colors font-bold uppercase tracking-widest text-xs">
                     <ArrowLeft className="w-4 h-4" /> Back to FAQ
                 </button>
-                <h2 className="text-2xl font-serif font-bold text-[#3E2723]">My Support Tickets</h2>
+                <h2 className="text-2xl font-display font-bold text-black">My Support Tickets</h2>
             </div>
 
             {tickets.length === 0 ? (
-                <div className="bg-white p-20 rounded-3xl border border-dashed border-[#EFEBE9] text-center">
-                    <Ticket className="w-12 h-12 text-[#EFEBE9] mx-auto mb-4" />
-                    <p className="text-[#8D6E63]">You haven't created any support tickets yet.</p>
+                <div className="bg-white p-20 rounded-3xl border border-dashed border-gray-200 text-center">
+                    <Ticket className="w-12 h-12 text-gray-200 mx-auto mb-4" />
+                    <p className="text-gray-500">You haven't created any support tickets yet.</p>
                 </div>
             ) : (
                 <div className="space-y-4">
                     {tickets.map((t) => (
-                        <div key={t.id} className="bg-white p-6 md:p-8 rounded-3xl border border-[#EFEBE9] shadow-sm hover:shadow-md transition-all space-y-6">
+                        <div key={t.id} className="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all space-y-6">
                             <div className="flex justify-between items-start">
                                 <div className="space-y-1">
-                                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#8D6E63] flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[#8D6E63]"></div>
+                                    <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#B7A0BA]"></div>
                                         {t.id}
                                     </span>
-                                    <h3 className="text-xl font-bold text-[#3E2723]">{t.subject}</h3>
+                                    <h3 className="text-xl font-bold text-black">{t.subject}</h3>
                                 </div>
                                 <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border ${t.status === 'Open' ? 'bg-red-50 text-red-700 border-red-100' :
                                     t.status === 'In Progress' ? 'bg-blue-50 text-blue-700 border-blue-100' :
@@ -130,24 +130,24 @@ const TicketHistory = ({ tickets, onBack }) => {
                                 </span>
                             </div>
 
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 bg-[#FDFBF7] p-5 rounded-2xl border border-[#EFEBE9]">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 bg-gray-50 p-5 rounded-2xl border border-gray-100">
                                 <div className="space-y-1 text-center md:text-left">
-                                    <p className="text-[10px] text-[#8D6E63] uppercase font-bold tracking-wider">Category</p>
-                                    <p className="text-xs font-bold text-[#5D4037]">{t.category}</p>
+                                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Category</p>
+                                    <p className="text-xs font-bold text-black">{t.category}</p>
                                 </div>
                                 <div className="space-y-1 text-center md:text-left">
-                                    <p className="text-[10px] text-[#8D6E63] uppercase font-bold tracking-wider">Submitted On</p>
-                                    <p className="text-xs font-bold text-[#5D4037]">{new Date(t.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Submitted On</p>
+                                    <p className="text-xs font-bold text-black">{new Date(t.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                                 </div>
                                 {t.orderId && (
                                     <div className="space-y-1 text-center md:text-left">
-                                        <p className="text-[10px] text-[#8D6E63] uppercase font-bold tracking-wider">Reference</p>
-                                        <p className="text-xs font-bold text-[#3E2723]">#{t.orderId}</p>
+                                        <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Reference</p>
+                                        <p className="text-xs font-bold text-black">#{t.orderId}</p>
                                     </div>
                                 )}
                                 <div className="space-y-1 text-center md:text-left">
-                                    <p className="text-[10px] text-[#8D6E63] uppercase font-bold tracking-wider">Priority</p>
-                                    <p className="text-xs font-bold text-[#5D4037]">{t.priority || 'Standard'}</p>
+                                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Priority</p>
+                                    <p className="text-xs font-bold text-black">{t.priority || 'Standard'}</p>
                                 </div>
                             </div>
 
@@ -163,16 +163,16 @@ const TicketHistory = ({ tickets, onBack }) => {
 
                                 {t.replies && t.replies.map((reply, ridx) => (
                                     <div key={ridx} className={`flex gap-4 ${reply.from === 'admin' ? 'flex-row-reverse' : ''}`}>
-                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border ${reply.from === 'admin' ? 'bg-[#3E2723] border-[#3E2723] text-white' : 'bg-gray-100 border-gray-200 text-gray-400'
+                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border ${reply.from === 'admin' ? 'bg-black text-white' : 'bg-gray-100 border-gray-200 text-gray-400'
                                             }`}>
                                             {reply.from === 'admin' ? <MessageCircle className="w-5 h-5" /> : <User className="w-5 h-5" />}
                                         </div>
                                         <div className={`p-5 rounded-2xl flex-1 shadow-sm ${reply.from === 'admin'
-                                            ? 'bg-amber-50 border border-amber-100 rounded-tr-none'
+                                            ? 'bg-[#F3F4F6] border border-gray-200 rounded-tr-none'
                                             : 'bg-gray-50 border border-gray-100 rounded-tl-none'
                                             }`}>
                                             <div className="flex justify-between items-center mb-2">
-                                                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8D6E63]">
+                                                <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
                                                     {reply.from === 'admin' ? 'Support Agent' : 'You'}
                                                 </span>
                                                 <span className="text-[9px] font-bold text-gray-400">
@@ -246,22 +246,26 @@ const HelpCenter = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FDFBF7] font-sans pb-10 md:pb-20">
+        <div className="min-h-screen bg-white font-body pb-10 md:pb-20 selection:bg-[#B7A0BA] selection:text-white">
             {/* Back Button */}
             <div className="container mx-auto px-4 pt-4 mb-2">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-[#8D6E63] hover:text-[#3E2723] transition-all group font-bold uppercase tracking-widest text-[10px]"
+                    className="flex items-center gap-2 text-black hover:text-[#B7A0BA] transition-all group font-bold uppercase tracking-widest text-[10px]"
                 >
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     Back
                 </button>
             </div>
             {/* Hero Section */}
-            <div className="bg-[#3E2723] text-white py-10 md:py-20 px-4 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl"></div>
+            <div className="bg-white border-b border-gray-100 py-10 md:py-20 px-4 relative overflow-hidden">
+                {/* Decorative */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-[#EBD3EC]/20 rounded-full -mr-48 -mt-48 blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#B7A0BA]/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4 md:mb-6">How can we help you?</h1>
+                    <span className="text-[#B7A0BA] text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Support Center</span>
+                    <h1 className="text-3xl md:text-5xl font-display font-bold mb-6 text-black">How can we help you?</h1>
                     <div className="relative max-w-2xl mx-auto">
                         <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                         <input
@@ -269,7 +273,7 @@ const HelpCenter = () => {
                             placeholder="Search for topics, questions..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white text-gray-900 rounded-full py-3 px-12 md:py-4 md:px-14 text-sm md:text-lg focus:outline-none focus:ring-4 focus:ring-[#8D6E63]/20 shadow-xl"
+                            className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-full py-3 px-12 md:py-4 md:px-14 text-sm md:text-lg focus:outline-none focus:ring-2 focus:ring-[#B7A0BA] focus:border-transparent shadow-sm transition-all"
                         />
                     </div>
                 </div>
@@ -285,13 +289,13 @@ const HelpCenter = () => {
                                 setActiveCategory(cat.id);
                                 setView('home');
                             }}
-                            className={`bg-white p-4 md:p-8 rounded-2xl shadow-sm border transition-all text-left group hover:shadow-md hover:-translate-y-1 ${activeCategory === cat.id && view === 'home' ? 'border-[#3E2723] ring-1 ring-[#3E2723]' : 'border-[#EFEBE9]'}`}
+                            className={`bg-white p-4 md:p-8 rounded-2xl shadow-sm border transition-all text-left group hover:shadow-lg hover:-translate-y-1 ${activeCategory === cat.id && view === 'home' ? 'border-black ring-1 ring-black' : 'border-gray-100'}`}
                         >
-                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-6 transition-colors ${activeCategory === cat.id && view === 'home' ? 'bg-[#3E2723] text-white' : 'bg-[#F5F5F5] text-[#8D6E63] group-hover:bg-[#3E2723] group-hover:text-white'}`}>
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-6 transition-colors ${activeCategory === cat.id && view === 'home' ? 'bg-black text-white' : 'bg-gray-50 text-black group-hover:bg-[#EBD3EC] group-hover:text-black'}`}>
                                 {cat.icon}
                             </div>
-                            <h3 className="text-sm md:text-lg font-bold text-[#3E2723] mb-1 md:mb-2">{cat.title}</h3>
-                            <p className="text-xs md:text-sm text-[#8D6E63] leading-relaxed hidden md:block">{cat.description}</p>
+                            <h3 className="text-sm md:text-lg font-bold text-black mb-1 md:mb-2 font-display">{cat.title}</h3>
+                            <p className="text-xs md:text-sm text-gray-500 leading-relaxed hidden md:block font-serif">{cat.description}</p>
                         </button>
                     ))}
                 </div>
@@ -302,30 +306,30 @@ const HelpCenter = () => {
                         {view === 'home' ? (
                             <div className="animate-in fade-in slide-in-from-left-4 duration-500">
                                 <div className="flex justify-between items-center mb-4 md:mb-8">
-                                    <h2 className="text-xl md:text-2xl font-serif font-bold text-[#3E2723]">Frequently Asked Questions</h2>
+                                    <h2 className="text-xl md:text-2xl font-display font-bold text-black">Frequently Asked Questions</h2>
                                     {activeCategory !== 'all' && (
-                                        <button onClick={() => setActiveCategory('all')} className="text-[#8D6E63] text-xs md:text-sm font-bold uppercase tracking-widest hover:text-[#3E2723]">Clear Filter</button>
+                                        <button onClick={() => setActiveCategory('all')} className="text-gray-500 text-xs md:text-sm font-bold uppercase tracking-widest hover:text-black transition-colors">Clear Filter</button>
                                     )}
                                 </div>
                                 <div className="space-y-3 md:space-y-4">
                                     {filteredFaqs.length > 0 ? (
                                         filteredFaqs.map((faq, idx) => (
-                                            <div key={idx} className="bg-white rounded-2xl border border-[#EFEBE9] overflow-hidden transition-all hover:shadow-sm">
+                                            <div key={idx} className="bg-white rounded-2xl border border-gray-100 overflow-hidden transition-all hover:bg-gray-50/50 hover:border-gray-200">
                                                 <details className="group">
                                                     <summary className="flex items-center justify-between p-4 md:p-6 cursor-pointer list-none">
-                                                        <h4 className="text-sm md:text-base font-bold text-[#3E2723] pr-4">{faq.question}</h4>
-                                                        <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-[#8D6E63] transition-transform group-open:rotate-90" />
+                                                        <h4 className="text-sm md:text-base font-bold text-black pr-4">{faq.question}</h4>
+                                                        <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-gray-400 transition-transform group-open:rotate-90" />
                                                     </summary>
-                                                    <div className="px-4 pb-4 md:px-6 md:pb-6 text-xs md:text-base text-[#5D4037] leading-relaxed animate-in fade-in slide-in-from-top-2">
+                                                    <div className="px-4 pb-4 md:px-6 md:pb-6 text-xs md:text-sm text-gray-600 leading-relaxed animate-in fade-in slide-in-from-top-2 font-serif">
                                                         {faq.answer}
                                                     </div>
                                                 </details>
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="text-center py-8 md:py-12 bg-white rounded-2xl border border-dashed border-[#EFEBE9]">
-                                            <HelpCircle className="w-8 h-8 md:w-12 md:h-12 text-[#EFEBE9] mx-auto mb-4" />
-                                            <p className="text-sm md:text-base text-[#8D6E63]">No results found for your search.</p>
+                                        <div className="text-center py-8 md:py-12 bg-white rounded-2xl border border-dashed border-gray-200">
+                                            <HelpCircle className="w-8 h-8 md:w-12 md:h-12 text-gray-300 mx-auto mb-4" />
+                                            <p className="text-sm md:text-base text-gray-500">No results found for your search.</p>
                                         </div>
                                     )}
                                 </div>
@@ -346,10 +350,10 @@ const HelpCenter = () => {
                     {/* Support Sidebar */}
                     <div className="space-y-6 md:space-y-8">
                         {/* Contact Card */}
-                        <div className="bg-[#3E2723] text-white p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden">
+                        <div className="bg-black text-white p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden">
                             <div className="relative z-10">
-                                <h3 className="text-xl md:text-2xl font-serif font-bold mb-2 md:mb-4">Still need help?</h3>
-                                <p className="text-white/80 mb-6 md:mb-8 text-xs md:text-sm leading-relaxed">Our support team is available from 10 AM to 7 PM to help you.</p>
+                                <h3 className="text-xl md:text-2xl font-display font-bold mb-2 md:mb-4">Still need help?</h3>
+                                <p className="text-white/80 mb-6 md:mb-8 text-xs md:text-sm leading-relaxed font-serif">Our support team is available from 10 AM to 7 PM to help you.</p>
 
                                 <div className="space-y-4 md:space-y-6">
                                     <button
@@ -357,7 +361,7 @@ const HelpCenter = () => {
                                             if (!user) return showNotification("Please login to contact support.");
                                             setView('contact');
                                         }}
-                                        className="w-full bg-white text-[#3E2723] py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 hover:bg-[#FDFBF7] transition-all shadow-lg active:scale-95 text-sm md:text-base"
+                                        className="w-full bg-white text-black py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 md:gap-3 hover:bg-[#EBD3EC] transition-all shadow-lg active:scale-95 text-sm md:text-base"
                                     >
                                         <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
                                         Contact Support
@@ -395,13 +399,13 @@ const HelpCenter = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#B7A0BA]/20 rounded-full blur-3xl"></div>
                         </div>
 
                         {/* Order Help Card */}
                         {user && orders.length > 0 && (
-                            <div className="bg-white p-6 md:p-8 rounded-3xl border border-[#EFEBE9] shadow-sm">
-                                <h3 className="text-base md:text-lg font-bold text-[#3E2723] mb-4 md:mb-6 flex items-center gap-2">
+                            <div className="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-sm">
+                                <h3 className="text-base md:text-lg font-bold text-black mb-4 md:mb-6 flex items-center gap-2 font-display">
                                     <Clock className="w-4 h-4 md:w-5 md:h-5" />
                                     Recent Orders
                                 </h3>
@@ -410,18 +414,18 @@ const HelpCenter = () => {
                                         <div
                                             key={order.id}
                                             onClick={() => handleNeedHelpWithOrder(order.id)}
-                                            className="p-3 md:p-4 rounded-xl bg-[#FDFBF7] border border-[#EFEBE9] group cursor-pointer hover:border-[#3E2723] transition-colors"
+                                            className="p-3 md:p-4 rounded-xl bg-gray-50 border border-gray-100 group cursor-pointer hover:border-black transition-colors"
                                         >
                                             <div className="flex justify-between items-start mb-1">
-                                                <span className="text-xs font-bold text-[#3E2723]">#{order.id.split('-')[1]}</span>
-                                                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8D6E63]">{new Date(order.date).toLocaleDateString()}</span>
+                                                <span className="text-xs font-bold text-black">#{order.id.split('-')[1]}</span>
+                                                <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">{new Date(order.date).toLocaleDateString()}</span>
                                             </div>
-                                            <p className="text-[10px] md:text-xs text-[#5D4037] line-clamp-1 mb-2 md:mb-3">{order.items[0].name}</p>
-                                            <button className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-[#3E2723] group-hover:underline">Need help?</button>
+                                            <p className="text-[10px] md:text-xs text-gray-600 line-clamp-1 mb-2 md:mb-3">{order.items[0].name}</p>
+                                            <button className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-[#B7A0BA] group-hover:underline group-hover:text-black">Need help?</button>
                                         </div>
                                     ))}
                                 </div>
-                                <Link to="/profile/orders" className="text-xs font-bold text-[#8D6E63] uppercase tracking-widest mt-4 md:mt-6 block text-center hover:text-[#3E2723]">View all orders</Link>
+                                <Link to="/profile/orders" className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-4 md:mt-6 block text-center hover:text-black transition-colors">View all orders</Link>
                             </div>
                         )}
                     </div>

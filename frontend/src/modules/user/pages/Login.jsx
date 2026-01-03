@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Gem, Gift, Crown } from 'lucide-react';
+import { Crown, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Login = () => {
     const { login } = useShop();
@@ -67,209 +68,180 @@ const Login = () => {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 overflow-hidden bg-[#FDFBF7]">
-            {/* Background with Blur Effect */}
-            {/* Dynamic Background */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 overflow-hidden bg-white">
+            {/* Dynamic Background - Abstract Luxury */}
             <div className="absolute inset-0 z-0 overflow-hidden">
                 <div
-                    className="absolute inset-0 bg-cover bg-center animate-in fade-in duration-1000"
+                    className="absolute inset-0 bg-cover bg-center animate-in fade-in duration-1000 grayscale-[20%]"
                     style={{
-                        backgroundImage: "url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2000&auto=format&fit=crop')", // Rich Gold/diamond texture
+                        backgroundImage: "url('https://images.unsplash.com/photo-1615655114865-4cc1bda5901e?q=80&w=2000&auto=format&fit=crop')", // Silver/White texture
                     }}
                 />
-                {/* Gradient Overlay for depth & warmth */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#3E2723]/90 via-[#3E2723]/50 to-black/60 backdrop-blur-[1px]"></div>
-
-                {/* Animated Particles/Orbs for 'Life' */}
-                <div className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-[#D7CCC8]/20 rounded-full blur-[100px] animate-pulse"></div>
-                <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[#8D6E63]/20 rounded-full blur-[100px] animate-pulse delay-1000"></div>
-                <div className="absolute bottom-0 left-1/3 w-[600px] h-[600px] bg-black/10 rounded-full blur-[80px]"></div>
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/70 to-black/20 backdrop-blur-[2px]"></div>
             </div>
 
-            {/* Close/Back Button */}
+            {/* Back Button */}
             <button
                 onClick={() => navigate('/')}
-                className="absolute top-6 right-6 z-20 text-white/80 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all"
+                className="absolute top-6 left-6 z-50 text-black hover:bg-black/5 p-3 rounded-full transition-all group"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                <ArrowLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
             </button>
 
-            {/* Mobile View - Premium App Style with Frosted Background */}
-            <div className="md:hidden absolute inset-0 z-50 overflow-hidden flex flex-col justify-center">
+            {/* Mobile View - Clean & Minimal */}
+            <div className="md:hidden absolute inset-0 z-50 flex flex-col justify-center px-4">
+                <div className="bg-white/90 backdrop-blur-xl px-6 py-8 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.1)] w-full max-w-sm mx-auto border border-white/50">
 
-                {/* Background Image Layer */}
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop"
-                        alt="Luxury Background"
-                        className="w-full h-full object-cover"
-                    />
-                    {/* Premium Overlays - Darkened for Card Contrast */}
-                    <div className="absolute inset-0 bg-black/30"></div>
-                </div>
+                    {/* Brand */}
+                    <div className="text-center mb-8">
+                        <Crown className="w-8 h-8 mx-auto mb-2 text-black" />
+                        <h1 className="font-display text-2xl font-bold tracking-[0.2em] text-black">SANDS</h1>
+                        <p className="text-[10px] text-[#B7A0BA] font-bold uppercase tracking-widest mt-1">Ornaments</p>
+                    </div>
 
-                <div className="relative z-10 w-full px-5 flex flex-col justify-center h-full items-center">
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-display text-black mb-1">
+                            {loginStep === 1 ? (isSignup ? 'Create Account' : 'Welcome Back') : 'Verify OTP'}
+                        </h2>
+                        <p className="text-gray-500 text-sm font-serif italic">
+                            {loginStep === 1
+                                ? (isSignup ? 'Begin your journey with us.' : 'Please login to continue.')
+                                : `Enter code sent to +91 ${phoneNumber}`
+                            }
+                        </p>
+                    </div>
 
-                    {/* Glass/White Card for Readability */}
-                    <div className="bg-white/95 backdrop-blur-md px-5 py-4 rounded-[2rem] shadow-2xl w-full max-w-sm border border-white/20">
-
-                        {/* Mobile Branding - Dark Theme for Light Page */}
-                        <div className="text-center mb-2 w-full">
-                            <Crown className="w-6 h-6 mx-auto mb-1 text-[#3E2723]" />
-                            <h1 className="font-display text-xl font-bold tracking-[0.2em] text-[#3E2723]">SANDS</h1>
-                        </div>
-
-                        <div className="w-8 h-1 bg-gray-200 rounded-full mx-auto mb-3"></div>
-
-                        <div className="flex-1">
-                            <h2 className="text-lg font-display font-bold text-[#3E2723] mb-0.5">
-                                {loginStep === 1 ? (isSignup ? 'Create Account' : 'Welcome Back') : 'Verify OTP'}
-                            </h2>
-                            <p className="text-[#8D6E63] text-[10px] mb-3">
-                                {loginStep === 1
-                                    ? (isSignup ? 'Sign up to start your journey.' : 'Please login to your account.')
-                                    : `Enter code sent to +91 ${phoneNumber}`
-                                }
-                            </p>
-
-                            {loginStep === 1 ? (
-                                <form onSubmit={handleSendOtp} className="space-y-2.5">
-                                    {isSignup && (
-                                        <div className="space-y-0.5">
-                                            <label className="text-[9px] font-bold text-[#8D6E63] uppercase tracking-widest pl-1">Full Name</label>
-                                            <input
-                                                type="text"
-                                                required
-                                                value={fullName}
-                                                onChange={(e) => setFullName(e.target.value)}
-                                                className="w-full h-11 xs:h-14 bg-gray-50 border-0 rounded-xl px-4 xs:px-5 text-[#3E2723] font-medium placeholder:text-gray-400 focus:ring-1 focus:ring-[#3E2723] outline-none transition-all text-sm xs:text-base"
-                                                placeholder="Enter your name"
-                                            />
-                                        </div>
-                                    )}
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-bold text-[#8D6E63] uppercase tracking-widest pl-1">Mobile Number</label>
-                                        <div className="flex bg-gray-50 rounded-xl overflow-hidden h-11 xs:h-14 items-center">
-                                            <div className="h-full px-3 xs:px-4 flex items-center gap-2 text-[#3E2723] font-bold border-r border-gray-200">
-                                                <span>🇮🇳</span>
-                                                <span>+91</span>
-                                            </div>
-                                            <input
-                                                type="tel"
-                                                value={phoneNumber}
-                                                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                                                placeholder="98765 43210"
-                                                className="flex-1 h-full bg-transparent border-0 px-3 xs:px-4 text-[#3E2723] font-bold text-base xs:text-xl placeholder:text-gray-300 focus:ring-0"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-[#3E2723] text-white py-3.5 xs:py-4 rounded-xl font-bold uppercase tracking-widest text-xs xs:text-sm shadow-lg shadow-[#3E2723]/25 active:scale-95 transition-transform mt-4"
-                                    >
-                                        Get OTP
-                                    </button>
-                                </form>
-                            ) : (
-                                <form onSubmit={handleVerifyOtp} className="space-y-6 xs:space-y-8">
-                                    <div className="flex justify-between gap-2 xs:gap-3 px-1 xs:px-2">
-                                        {otp.map((data, index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                maxLength="1"
-                                                value={data}
-                                                onChange={(e) => handleOtpChange(e.target, index)}
-                                                onFocus={(e) => e.target.select()}
-                                                className="w-12 h-14 xs:w-14 xs:h-16 bg-transparent border-b-2 border-[#3E2723]/30 focus:border-[#3E2723] text-center text-2xl xs:text-3xl font-bold text-[#3E2723] outline-none transition-all rounded-none p-0"
-                                            />
-                                        ))}
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-[#3E2723] text-white py-3.5 xs:py-4 rounded-xl font-bold uppercase tracking-widest text-xs xs:text-sm shadow-lg shadow-[#3E2723]/25 active:scale-95 transition-transform"
-                                    >
-                                        Verify & Proceed
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setLoginStep(1)}
-                                        className="w-full text-center text-[10px] xs:text-xs font-bold text-[#8D6E63] uppercase tracking-wider py-2"
-                                    >
-                                        Change Mobile Number
-                                    </button>
-                                </form>
+                    {loginStep === 1 ? (
+                        <form onSubmit={handleSendOtp} className="space-y-4">
+                            {isSignup && (
+                                <div className="space-y-1">
+                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Full Name</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={fullName}
+                                        onChange={(e) => setFullName(e.target.value)}
+                                        className="w-full h-12 bg-white border border-[#EBD3EC] rounded-xl px-4 text-black font-medium placeholder:text-gray-300 focus:border-[#B7A0BA] focus:ring-1 focus:ring-[#B7A0BA] outline-none transition-all"
+                                        placeholder="Enter your name"
+                                    />
+                                </div>
                             )}
-                        </div>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Mobile Number</label>
+                                <div className="flex bg-white border border-[#EBD3EC] rounded-xl overflow-hidden h-12 items-center focus-within:border-[#B7A0BA] focus-within:ring-1 focus-within:ring-[#B7A0BA] transition-all">
+                                    <div className="h-full px-4 flex items-center gap-2 text-black font-bold border-r border-[#EBD3EC]">
+                                        <span>+91</span>
+                                    </div>
+                                    <input
+                                        type="tel"
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                        placeholder="98765 43210"
+                                        className="flex-1 h-full bg-transparent border-0 px-4 text-black font-bold text-lg placeholder:text-gray-300 focus:ring-0 outline-none"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full bg-[#EBD3EC] text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-md mt-2"
+                            >
+                                Get OTP
+                            </button>
+                        </form>
+                    ) : (
+                        <form onSubmit={handleVerifyOtp} className="space-y-6">
+                            <div className="flex justify-between gap-3 px-2">
+                                {otp.map((data, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        maxLength="1"
+                                        value={data}
+                                        onChange={(e) => handleOtpChange(e.target, index)}
+                                        onFocus={(e) => e.target.select()}
+                                        className="w-14 h-16 bg-transparent border-b-2 border-[#EBD3EC] focus:border-[#B7A0BA] text-center text-3xl font-bold text-black outline-none transition-all p-0 rounded-none"
+                                    />
+                                ))}
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full bg-[#EBD3EC] text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-md"
+                            >
+                                Verify & Proceed
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setLoginStep(1)}
+                                className="w-full text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest py-2 hover:text-[#B7A0BA] transition-colors"
+                            >
+                                Change Mobile Number
+                            </button>
+                        </form>
+                    )}
 
-                        <div className="mt-6 text-center">
-                            <p className="text-xs text-[#8D6E63] font-medium">
-                                {isSignup ? 'Already Member?' : 'New here?'}
-                                <Link to={isSignup ? "/login" : "/signup"} className="ml-1 text-[#3E2723] font-bold border-b border-[#3E2723]">
-                                    {isSignup ? 'Login' : 'Join Now'}
-                                </Link>
-                            </p>
-                        </div>
+                    <div className="mt-8 text-center">
+                        <p className="text-xs text-gray-500 font-medium font-serif">
+                            {isSignup ? 'Already a Member?' : 'New here?'}
+                            <Link to={isSignup ? "/login" : "/signup"} className="ml-1 text-black font-bold border-b border-black hover:text-[#B7A0BA] hover:border-[#B7A0BA] transition-colors">
+                                {isSignup ? 'Login' : 'Join Now'}
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
 
-            {/* Desktop View (Hidden on Mobile) */}
-            <div className="w-full max-w-5xl bg-[#EFEBE9] rounded-2xl overflow-hidden shadow-2xl hidden md:flex flex-col-reverse lg:flex-row relative z-10 min-h-[550px] animate-in slide-in-from-bottom-8 fade-in duration-700">
+            {/* Desktop View - Split Screen */}
+            <div className="w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-2xl hidden md:flex flex-col-reverse lg:flex-row relative z-10 min-h-[600px] animate-in slide-in-from-bottom-8 fade-in duration-700">
 
                 {/* Left Side (Desktop) - Form */}
                 <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center p-8 lg:p-16 relative">
                     <div className="max-w-md mx-auto w-full">
-                        <h2 className="text-3xl font-display text-[#3E2723] mb-2">
-                            {isSignup ? 'Join Sands' : 'Explore Sands'}
+                        <span className="text-[#B7A0BA] text-xs font-bold uppercase tracking-[0.2em] mb-2 block">
+                            {isSignup ? 'Start Your Journey' : 'Welcome Back'}
+                        </span>
+                        <h2 className="text-4xl font-display text-black mb-2">
+                            {isSignup ? 'Create Account' : 'Login'}
                         </h2>
-                        <p className="text-[#8D6E63] font-serif mb-8">Timeless Elegance, Crafted for You.</p>
+                        <p className="text-gray-500 font-serif italic mb-8">Timeless Elegance, Crafted for You.</p>
 
                         {loginStep === 1 ? (
                             <form onSubmit={handleSendOtp} className="space-y-6">
-
-                                {/* Signup Fields */}
                                 {isSignup && (
-                                    <div className="space-y-4 animate-in slide-in-from-top-4 fade-in duration-300">
-                                        <div>
-                                            <label className="block text-xs font-bold text-[#5D4037] uppercase tracking-widest mb-1.5">Full Name</label>
-                                            <input
-                                                type="text"
-                                                required
-                                                value={fullName}
-                                                onChange={(e) => setFullName(e.target.value)}
-                                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#5D4037] focus:ring-1 focus:ring-[#5D4037] transition-all"
-                                                placeholder="John Doe"
-                                            />
-                                        </div>
-
+                                    <div className="animate-in slide-in-from-top-4 fade-in duration-300">
+                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Full Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={fullName}
+                                            onChange={(e) => setFullName(e.target.value)}
+                                            className="w-full border-b border-gray-300 px-0 py-3 text-black placeholder:text-gray-300 focus:outline-none focus:border-[#B7A0BA] transition-all bg-transparent"
+                                            placeholder="John Doe"
+                                        />
                                     </div>
                                 )}
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 uppercase tracking-widest mb-2">Mobile Number</label>
-                                    <div className="flex border border-gray-300 rounded-lg overflow-hidden focus-within:ring-1 focus-within:ring-[#5D4037] focus-within:border-[#5D4037] transition-all">
-                                        <div className="bg-gray-50 px-4 py-3 border-r border-gray-300 flex items-center gap-2 text-gray-600">
-                                            <span className="text-lg">🇮🇳</span>
-                                            <span className="font-medium font-sans">+91</span>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Mobile Number</label>
+                                    <div className="flex border-b border-gray-300 focus-within:border-[#B7A0BA] transition-all">
+                                        <div className="py-3 pr-3 flex items-center gap-2 text-black font-bold">
+                                            <span>+91</span>
                                         </div>
                                         <input
                                             type="tel"
                                             value={phoneNumber}
                                             onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
                                             placeholder="Enter Mobile Number"
-                                            className="flex-1 px-4 py-3 outline-none text-gray-800 font-medium tracking-wide placeholder-gray-400"
+                                            className="flex-1 py-3 outline-none text-black font-medium tracking-wide placeholder:text-gray-300 bg-transparent"
                                             required
                                         />
                                     </div>
                                 </div>
 
-
-
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#3E2723] text-white py-4 rounded-lg font-bold uppercase tracking-wider hover:bg-[#5D4037] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                    className="w-full bg-[#EBD3EC] text-black py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                 >
                                     Get OTP
                                 </button>
@@ -277,7 +249,7 @@ const Login = () => {
                         ) : (
                             <form onSubmit={handleVerifyOtp} className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
                                 <div className="text-center">
-                                    <p className="text-gray-500 mb-6">Enter the 4-digit code sent to <span className="font-bold text-[#3E2723]">+91 {phoneNumber}</span></p>
+                                    <p className="text-gray-500 mb-6 font-serif">Enter the 4-digit code sent to <span className="font-bold text-black">+91 {phoneNumber}</span></p>
                                     <div className="flex justify-center gap-4 mb-6">
                                         {otp.map((data, index) => (
                                             <input
@@ -287,7 +259,7 @@ const Login = () => {
                                                 value={data}
                                                 onChange={(e) => handleOtpChange(e.target, index)}
                                                 onFocus={(e) => e.target.select()}
-                                                className="w-14 h-14 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold focus:border-[#5D4037] focus:ring-2 focus:ring-[#5D4037]/20 outline-none transition-all text-[#3E2723]"
+                                                className="w-14 h-14 border border-[#EBD3EC] rounded-xl text-center text-2xl font-bold focus:border-[#B7A0BA] focus:ring-2 focus:ring-[#B7A0BA]/20 outline-none transition-all text-black bg-[#FAFAFA]"
                                             />
                                         ))}
                                     </div>
@@ -295,7 +267,7 @@ const Login = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#3E2723] text-white py-4 rounded-lg font-bold uppercase tracking-wider hover:bg-[#5D4037] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                    className="w-full bg-[#EBD3EC] text-black py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#B7A0BA] hover:text-white transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                 >
                                     Verify & {isSignup ? 'Sign Up' : 'Login'}
                                 </button>
@@ -303,7 +275,7 @@ const Login = () => {
                                 <button
                                     type="button"
                                     onClick={() => setLoginStep(1)}
-                                    className="w-full text-center text-sm text-[#8D6E63] hover:text-[#5D4037] underline font-medium"
+                                    className="w-full text-center text-xs text-gray-400 hover:text-[#B7A0BA] transition-colors font-bold uppercase tracking-widest"
                                 >
                                     Change Phone Number
                                 </button>
@@ -311,37 +283,36 @@ const Login = () => {
                         )}
 
                         <div className="mt-8 text-center pt-6 border-t border-gray-100">
-                            <p className="text-sm text-gray-600">
-                                {isSignup ? 'Already have an account?' : 'New to Sands Ornaments?'}
+                            <p className="text-xs text-gray-500 font-serif">
+                                {isSignup ? 'Already have an account?' : 'New to Sands?'}
                                 <Link
                                     to={isSignup ? "/login" : "/signup"}
-                                    className="ml-2 font-bold text-[#3E2723] hover:underline"
+                                    className="ml-2 font-bold text-black border-b border-black/20 hover:border-black hover:text-[#B7A0BA] transition-all"
                                 >
-                                    {isSignup ? 'Login' : 'Create an account'}
+                                    {isSignup ? 'Login' : 'Create Account'}
                                 </Link>
-                            </p>
-                        </div>
-
-                        <div className="mt-8 text-center">
-                            <p className="text-xs text-gray-400 max-w-xs mx-auto leading-relaxed">
-                                By continuing, you agree to Sands Ornaments's <a href="#" className="underline hover:text-[#5D4037]">Terms of Use</a> and <a href="#" className="underline hover:text-[#5D4037]">Privacy Policy</a>.
                             </p>
                         </div>
                     </div>
                 </div >
 
+                {/* Right Side (Desktop) - Image & Branding */}
                 <div
-                    className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center items-center relative overflow-hidden bg-cover bg-center"
+                    className="w-full lg:w-1/2 p-12 flex flex-col justify-end items-start relative overflow-hidden bg-cover bg-center group"
                     style={{
-                        backgroundImage: "url('https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=1000&auto=format&fit=crop')" // Elegant Model with Jewellery
+                        backgroundImage: "url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1000&auto=format&fit=crop')" // Clean Silver/Jewellery Image
                     }}
                 >
-                    <div className="absolute inset-0 bg-[#3E2723]/30 backdrop-blur-[2px]"></div>
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 
-                    <div className="relative z-10 text-center animate-in slide-in-from-right-8 duration-700 delay-150 p-8 glass rounded-2xl border border-white/20 bg-black/20 backdrop-blur-sm">
-                        <h3 className="font-serif text-xl text-white/90 mb-2 tracking-wide">Welcome to</h3>
-                        <h1 className="font-display text-4xl lg:text-5xl text-white uppercase tracking-widest mb-4 shadow-sm">Sands Ornaments</h1>
-                        <p className="font-serif italic text-white/80 text-sm tracking-wider">India's Premium Silver Jewellery Brand</p>
+                    <div className="relative z-10 text-left p-6 animate-in slide-in-from-bottom-8 duration-700 delay-150">
+                        <Crown className="w-12 h-12 text-white mb-6 opacity-90" />
+                        <h3 className="font-serif text-2xl text-white/90 mb-2 tracking-wide italic">Discover</h3>
+                        <h1 className="font-display text-5xl lg:text-6xl text-white uppercase tracking-wider mb-4 leading-none">
+                            Pure <br /> Elegance
+                        </h1>
+                        <p className="font-sans text-white/70 text-sm tracking-widest uppercase border-l-2 border-white/50 pl-4">Premium Silver Collection</p>
                     </div>
                 </div>
             </div >

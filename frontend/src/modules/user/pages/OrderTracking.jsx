@@ -61,9 +61,9 @@ const OrderTracking = () => {
 
     if (!order) {
         return (
-            <div className="min-h-screen pt-32 pb-12 px-4 flex flex-col items-center justify-center">
-                <h2 className="text-2xl font-serif text-[#3E2723] mb-4">Order Not Found</h2>
-                <Link to="/profile" className="text-[#3E2723] underline hover:text-[#5D4037]">Back to Profile</Link>
+            <div className="min-h-screen pt-32 pb-12 px-4 flex flex-col items-center justify-center bg-white">
+                <h2 className="text-2xl font-display text-black mb-4">Order Not Found</h2>
+                <Link to="/profile" className="text-black underline hover:text-[#B7A0BA]">Back to Profile</Link>
             </div>
         );
     }
@@ -148,12 +148,12 @@ const OrderTracking = () => {
                 <div key={index} className="flex gap-4 md:gap-6 relative pb-8 last:pb-0">
                     {/* Connecting Line */}
                     {index !== steps.length - 1 && (
-                        <div className={`absolute left-[5px] md:left-[11px] top-4 md:top-6 bottom-0 w-0.5 z-0 transition-colors duration-500 ${step.completed && steps[index + 1]?.completed ? 'bg-[#3E2723]' : 'bg-[#EFEBE9]'}`}></div>
+                        <div className={`absolute left-[5px] md:left-[11px] top-4 md:top-6 bottom-0 w-0.5 z-0 transition-colors duration-500 ${step.completed && steps[index + 1]?.completed ? 'bg-black' : 'bg-gray-200'}`}></div>
                     )}
 
                     {/* Dot/Icon */}
                     <div className="relative z-10 flex-shrink-0 mt-0.5 md:mt-1">
-                        <div className={`w-3 h-3 md:w-6 md:h-6 rounded-full flex items-center justify-center transition-all duration-500 ${step.completed ? 'bg-[#3E2723] md:shadow-md' : 'bg-[#D7CCC8]'} ${step.current ? 'ring-4 ring-[#3E2723]/10 scale-110' : ''}`}>
+                        <div className={`w-3 h-3 md:w-6 md:h-6 rounded-full flex items-center justify-center transition-all duration-500 ${step.completed ? 'bg-black md:shadow-md' : 'bg-gray-200'} ${step.current ? 'ring-4 ring-black/10 scale-110' : ''}`}>
                             <span className="hidden md:block">
                                 {step.completed && <Check className="w-3.5 h-3.5 text-white" />}
                             </span>
@@ -162,10 +162,10 @@ const OrderTracking = () => {
 
                     {/* Content */}
                     <div className="flex-1 -mt-1 md:mt-0">
-                        <h4 className={`text-xs md:text-lg font-serif font-bold transition-colors duration-500 ${step.completed || step.current ? 'text-[#3E2723]' : 'text-gray-400'}`}>
+                        <h4 className={`text-xs md:text-lg font-display font-bold transition-colors duration-500 ${step.completed || step.current ? 'text-black' : 'text-gray-400'}`}>
                             {step.status}
                         </h4>
-                        {step.date && <p className="text-[10px] md:text-sm text-[#8D6E63] font-medium mt-0.5 md:mt-1">{step.date}</p>}
+                        {step.date && <p className="text-[10px] md:text-sm text-gray-500 font-medium mt-0.5 md:mt-1 font-serif">{step.date}</p>}
                     </div>
                 </div>
             ))}
@@ -175,27 +175,27 @@ const OrderTracking = () => {
     // --- DETAILED VIEW ---
     if (view) {
         return (
-            <div className="min-h-screen bg-[#FDFBF7] font-sans pt-0 md:pt-12 pb-12">
+            <div className="min-h-screen bg-white font-sans pt-0 md:pt-12 pb-12 selection:bg-[#B7A0BA] selection:text-white">
                 <div className="md:hidden bg-white shadow-sm p-4 sticky top-0 z-20 flex items-center gap-4">
-                    <button onClick={() => navigate(`/order-tracking/${orderId}`)} className="p-2 -ml-2 text-[#3E2723]">
+                    <button onClick={() => navigate(`/order-tracking/${orderId}`)} className="p-2 -ml-2 text-black">
                         <ArrowLeft className="w-5 h-5" />
                     </button>
-                    <h1 className="text-lg font-bold font-serif text-[#3E2723]">{activeTitle}</h1>
+                    <h1 className="text-lg font-bold font-display text-black">{activeTitle}</h1>
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-0">
                     <div className="hidden md:block mb-6">
-                        <button onClick={() => navigate(`/order-tracking/${orderId}`)} className="inline-flex items-center text-sm font-medium text-[#8D6E63] hover:text-[#3E2723] transition-colors group">
+                        <button onClick={() => navigate(`/order-tracking/${orderId}`)} className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-black transition-colors group uppercase tracking-widest font-bold text-[10px]">
                             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
                             Back to Summary
                         </button>
                     </div>
 
-                    <div className="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-[#EFEBE9] min-h-[50vh]">
-                        <div className="mb-8 md:mb-12 border-b border-[#EFEBE9] pb-6">
-                            <span className="block text-[10px] md:text-xs text-[#8D6E63] uppercase tracking-widest font-bold mb-2">Current Activity</span>
-                            <h2 className="text-2xl md:text-4xl font-serif font-bold text-[#3E2723] mb-2">{activeStatusObj.status}</h2>
-                            <p className="text-sm md:text-base text-[#8D6E63]">{activeStatusObj.date}</p>
+                    <div className="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-gray-100 min-h-[50vh]">
+                        <div className="mb-8 md:mb-12 border-b border-gray-100 pb-6">
+                            <span className="block text-[10px] md:text-xs text-[#B7A0BA] uppercase tracking-widest font-bold mb-2">Current Activity</span>
+                            <h2 className="text-2xl md:text-4xl font-display font-bold text-black mb-2">{activeStatusObj.status}</h2>
+                            <p className="text-sm md:text-base text-gray-500 font-serif">{activeStatusObj.date}</p>
                         </div>
 
                         <RenderTimeline steps={activeTimelineSteps} />
@@ -207,33 +207,33 @@ const OrderTracking = () => {
 
     // --- SUMMARY VIEW ---
     return (
-        <div className="min-h-screen bg-[#FDFBF7] font-sans pt-0 md:pt-12 pb-12">
+        <div className="min-h-screen bg-white font-sans pt-0 md:pt-12 pb-12 selection:bg-[#B7A0BA] selection:text-white">
             <div className="md:hidden bg-white shadow-sm p-4 sticky top-0 z-20 flex items-center gap-4">
-                <Link to="/profile" className="p-2 -ml-2 text-[#3E2723]">
+                <Link to="/profile" className="p-2 -ml-2 text-black">
                     <ArrowLeft className="w-5 h-5" />
                 </Link>
-                <h1 className="text-lg font-bold font-serif text-[#3E2723]">Order #{order.id.replace('ORD-', '')}</h1>
+                <h1 className="text-lg font-bold font-display text-black">Order #{order.id.replace('ORD-', '')}</h1>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-0">
                 <div className="hidden md:block mb-6">
-                    <Link to="/profile" className="inline-flex items-center text-sm font-medium text-[#8D6E63] hover:text-[#3E2723] transition-colors group">
+                    <Link to="/profile" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-black transition-colors group uppercase tracking-widest font-bold text-[10px]">
                         <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
                         Back to Orders
                     </Link>
                 </div>
 
-                <h2 className="text-xl md:text-2xl font-serif font-bold text-[#3E2723] mb-6 flex items-center gap-2">
-                    <Clock className="w-5 h-5 md:w-6 md:h-6" />
+                <h2 className="text-xl md:text-2xl font-display font-bold text-black mb-6 flex items-center gap-2">
+                    <Clock className="w-5 h-5 md:w-6 md:h-6 text-[#B7A0BA]" />
                     Order Journey
                 </h2>
 
                 <div className="space-y-8">
                     {/* 1. Return/Exchange Request Card (Latest Activity First) */}
                     {returnRequest && (
-                        <div className="bg-white border border-[#EFEBE9] rounded-xl shadow-sm overflow-hidden group hover:shadow-md transition-shadow relative z-10">
+                        <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden group hover:shadow-md transition-shadow relative z-10">
 
-                            <div className="p-3 md:p-5 border-b border-[#FDFBF7] bg-[#FDFBF7] flex justify-between items-center">
+                            <div className="p-3 md:p-5 border-b border-gray-50 bg-gray-50 flex justify-between items-center">
                                 <div className="flex items-center gap-2.5">
                                     {/* Icon Logic: Spin if processing, Green Check if complete */}
                                     {mockReturnStep >= (returnRequest?.type === 'exchange' ? 4 : 3) ? (
@@ -246,15 +246,15 @@ const OrderTracking = () => {
                                         </div>
                                     )}
                                     <div>
-                                        <span className="text-[9px] md:text-[10px] font-bold text-[#8D6E63] uppercase tracking-widest block">
+                                        <span className="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
                                             {returnRequest.type === 'exchange' ? 'Exchange Request' : 'Return Request'}
                                         </span>
-                                        <h3 className="text-xs md:text-sm font-bold text-[#3E2723] mt-0.5">{currentReturnStatus.status}</h3>
+                                        <h3 className="text-xs md:text-sm font-bold text-black mt-0.5">{currentReturnStatus.status}</h3>
                                     </div>
                                 </div>
                                 <button
                                     onClick={() => navigate(`/order-tracking/${orderId}/return`)}
-                                    className="bg-white border border-[#EFEBE9] text-[#3E2723] px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-bold uppercase tracking-wider hover:bg-[#3E2723] hover:text-white transition-colors"
+                                    className="bg-white border border-gray-200 text-black px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
                                 >
                                     Track Detail
                                 </button>
@@ -271,7 +271,7 @@ const OrderTracking = () => {
 
                                     {/* Arrow indicating exchange */}
                                     {returnRequest.type === 'exchange' && (
-                                        <div className="text-[#8D6E63]">
+                                        <div className="text-gray-400">
                                             <RefreshCw className="w-4 h-4" />
                                         </div>
                                     )}
@@ -285,11 +285,11 @@ const OrderTracking = () => {
                                     ))}
 
                                     <div className="flex flex-col justify-center pl-1">
-                                        <p className="text-xs font-bold text-[#3E2723]">ID: {returnRequest.id}</p>
+                                        <p className="text-xs font-bold text-black">ID: {returnRequest.id}</p>
                                         {returnRequest.type === 'exchange' ? (
-                                            <p className="text-[10px] text-[#8D6E63] font-bold mt-0.5">Size Changed: <span className="text-[#3E2723]">M</span></p>
+                                            <p className="text-[10px] text-gray-500 font-bold mt-0.5">Size Changed: <span className="text-black">M</span></p>
                                         ) : (
-                                            <p className="text-[10px] text-[#8D6E63] mt-0.5">Refund Method: Original Source</p>
+                                            <p className="text-[10px] text-gray-500 mt-0.5">Refund Method: Original Source</p>
                                         )}
                                     </div>
                                 </div>
@@ -298,18 +298,18 @@ const OrderTracking = () => {
                     )}
 
                     {/* 2. Original Order Card */}
-                    <div className="bg-white border border-[#EFEBE9] rounded-xl shadow-sm overflow-hidden group hover:shadow-md transition-shadow relative">
+                    <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden group hover:shadow-md transition-shadow relative">
                         {/* Connecting line to show flow (Upwards to Return if exists) */}
-                        {returnRequest && <div className="absolute top-[-24px] left-8 w-0.5 h-6 bg-[#EFEBE9] z-0"></div>}
+                        {returnRequest && <div className="absolute top-[-24px] left-8 w-0.5 h-6 bg-gray-100 z-0"></div>}
 
-                        <div className="p-3 md:p-5 border-b border-[#FAFAFA] bg-[#FAFAFA] flex justify-between items-center">
+                        <div className="p-3 md:p-5 border-b border-gray-50 bg-gray-50 flex justify-between items-center">
                             <div>
-                                <span className="text-[9px] md:text-[10px] font-bold text-[#8D6E63] uppercase tracking-widest block">Original Delivery</span>
-                                <h3 className="text-xs md:text-sm font-bold text-[#3E2723] mt-0.5">{currentDeliveryStatus.status}</h3>
+                                <span className="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Original Delivery</span>
+                                <h3 className="text-xs md:text-sm font-bold text-black mt-0.5">{currentDeliveryStatus.status}</h3>
                             </div>
                             <button
                                 onClick={() => navigate(`/order-tracking/${orderId}/detail`)}
-                                className="bg-white border border-[#EFEBE9] text-[#3E2723] px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-bold uppercase tracking-wider hover:bg-[#3E2723] hover:text-white transition-colors"
+                                className="bg-white border border-gray-200 text-black px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
                             >
                                 Track Detail
                             </button>
@@ -322,8 +322,8 @@ const OrderTracking = () => {
                                     </div>
                                 ))}
                                 <div className="flex flex-col justify-center pl-1">
-                                    <p className="text-xs font-bold text-[#3E2723]">{order.items.length} Items</p>
-                                    <p className="text-[10px] text-[#8D6E63] mt-0.5">Total: ₹{order.total.toLocaleString()}</p>
+                                    <p className="text-xs font-bold text-black">{order.items.length} Items</p>
+                                    <p className="text-[10px] text-gray-500 mt-0.5">Total: ₹{order.total.toLocaleString()}</p>
                                 </div>
                             </div>
                         </div>

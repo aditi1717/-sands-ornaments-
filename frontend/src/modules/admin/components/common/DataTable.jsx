@@ -45,7 +45,7 @@ const DataTable = ({
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className="bg-gray-50 text-gray-600 font-bold border-b border-gray-200 uppercase tracking-widest text-[9px] md:text-[10px]">
+                        <thead className="bg-white text-gray-600 font-bold border-b border-gray-200 uppercase tracking-widest text-[9px] md:text-[10px]">
                             <tr>
                                 {columns.map((col, index) => (
                                     <th key={index} className={`px-4 md:px-6 py-3 md:py-4 ${col.align === 'right' ? 'text-right' : ''}`}>

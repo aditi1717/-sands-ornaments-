@@ -13,23 +13,25 @@ const OrderSuccess = () => {
     }, []);
 
     return (
-        <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 bg-[#FDFBF7]">
-            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-in zoom-in duration-500">
-                <CheckCircle className="w-12 h-12 text-green-600" />
+        <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-white animate-in fade-in duration-700">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-[#FCF2FB] border border-[#EBD3EC] rounded-full flex items-center justify-center mb-6 md:mb-8 animate-in zoom-in duration-500 shadow-sm">
+                <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-[#B7A0BA]" strokeWidth={1.5} />
             </div>
 
-            <h1 className="text-4xl font-serif font-bold text-[#3E2723] mb-4">Order Placed Successfully!</h1>
-            <p className="text-gray-600 mb-8 max-w-lg text-lg">
+            <h1 className="text-3xl md:text-5xl font-display font-bold text-black mb-4 tracking-wide">Order Placed Successfully!</h1>
+            <p className="text-gray-500 mb-8 md:mb-10 max-w-lg text-sm md:text-base font-serif leading-relaxed">
                 Thank you for your purchase. Your order has been received and is being processed. You will receive an email confirmation shortly.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/shop" className="bg-[#5D4037] text-white px-8 py-3.5 rounded-md hover:bg-[#4E342E] transition-colors font-medium flex items-center justify-center gap-2 shadow-lg">
-                    Continue Shopping <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link to="/profile/orders" className="bg-white border border-[#5D4037] text-[#5D4037] px-8 py-3.5 rounded-md hover:bg-[#FDFBF7] transition-colors font-medium">
-                    View My Orders
-                </Link>
+                <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                    <Link to="/shop" className="flex-1 bg-black text-white px-8 py-4 rounded-xl hover:bg-[#B7A0BA] transition-all font-bold uppercase tracking-widest text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg shadow-black/10 active:scale-95">
+                        Continue Shopping <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <Link to="/profile?tab=orders" className="flex-1 bg-white border border-gray-200 text-black px-8 py-4 rounded-xl hover:border-black hover:bg-gray-50 transition-all font-bold uppercase tracking-widest text-xs md:text-sm flex items-center justify-center active:scale-95">
+                        View My Orders
+                    </Link>
+                </div>
             </div>
         </div>
     );

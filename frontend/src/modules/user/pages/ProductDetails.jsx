@@ -9,22 +9,22 @@ import { Heart, ShoppingBag, Star, Share2, Plus, Minus, Truck, ShieldCheck, Smil
 
 // ... AccordionItem component ...
 const AccordionItem = ({ title, children, isOpen, onClick }) => (
-    <div className="border-b border-gray-200">
+    <div className="border-b border-[#EBD3EC]/50">
         <button
             className="w-full py-4 flex items-center justify-between text-left focus:outline-none group"
             onClick={onClick}
         >
-            <span className={`font-serif text-lg font-medium transition-colors ${isOpen ? 'text-[#5D4037]' : 'text-gray-800 group-hover:text-[#5D4037]'}`}>
+            <span className={`font-serif text-lg font-bold transition-colors ${isOpen ? 'text-black' : 'text-gray-800 group-hover:text-black'}`}>
                 {title}
             </span>
             <span className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-                <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-[#5D4037]' : 'text-gray-400 group-hover:text-[#5D4037]'}`} />
+                <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-[#B7A0BA]' : 'text-gray-400 group-hover:text-[#B7A0BA]'}`} />
             </span>
         </button>
         <div
             className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}
         >
-            <div className="text-sm text-gray-600 leading-relaxed font-light">
+            <div className="text-sm text-gray-500 leading-relaxed font-serif">
                 {children}
             </div>
         </div>
@@ -161,12 +161,12 @@ const ProductDetails = () => {
     ];
 
     return (
-        <div className="bg-[#FDFBF7] min-h-screen py-8 pb-24 md:pb-8 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out fill-mode-both">
+        <div className="bg-white min-h-screen py-8 pb-24 md:pb-8 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out fill-mode-both selection:bg-[#B7A0BA] selection:text-white">
             {/* Back Button */}
             <div className="container mx-auto px-4 mb-6 md:mb-10">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-[#8D6E63] hover:text-[#3E2723] transition-all group font-bold uppercase tracking-widest text-[9px] md:text-xs"
+                    className="flex items-center gap-2 text-black hover:text-[#B7A0BA] transition-all group font-bold uppercase tracking-widest text-[10px] md:text-xs"
                 >
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:-translate-x-1 transition-transform">
                         <ArrowLeft className="w-4 h-4 md:w-5 h-5 text-gray-500" />
@@ -217,7 +217,7 @@ const ProductDetails = () => {
                                 <tbody>
                                     {sizeChartData.map((row, index) => (
                                         <tr key={index} className="bg-white border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4 font-bold text-[#5D4037]">{row.size}</td>
+                                            <td className="px-6 py-4 font-bold text-black">{row.size}</td>
                                             <td className="px-6 py-4 text-gray-600">{row.diameter}</td>
                                             <td className="px-6 py-4 text-gray-600">{row.circumference}</td>
                                         </tr>
@@ -250,12 +250,12 @@ const ProductDetails = () => {
                         <div className="h-[350px] lg:h-[480px] w-full bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm relative group">
                             <img src={selectedImage || product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-zoom-in" />
                             <div className="absolute top-3 right-3 md:top-4 md:right-4 flex flex-col gap-2 z-10">
-                                <button className="bg-white/90 p-2 md:p-2.5 rounded-full shadow-md hover:bg-[#5D4037] hover:text-white text-gray-600 transition-all">
+                                <button className="bg-white/90 p-2 md:p-2.5 rounded-full shadow-md hover:bg-[#B7A0BA] hover:text-white text-black transition-all">
                                     <Share2 className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.5} />
                                 </button>
                                 <button
                                     onClick={handleWishlist}
-                                    className={`md:hidden p-2 md:p-2.5 rounded-full shadow-md transition-all ${isWishlisted ? 'bg-red-50 text-red-500' : 'bg-white/90 text-gray-600 hover:bg-[#5D4037] hover:text-white'}`}
+                                    className={`md:hidden p-2 md:p-2.5 rounded-full shadow-md transition-all ${isWishlisted ? 'bg-red-50 text-red-500' : 'bg-white/90 text-black hover:bg-[#B7A0BA] hover:text-white'}`}
                                 >
                                     <Heart className={`w-4 h-4 md:w-5 md:h-5 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={1.5} />
                                 </button>
@@ -269,7 +269,7 @@ const ProductDetails = () => {
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(img)}
-                                        className={`relative shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border-2 transition-all shadow-sm ${selectedImage === img ? 'border-[#5D4037] ring-1 ring-[#5D4037]' : 'border-transparent hover:border-gray-200'}`}
+                                        className={`relative shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border-2 transition-all shadow-sm ${selectedImage === img ? 'border-[#B7A0BA] ring-1 ring-[#B7A0BA]' : 'border-transparent hover:border-gray-200'}`}
                                     >
                                         <img src={img} alt={`View ${idx + 1}`} className="w-full h-full object-cover" />
                                         {selectedImage === img && <div className="absolute inset-0 bg-black/10" />}
@@ -282,9 +282,9 @@ const ProductDetails = () => {
                     {/* Right: Product Info */}
                     <div className="space-y-6 pt-2">
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-serif font-extrabold text-[#5D4037] mb-2 md:mb-4 leading-tight">{product.name}</h1>
+                            <h1 className="text-2xl md:text-3xl font-display font-bold text-black mb-2 md:mb-4 leading-tight">{product.name}</h1>
                             <div className="flex items-center gap-4 text-sm px-1">
-                                <div className="flex items-center text-[#5D4037]">
+                                <div className="flex items-center text-[#B7A0BA]">
                                     {[...Array(5)].map((_, i) => (
                                         <Star key={i} className={`w-3.5 h-3.5 ${i < Math.round(product.rating) ? 'fill-current' : 'text-gray-300'} `} />
                                     ))}
@@ -297,11 +297,11 @@ const ProductDetails = () => {
 
                         <div className="border-b border-gray-100 pb-6">
                             <div className="flex items-baseline gap-3 mb-1">
-                                <span className="text-2xl md:text-3xl font-bold md:font-semibold text-[#212121]">₹{product.price.toLocaleString()}</span>
+                                <span className="text-2xl md:text-3xl font-bold md:font-semibold text-black">₹{product.price.toLocaleString()}</span>
                                 {product.originalPrice > product.price && (
                                     <>
                                         <span className="text-base md:text-lg text-gray-400 line-through font-medium">₹{product.originalPrice.toLocaleString()}</span>
-                                        <span className="bg-[#212121] text-white text-[10px] font-bold px-2 py-1 rounded-sm tracking-wider">SAVE {discount}%</span>
+                                        <span className="bg-black text-white text-[10px] font-bold px-2 py-1 rounded-sm tracking-wider">SAVE {discount}%</span>
                                     </>
                                 )}
                             </div>
@@ -312,12 +312,12 @@ const ProductDetails = () => {
                             {/* Size Selector */}
                             <div>
                                 <div className="flex justify-between items-center mb-2">
-                                    <label className="text-sm font-bold text-gray-800 uppercase tracking-wide">
+                                    <label className="text-sm font-bold text-black uppercase tracking-wide">
                                         Select Size
                                     </label>
                                     <button
                                         onClick={() => setIsSizeChartOpen(true)}
-                                        className="text-xs text-[#8D6E63] underline hover:text-[#5D4037]"
+                                        className="text-xs text-[#B7A0BA] underline hover:text-black font-bold"
                                     >
                                         Size Chart
                                     </button>
@@ -338,8 +338,8 @@ const ProductDetails = () => {
                                                 onClick={() => { setSelectedSize(size); setSizeError(false); }}
                                                 className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center text-sm font-medium transition-all
                                                         ${selectedSize === size
-                                                        ? 'border-[#5D4037] bg-[#5D4037] text-white shadow-md scale-105'
-                                                        : 'border-gray-200 text-gray-700 hover:border-[#8D6E63] hover:text-[#8D6E63] bg-white'
+                                                        ? 'border-black bg-black text-white shadow-md scale-105'
+                                                        : 'border-gray-200 text-gray-700 hover:border-[#B7A0BA] hover:text-black bg-white'
                                                     }
                                                     `}
                                             >
@@ -355,7 +355,7 @@ const ProductDetails = () => {
                                 )}
                             </div>
 
-                            <div className="flex items-center gap-2 text-green-700 text-sm font-medium">
+                            <div className="flex items-center gap-2 text-emerald-700 text-sm font-medium">
                                 <ShieldCheck className="w-4 h-4" />
                                 <span>In stock - ready to ship</span>
                             </div>
@@ -365,13 +365,13 @@ const ProductDetails = () => {
                                 <div className="flex gap-3 h-12">
                                     <button
                                         onClick={handleAddToCart}
-                                        className="flex-1 font-medium text-sm tracking-wide transition-all duration-200 transform hover:scale-95 flex items-center justify-center gap-2 uppercase bg-[#212121] text-white hover:bg-black"
+                                        className="flex-1 font-medium text-sm tracking-wide transition-all duration-200 transform hover:scale-95 flex items-center justify-center gap-2 uppercase bg-black text-white hover:bg-[#B7A0BA] hover:shadow-lg"
                                     >
                                         <ShoppingBag className="w-4 h-4" /> Add to Bag
                                     </button>
                                     <button
                                         onClick={handleWishlist}
-                                        className={`w-12 border flex items-center justify-center transition-colors bg-white ${isWishlisted ? 'border-red-500 text-red-500' : 'border-gray-300 text-gray-700 hover:border-[#5D4037] hover:text-[#5D4037]'}`}
+                                        className={`w-12 border flex items-center justify-center transition-colors bg-white ${isWishlisted ? 'border-red-500 text-red-500' : 'border-gray-300 text-black hover:border-[#B7A0BA] hover:text-[#B7A0BA]'}`}
                                     >
                                         <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={1.5} />
                                     </button>
@@ -385,17 +385,17 @@ const ProductDetails = () => {
                                         // Handle Buy Now Logic (Direct Cart + Navigate)
                                         handleAddToCart();
                                     }}
-                                    className="w-full h-12 bg-[#5D4037] text-white font-medium text-sm tracking-wide hover:bg-[#4E342E] transition-colors uppercase shadow-md"
+                                    className="w-full h-12 bg-[#EBD3EC] text-black font-bold text-sm tracking-wide hover:bg-[#B7A0BA] hover:text-white transition-colors uppercase shadow-sm"
                                 >
                                     Buy It Now
                                 </button>
                             </div>
 
                             {/* Mobile Sticky Action Bar (Fixed Overlay) */}
-                            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#EFEBE9] p-3 z-[110] md:hidden flex gap-3 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] pb-safe">
+                            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 z-[110] md:hidden flex gap-3 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] pb-safe">
                                 <button
                                     onClick={handleAddToCart}
-                                    className="flex-1 bg-[#212121] text-white rounded-xl h-12 font-bold uppercase tracking-wide text-[10px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                                    className="flex-1 bg-black text-white rounded-xl h-12 font-bold uppercase tracking-wide text-[10px] flex items-center justify-center gap-2 active:scale-95 transition-transform hover:bg-[#B7A0BA]"
                                 >
                                     <ShoppingBag className="w-4 h-4" /> Add to Bag
                                 </button>
@@ -407,7 +407,7 @@ const ProductDetails = () => {
                                         }
                                         handleAddToCart();
                                     }}
-                                    className="flex-1 bg-[#5D4037] text-white rounded-xl h-12 font-bold uppercase tracking-wide text-[10px] active:scale-95 transition-transform"
+                                    className="flex-1 bg-[#EBD3EC] text-black hover:bg-[#B7A0BA] hover:text-white rounded-xl h-12 font-bold uppercase tracking-wide text-[10px] active:scale-95 transition-transform"
                                 >
                                     Buy Now
                                 </button>
@@ -456,27 +456,27 @@ const ProductDetails = () => {
                             </AccordionItem>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-2 md:gap-4 bg-[#F5F0EB] p-4 md:p-6 rounded-sm mt-2">
+                        <div className="grid grid-cols-3 gap-2 md:gap-4 bg-[#FCF2FB] p-4 md:p-6 rounded-2xl mt-2 border border-[#EBD3EC]/50">
                             <div className="flex flex-col items-center text-center gap-2">
-                                <ShieldCheck className="w-6 h-6 text-[#5D4037]" strokeWidth={1.5} />
-                                <span className="text-[10px] uppercase font-medium tracking-wide text-[#5D4037]">Lifetime Warranty</span>
+                                <ShieldCheck className="w-6 h-6 text-[#B7A0BA]" strokeWidth={1.5} />
+                                <span className="text-[10px] uppercase font-bold tracking-wide text-black">Lifetime Warranty</span>
                             </div>
                             <div className="flex flex-col items-center text-center gap-2">
-                                <Smile className="w-6 h-6 text-[#5D4037]" strokeWidth={1.5} />
-                                <span className="text-[10px] uppercase font-medium tracking-wide text-[#5D4037]">Skin Safe Jewellery</span>
+                                <Smile className="w-6 h-6 text-[#B7A0BA]" strokeWidth={1.5} />
+                                <span className="text-[10px] uppercase font-bold tracking-wide text-black">Skin Safe Jewellery</span>
                             </div>
                             <div className="flex flex-col items-center text-center gap-2">
-                                <Gift className="w-6 h-6 text-[#5D4037]" strokeWidth={1.5} />
-                                <span className="text-[10px] uppercase font-medium tracking-wide text-[#5D4037]">18k Gold Tone Plated</span>
+                                <Gift className="w-6 h-6 text-[#B7A0BA]" strokeWidth={1.5} />
+                                <span className="text-[10px] uppercase font-bold tracking-wide text-black">18k Gold Tone Plated</span>
                             </div>
                         </div>
 
                         <div className="mt-2">
                             <div className="flex items-center justify-between mb-4">
-                                <span className="text-sm font-bold text-gray-800 font-sans">Estimated Delivery Date</span>
+                                <span className="text-sm font-bold text-black font-display">Estimated Delivery Date</span>
                                 <button
                                     onClick={() => setOpenSection('pincode')}
-                                    className="text-xs font-bold text-[#8D6E63] hover:text-[#5D4037] uppercase tracking-wider border-b border-[#8D6E63] pb-0.5"
+                                    className="text-xs font-bold text-[#B7A0BA] hover:text-black uppercase tracking-wider border-b border-[#B7A0BA] pb-0.5"
                                 >
                                     Check Pincode
                                 </button>
@@ -525,18 +525,18 @@ const ProductDetails = () => {
                 <div className="mt-4 md:mt-8">
                     <div className="flex gap-10 border-b border-gray-100 mb-6">
                         <button
-                            className={`pb-4 text-sm md:text-base font-bold uppercase tracking-[0.15em] transition-all relative ${activeTab === 'related' ? 'text-[#5D4037]' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`pb-4 text-sm md:text-base font-bold uppercase tracking-[0.15em] transition-all relative ${activeTab === 'related' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
                             onClick={() => setActiveTab('related')}
                         >
                             Related products
-                            {activeTab === 'related' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#5D4037] animate-in fade-in slide-in-from-left-2 duration-300"></span>}
+                            {activeTab === 'related' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-black animate-in fade-in slide-in-from-left-2 duration-300"></span>}
                         </button>
                         <button
-                            className={`pb-4 text-sm md:text-base font-bold uppercase tracking-[0.15em] transition-all relative ${activeTab === 'recent' ? 'text-[#5D4037]' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`pb-4 text-sm md:text-base font-bold uppercase tracking-[0.15em] transition-all relative ${activeTab === 'recent' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
                             onClick={() => setActiveTab('recent')}
                         >
                             Recently viewed
-                            {activeTab === 'recent' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#5D4037] animate-in fade-in slide-in-from-left-2 duration-300"></span>}
+                            {activeTab === 'recent' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-black animate-in fade-in slide-in-from-left-2 duration-300"></span>}
                         </button>
                     </div>
 
@@ -571,7 +571,7 @@ const ProductDetails = () => {
                 <div className="mt-4 border-t border-gray-200 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700 relative pb-24 md:pb-0">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
                         <div className="flex items-center gap-2">
-                            <div className="flex text-[#5D4037]">
+                            <div className="flex text-[#B7A0BA]">
                                 {[...Array(5)].map((_, i) => (
                                     <Star key={i} className="w-5 h-5 fill-current" />
                                 ))}
@@ -584,13 +584,13 @@ const ProductDetails = () => {
                         <div className="flex gap-3 relative w-full md:w-auto">
                             <button
                                 onClick={() => { setIsWriteReviewOpen(true); setReviewStep(1); }}
-                                className="flex-1 md:flex-none border border-gray-300 px-4 py-2.5 rounded text-sm font-medium text-gray-700 hover:border-[#5D4037] hover:text-[#5D4037] transition-colors text-center"
+                                className="flex-1 md:flex-none border border-gray-300 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest text-black hover:border-black hover:bg-black hover:text-white transition-colors text-center"
                             >
                                 Write a review
                             </button>
                             <button
                                 onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-                                className={`border border-gray-300 p-2.5 rounded text-gray-700 hover:border-[#5D4037] hover:text-[#5D4037] transition-colors ${isReviewFilterOpen ? 'bg-gray-100' : ''}`}
+                                className={`border border-gray-300 p-2.5 rounded text-black hover:border-black hover:bg-black hover:text-white transition-colors ${isReviewFilterOpen ? 'bg-black text-white' : ''}`}
                             >
                                 <SlidersHorizontal className="w-5 h-5" />
                             </button>
@@ -609,7 +609,7 @@ const ProductDetails = () => {
                                                 className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded flex justify-between items-center"
                                             >
                                                 {option}
-                                                {sortBy === option && <Check className="w-4 h-4 text-[#5D4037]" />}
+                                                {sortBy === option && <Check className="w-4 h-4 text-black" />}
                                             </button>
                                         ))}
                                     </div>
@@ -626,7 +626,7 @@ const ProductDetails = () => {
                                         <h4 className="font-bold text-gray-900">{review.name}</h4>
                                         <span className="text-xs text-gray-400">{review.date}</span>
                                     </div>
-                                    <div className="flex text-[#5D4037]">
+                                    <div className="flex text-[#B7A0BA]">
                                         {[...Array(5)].map((_, i) => (
                                             <Star key={i} className={`w-3 h-3 ${i < review.rating ? 'fill-current' : 'text-gray-200'} `} />
                                         ))}
@@ -645,9 +645,9 @@ const ProductDetails = () => {
                 <div className="fixed inset-0 bg-black/50 z-[120] flex items-end md:items-center justify-center p-0 md:p-4 backdrop-blur-sm animate-in fade-in duration-300">
                     <div className="bg-white rounded-t-2xl md:rounded-xl w-full max-w-lg overflow-hidden shadow-2xl animate-in slide-in-from-bottom-10 md:zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
                         {/* Modal Header */}
-                        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50 sticky top-0 z-10">
-                            <h3 className="font-serif font-bold text-lg text-[#5D4037]">Write a Review</h3>
-                            <button onClick={() => setIsWriteReviewOpen(false)} className="text-gray-400 hover:text-gray-600 bg-white rounded-full p-1">
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-white sticky top-0 z-10">
+                            <h3 className="font-display font-bold text-lg text-black">Write a Review</h3>
+                            <button onClick={() => setIsWriteReviewOpen(false)} className="text-gray-400 hover:text-black bg-white rounded-full p-1">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
@@ -659,7 +659,7 @@ const ProductDetails = () => {
                                 {[1, 2, 3].map((step) => (
                                     <div
                                         key={step}
-                                        className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${reviewStep >= step ? 'bg-[#5D4037]' : 'bg-gray-200'}`}
+                                        className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${reviewStep >= step ? 'bg-black' : 'bg-gray-200'}`}
                                     />
                                 ))}
                             </div>
@@ -675,14 +675,14 @@ const ProductDetails = () => {
                                                 className="transition-transform hover:scale-110 focus:outline-none"
                                             >
                                                 <Star
-                                                    className={`w-8 h-8 md:w-10 md:h-10 ${star <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                                                    className={`w-8 h-8 md:w-10 md:h-10 ${star <= rating ? 'fill-[#B7A0BA] text-[#B7A0BA]' : 'text-gray-300'}`}
                                                 />
                                             </button>
                                         ))}
                                     </div>
                                     <button
                                         onClick={() => setReviewStep(2)}
-                                        className="w-full bg-[#5D4037] text-white py-3.5 rounded-lg font-bold tracking-widest uppercase text-xs md:text-sm hover:bg-[#4E342E] transition-all mt-4 active:scale-95 shadow-lg shadow-black/5"
+                                        className="w-full bg-black text-white py-3.5 rounded-lg font-bold tracking-widest uppercase text-xs md:text-sm hover:bg-[#B7A0BA] transition-all mt-4 active:scale-95 shadow-lg shadow-black/5"
                                     >
                                         Next
                                     </button>
@@ -710,7 +710,7 @@ const ProductDetails = () => {
                                         </button>
                                         <button
                                             onClick={() => setReviewStep(3)}
-                                            className="flex-1 bg-[#5D4037] text-white px-4 py-3.5 rounded-lg font-bold tracking-widest uppercase text-xs md:text-sm hover:bg-[#4E342E] transition-all active:scale-95 shadow-lg shadow-black/5"
+                                            className="flex-1 bg-black text-white px-4 py-3.5 rounded-lg font-bold tracking-widest uppercase text-xs md:text-sm hover:bg-[#B7A0BA] transition-all active:scale-95 shadow-lg shadow-black/5"
                                         >
                                             Next
                                         </button>
@@ -757,7 +757,7 @@ const ProductDetails = () => {
                                         <button
                                             onClick={handleReviewSubmit}
                                             disabled={!reviewTitle.trim() && !reviewComment.trim() && rating === 0}
-                                            className={`flex-1 text-white px-4 py-3.5 rounded-lg transition-all font-bold tracking-widest uppercase text-xs md:text-sm ${(!reviewTitle.trim() && !reviewComment.trim() && rating === 0) ? 'bg-gray-300 cursor-not-allowed shadow-none' : 'bg-[#5D4037] hover:bg-[#4E342E] shadow-lg shadow-black/10'}`}
+                                            className={`flex-1 text-white px-4 py-3.5 rounded-lg transition-all font-bold tracking-widest uppercase text-xs md:text-sm ${(!reviewTitle.trim() && !reviewComment.trim() && rating === 0) ? 'bg-gray-300 cursor-not-allowed shadow-none' : 'bg-black hover:bg-[#B7A0BA] shadow-lg shadow-black/10'}`}
                                         >
                                             Submit
                                         </button>

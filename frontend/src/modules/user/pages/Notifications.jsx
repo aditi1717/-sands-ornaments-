@@ -1,124 +1,145 @@
 import React from 'react';
 import { useShop } from '../../../context/ShopContext';
-import { Bell, BellOff, ArrowLeft, Trash2 } from 'lucide-react';
+import { Bell, BellOff, ArrowLeft, Trash2, ShoppingBag } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Notifications = () => {
     const { notificationsEnabled, userNotifications, toggleNotificationSettings, deleteUserNotification } = useShop();
     const navigate = useNavigate();
 
-    // Compact styles for mobile
-    const styles = {
-        page: "min-h-screen bg-[#FDFBF7] font-sans pb-12",
-        header: "bg-white shadow-sm p-4 sticky top-0 z-20 flex items-center gap-4 border-b border-[#EFEBE9]",
-        headerTitle: "text-lg font-bold font-serif text-[#3E2723]",
-        container: "max-w-2xl mx-auto px-4 py-8",
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
-        // Empty/Off State
-        emptyContainer: "flex flex-col items-center justify-center text-center py-20 px-4",
-        iconContainer: "bg-[#EFEBE9] p-6 rounded-full mb-6",
-        emptyTitle: "text-xl font-bold text-[#3E2723] mb-2 font-serif",
-        emptyText: "text-sm text-[#8D6E63] leading-relaxed max-w-xs mx-auto mb-8",
-        actionButton: "bg-[#3E2723] text-white px-8 py-3 rounded-xl text-sm font-bold uppercase tracking-widest hover:bg-[#5D4037] transition-all shadow-lg shadow-[#3E2723]/20 active:scale-95",
-
-        // List State
-        listContainer: "space-y-4",
-        card: "bg-white p-4 rounded-xl border border-[#EFEBE9] shadow-sm flex gap-4 items-start relative group transition-all hover:shadow-md",
-        cardIcon: "p-2 rounded-lg bg-[#EFEBE9] text-[#5D4037] flex-shrink-0",
-        cardContent: "flex-grow min-w-0 pr-6", // pr-6 for delete button space
-        cardTitle: "text-sm font-bold text-[#3E2723] mb-1",
-        cardMessage: "text-xs text-[#8D6E63] leading-relaxed mb-2 line-clamp-2",
-        cardDate: "text-[10px] text-[#A1887F] font-medium uppercase tracking-wider",
-        deleteBtn: "absolute top-4 right-4 text-gray-400 hover:text-red-500 p-1 rounded-md transition-colors",
+    // Animation Variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
     };
 
-    // --- RENDER CONTENT ---
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+    };
 
-    // 1. If Notifications are OFF (or list is empty, effectively "no notifications")
-    // The user wants a specific message and "Turn On" button if notifications are "no notification".
-    // I will treat "Disabled" OR "Empty" similarly but distinct actions.
-
-    if (!notificationsEnabled) {
-        return (
-            <div className={styles.page}>
-                <div className={styles.header}>
-                    <button onClick={() => navigate(-1)} className="text-[#3E2723]">
-                        <ArrowLeft className="w-5 h-5" />
+    return (
+        <div className="min-h-screen bg-white font-body pb-12 selection:bg-[#B7A0BA] selection:text-white">
+            {/* Header - Minimal & Clean */}
+            <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#EBD3EC]/50 px-4 py-4 md:py-5">
+                <div className="max-w-4xl mx-auto flex items-center justify-between">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="p-2 rounded-full hover:bg-black/5 transition-colors text-black group"
+                        aria-label="Go back"
+                    >
+                        <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform duration-300" />
                     </button>
-                    <h1 className={styles.headerTitle}>Notifications</h1>
-                </div>
-                <div className={styles.container}>
-                    <div className={styles.emptyContainer}>
-                        <div className={styles.iconContainer}>
-                            <BellOff className="w-12 h-12 text-[#8D6E63]" />
-                        </div>
-                        <h2 className={styles.emptyTitle}>You have no notifications</h2>
-                        <p className={styles.emptyText}>
-                            Get alerts on order updates, latest offers, and new arrivals.
-                        </p>
-                        <button onClick={toggleNotificationSettings} className={styles.actionButton}>
-                            Turn On Notifications
-                        </button>
-                    </div>
+                    <h1 className="text-xl md:text-2xl font-display font-medium text-black tracking-wide">Notifications</h1>
+                    <div className="w-9 md:w-10"></div> {/* Spacer for centering */}
                 </div>
             </div>
-        );
-    }
 
-    // 2. Enabled but Empty
-    if (userNotifications.length === 0) {
-        return (
-            <div className={styles.page}>
-                <div className={styles.header}>
-                    <button onClick={() => navigate(-1)} className="text-[#3E2723]">
-                        <ArrowLeft className="w-5 h-5" />
-                    </button>
-                    <h1 className={styles.headerTitle}>Notifications</h1>
-                </div>
-                <div className={styles.container}>
-                    <div className={styles.emptyContainer}>
-                        <div className={styles.iconContainer}>
-                            <Bell className="w-12 h-12 text-[#8D6E63]" />
-                        </div>
-                        <h2 className={styles.emptyTitle}>All caught up!</h2>
-                        <p className={styles.emptyText}>
+            <div className="container mx-auto px-4 py-8 md:py-12 max-w-3xl">
+
+                {/* Case 1: Notifications Disabled */}
+                {!notificationsEnabled && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex flex-col items-center justify-center text-center py-16 md:py-24"
+                    >
+                        {/* Icon removed as per request */}
+                        <h2 className="text-2xl md:text-3xl font-display font-medium text-black mb-4">Notifications are Off</h2>
+                        <p className="text-gray-500 text-sm md:text-base mb-8 max-w-md mx-auto leading-relaxed font-serif">
+                            Stay updated with exclusive offers, order statuses, and new arrivals by enabling notifications.
+                        </p>
+                        <button
+                            onClick={toggleNotificationSettings}
+                            className="bg-[#EBD3EC] text-black px-8 md:px-10 py-3 md:py-4 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-[#B7A0BA] hover:text-white transition-all transform hover:scale-105 shadow-md"
+                        >
+                            Enable Notifications
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* Case 2: No Notifications (Enabled but empty) */}
+                {notificationsEnabled && userNotifications.length === 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex flex-col items-center justify-center text-center py-16 md:py-24"
+                    >
+                        {/* Icon removed as per request */}
+                        <h2 className="text-2xl md:text-3xl font-display font-medium text-black mb-3">All Caught Up</h2>
+                        <p className="text-gray-500 text-sm md:text-base mb-8 max-w-xs mx-auto font-serif">
                             You have no new notifications at the moment.
                         </p>
-                        <Link to="/shop" className="text-[#3E2723] font-bold text-sm underline mt-4">Continue Shopping</Link>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+                        <Link
+                            to="/shop"
+                            className="inline-flex items-center gap-2 text-black font-bold text-xs md:text-sm uppercase tracking-widest hover:text-[#B7A0BA] group transition-colors"
+                        >
+                            Continue Shopping
+                            <ShoppingBag className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                        </Link>
+                    </motion.div>
+                )}
 
-    // 3. Enabled and Has Items
-    return (
-        <div className={styles.page}>
-            <div className={styles.header}>
-                <button onClick={() => navigate(-1)} className="text-[#3E2723]">
-                    <ArrowLeft className="w-5 h-5" />
-                </button>
-                <h1 className={styles.headerTitle}>Notifications ({userNotifications.length})</h1>
-            </div>
-
-            <div className={styles.container}>
-                <div className={styles.listContainer}>
-                    {userNotifications.map((note) => (
-                        <div key={note.id} className={styles.card}>
-                            <div className={styles.cardIcon}>
-                                <Bell className="w-5 h-5" />
-                            </div>
-                            <div className={styles.cardContent}>
-                                <h3 className={styles.cardTitle}>{note.title}</h3>
-                                <p className={styles.cardMessage}>{note.message}</p>
-                                <span className={styles.cardDate}>{note.date}</span>
-                            </div>
-                            <button onClick={() => deleteUserNotification(note.id)} className={styles.deleteBtn}>
-                                <Trash2 className="w-4 h-4" />
-                            </button>
+                {/* Case 3: List of Notifications */}
+                {notificationsEnabled && userNotifications.length > 0 && (
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="space-y-4 md:space-y-6"
+                    >
+                        <div className="flex items-center justify-between mb-6 px-1">
+                            <span className="text-xs font-bold uppercase tracking-wider text-[#B7A0BA]">{userNotifications.length} Unread</span>
+                            <span className="text-xs font-serif italic text-gray-400">Swipe to delete</span>
                         </div>
-                    ))}
-                </div>
+
+                        <AnimatePresence mode='popLayout'>
+                            {userNotifications.map((note) => (
+                                <motion.div
+                                    key={note.id}
+                                    layout
+                                    variants={itemVariants}
+                                    exit={{ opacity: 0, x: -100, transition: { duration: 0.3 } }}
+                                    className="group relative bg-white p-5 md:p-6 rounded-2xl border border-[#EBD3EC] hover:border-[#B7A0BA] shadow-sm hover:shadow-md transition-all duration-300"
+                                >
+                                    <div className="flex items-start gap-4 md:gap-6 pr-8">
+                                        <div className="p-3 bg-gray-50 rounded-xl text-[#B7A0BA] flex-shrink-0">
+                                            <Bell className="w-5 h-5 md:w-6 md:h-6" />
+                                        </div>
+                                        <div className="flex-grow min-w-0">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 mb-1 md:mb-2">
+                                                <h3 className="text-base md:text-lg font-display text-black">{note.title}</h3>
+                                                <span className="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-wider">{note.date}</span>
+                                            </div>
+                                            <p className="text-xs md:text-sm text-gray-600 leading-relaxed font-serif line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                                                {note.message}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Delete Button */}
+                                    <button
+                                        onClick={() => deleteUserNotification(note.id)}
+                                        className="absolute top-4 right-4 p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                                        aria-label="Delete notification"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
+                )}
             </div>
         </div>
     );

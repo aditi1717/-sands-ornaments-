@@ -111,7 +111,7 @@ const OrderManagement = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-gray-50 text-gray-500 uppercase tracking-widest text-[9px] md:text-[11px] font-bold border-b border-gray-100">
+                            <tr className="bg-white text-gray-500 uppercase tracking-widest text-[9px] md:text-[11px] font-bold border-b border-gray-100">
                                 <th className="px-4 md:px-6 py-3 md:py-4">Order Details</th>
                                 <th className="px-4 md:px-6 py-3 md:py-4">Customer</th>
                                 <th className="px-4 md:px-6 py-3 md:py-4">Total Amount</th>
