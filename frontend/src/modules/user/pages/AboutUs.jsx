@@ -1,259 +1,135 @@
-import React, { useEffect, useRef } from 'react';
-import { Truck, ThumbsUp, Lock, ArrowLeft, Gem, PenTool, HeartHandshake } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from '@studio-freight/lenis';
-
-import aboutCraft1 from '../assets/about_craft_1.png';
-import aboutCraft2 from '../assets/about_craft_2.png';
-import aboutCraft3 from '../assets/about_craft_3.png';
-
-gsap.registerPlugin(ScrollTrigger);
+import React from 'react';
+import { Truck, ThumbsUp, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const AboutUs = () => {
-    const navigate = useNavigate();
-    const containerRef = useRef(null);
-
-    useEffect(() => {
-        // Initialize Lenis for smooth scrolling
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-
-        // GSAP Animations
-        const ctx = gsap.context(() => {
-            // Text Hero Reveal
-            gsap.from(".hero-text", {
-                y: 100,
-                opacity: 0,
-                duration: 1.5,
-                ease: "power4.out",
-                stagger: 0.2
-            });
-
-            // Image Parallax Effect
-            gsap.utils.toArray(".parallax-image").forEach((img) => {
-                gsap.to(img, {
-                    yPercent: -20,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: img.parentElement,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    }
-                });
-            });
-
-            // Horizontal Scroll Section for Values
-            const sections = gsap.utils.toArray(".value-card");
-            gsap.to(sections, {
-                xPercent: -100 * (sections.length - 1),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".values-container",
-                    pin: true,
-                    scrub: 1,
-                    snap: 1 / (sections.length - 1),
-                    end: "+=3000", // Scrolling duration
-                }
-            });
-
-            // Fade in sections
-            gsap.utils.toArray(".fade-in-section").forEach((elem) => {
-                gsap.from(elem, {
-                    y: 50,
-                    opacity: 0,
-                    duration: 1,
-                    scrollTrigger: {
-                        trigger: elem,
-                        start: "top 80%",
-                    }
-                });
-            });
-
-        }, containerRef);
-
-        return () => {
-            lenis.destroy();
-            ctx.revert();
-        };
-    }, []);
-
     return (
-        <div ref={containerRef} className="bg-white min-h-screen text-black font-body selection:bg-[#D39A9F] selection:text-white overflow-hidden">
-
-            {/* Navigation & Header */}
-            <div className="fixed top-0 left-0 w-full z-50 p-6 mix-blend-difference text-white pointer-events-none">
-                <div className="container mx-auto flex justify-between items-center pointer-events-auto">
-                    <button
-                        onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 hover:text-[#D39A9F] transition-all group font-bold uppercase tracking-widest text-xs"
-                    >
-                        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" />
-                        Back
-                    </button>
-                    <span className="font-display text-xl tracking-widest uppercase">Sands Ornaments</span>
-                </div>
-            </div>
-
+        <div className="bg-[#FDFBF7] min-h-screen text-[#5D4037] font-sans pb-20">
             {/* Hero Section */}
-            <section className="relative h-screen flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent z-10" />
-                    <div className="w-full h-full bg-[#f8f5f2] relative overflow-hidden">
-                        <motion.div
-                            initial={{ scale: 1.2 }}
-                            animate={{ scale: 1 }}
-                            transition={{ duration: 2, ease: "easeOut" }}
-                            className="absolute -right-20 -top-20 w-[60vw] h-[60vw] rounded-full bg-[#EBCDD0]/20 blur-[100px]"
-                        />
-                        <motion.div
-                            initial={{ scale: 1.2 }}
-                            animate={{ scale: 1 }}
-                            transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-                            className="absolute -left-20 bottom-0 w-[40vw] h-[40vw] rounded-full bg-[#D39A9F]/10 blur-[80px]"
-                        />
-                    </div>
-                </div>
+            <section className="container mx-auto px-4 py-20">
+                <div className="flex flex-col lg:flex-row items-center gap-16">
+                    {/* Left: Text Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="w-full lg:w-1/2 space-y-6 flex flex-col items-center text-center"
+                    >
+                        <h1 className="text-5xl md:text-6xl font-serif text-[#8D6E63] mb-4">About Us</h1>
+                        <p className="text-[#8D6E63] text-sm leading-relaxed max-w-md font-serif">
+                            Welcome to <strong>Sands Ornaments</strong>, where elegance meets timeless tradition. We are more than just a jewellery brand; we are curators of silver artistry designed to adorn your soul.
+                        </p>
+                        <p className="text-[#8D6E63] text-sm leading-relaxed max-w-md font-serif">
+                            Our journey began with a passion for bringing high-quality, handcrafted 925 Sterling Silver pieces to the modern woman. Every necklace, ring, and bracelet in our collection tells a story of skilled craftsmanship and attention to detail. We believe that luxury should be an everyday experience, not just for special occasions.
+                        </p>
+                        <p className="text-[#8D6E63] text-sm leading-relaxed max-w-md font-serif">
+                            At Sands Ornaments, we are committed to sustainability and ethical sourcing, ensuring that beauty does not come at a cost to our planet. Join us in celebrating your unique style with ornaments that shine as bright as you do.
+                        </p>
+                    </motion.div>
 
-                <div className="container mx-auto px-4 relative z-20 text-center">
-                    <span className="hero-text block text-[#D39A9F] text-sm md:text-base font-bold uppercase tracking-[0.4em] mb-6">
-                        Est. 2024
-                    </span>
-                    <h1 className="hero-text font-display text-5xl md:text-8xl lg:text-9xl leading-none text-black mb-8">
-                        The Art of <br />
-                        <span className="font-serif italic text-[#8D6E63]">Reflection</span>
-                    </h1>
-                    <p className="hero-text max-w-xl mx-auto text-gray-600 font-serif text-lg leading-relaxed">
-                        We don't just craft jewelry. We forge manifestations of your inner light,
-                        casting silver into stories that last forever.
-                    </p>
-                </div>
-            </section>
-
-            {/* Collage Parallax Section */}
-            <section className="py-20 md:py-32 overflow-hidden">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row items-center gap-20">
-                        {/* Text Content */}
-                        <div className="w-full lg:w-1/2 fade-in-section">
-                            <h2 className="text-4xl md:text-6xl font-display text-black mb-8 leading-tight">
-                                Curating <br /><span className="italic font-serif text-[#D39A9F]">Timelessness</span>
-                            </h2>
-                            <p className="text-gray-600 text-lg leading-relaxed mb-6 font-serif">
-                                At Sands Ornaments, we believe that true luxury lies in the details.
-                                Our artisans spend hours perfecting every curve, ensuring that each piece of
-                                925 Sterling Silver isn't just an accessory, but a masterpiece.
-                            </p>
-                            <p className="text-gray-600 text-lg leading-relaxed font-serif pl-6 border-l-2 border-[#D39A9F]">
-                                "Silver is the mirror of the soul. We ensure yours shines the brightest."
-                            </p>
+                    {/* Right: Collage Image - Redesigned to match screenshot */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="w-full lg:w-1/2 relative h-[500px]"
+                    >
+                        {/* Main Top Left Image - Landscape */}
+                        <div className="absolute top-0 left-0 w-72 h-48 overflow-hidden shadow-lg z-10 border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&q=80&w=600" alt="Landscape Jewellery" className="w-full h-full object-cover" />
                         </div>
 
-                        {/* Parallax Images */}
-                        <div className="w-full lg:w-1/2 relative h-[600px]">
-                            <div className="absolute top-0 right-0 w-3/4 h-3/4 overflow-hidden rounded-[2rem]">
-                                <img src={aboutCraft1} alt="Craftsmanship" className="parallax-image w-full h-[120%] object-cover" />
-                            </div>
-                            <div className="absolute bottom-0 left-0 w-1/2 h-1/2 overflow-hidden rounded-full border-8 border-white shadow-2xl">
-                                <img src={aboutCraft3} alt="Detail" className="parallax-image w-full h-[120%] object-cover" />
-                            </div>
+                        {/* Center Bottom Circle Image - Bracelet */}
+                        <div className="absolute top-28 left-20 w-64 h-64 rounded-full overflow-hidden shadow-2xl z-30 border-8 border-white">
+                            <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=600" alt="Gold Bracelet" className="w-full h-full object-cover" />
                         </div>
-                    </div>
+
+                        {/* Top Right Rounded Image - Wearing Necklace */}
+                        <div className="absolute -top-10 right-0 w-60 h-60 rounded-tr-[3rem] rounded-bl-[3rem] overflow-hidden shadow-xl z-20 border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=600" alt="Wearing Necklace" className="w-full h-full object-cover" />
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Horizontal Scroll Values Section */}
-            <section className="values-container bg-black text-white relative py-20 overflow-hidden">
-                <div className="container mx-auto px-4 h-full flex flex-col justify-center">
-                    <div className="mb-12">
-                        <span className="text-[#D39A9F] text-sm font-bold uppercase tracking-[0.2em]">Our Core</span>
-                        <h2 className="text-5xl md:text-7xl font-display mt-4">Values</h2>
-                    </div>
-
-                    {/* The scrolling wrapper */}
-                    <div className="flex gap-10 md:gap-20 w-[300%] md:w-[200%]">
-                        {/* Card 1 */}
-                        <div className="value-card w-[80vw] md:w-[40vw] flex-shrink-0">
-                            <div className="border-t border-white/20 pt-8">
-                                <Gem className="w-12 h-12 text-[#D39A9F] mb-6" />
-                                <h3 className="text-4xl font-display mb-4">Authenticity</h3>
-                                <p className="text-gray-400 font-serif text-lg leading-relaxed">
-                                    100% Hallmarked 925 Sterling Silver. No compromises. We believe in the purity of material and the honesty of design.
-                                </p>
-                            </div>
+            {/* Features Section */}
+            <section className="container mx-auto px-4 py-20">
+                <div className="flex flex-col md:flex-row justify-center items-start gap-12 md:gap-24 text-center">
+                    {/* Feature 1 */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="flex flex-col items-center max-w-xs"
+                    >
+                        <div className="w-16 h-16 rounded-full bg-[#8D6E63] text-white flex items-center justify-center mb-6 shadow-lg">
+                            <Truck className="w-8 h-8" />
                         </div>
+                        <h3 className="font-serif text-xl text-[#5D4037] mb-3">Free Shipping</h3>
+                        <p className="text-[#8D6E63] text-xs leading-relaxed">
+                            Enjoy free and fast delivery on all orders above ₹2000. We ensure your precious pieces reach you safely and on time, anywhere in the country.
+                        </p>
+                    </motion.div>
 
-                        {/* Card 2 */}
-                        <div className="value-card w-[80vw] md:w-[40vw] flex-shrink-0">
-                            <div className="border-t border-white/20 pt-8">
-                                <PenTool className="w-12 h-12 text-[#D39A9F] mb-6" />
-                                <h3 className="text-4xl font-display mb-4">Artistry</h3>
-                                <p className="text-gray-400 font-serif text-lg leading-relaxed">
-                                    Handcrafted by master artisans who have inherited generations of knowledge. Every scratch, every polish tells a story.
-                                </p>
-                            </div>
+                    {/* Feature 2 */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="flex flex-col items-center max-w-xs"
+                    >
+                        <div className="w-16 h-16 rounded-full bg-[#8D6E63] text-white flex items-center justify-center mb-6 shadow-lg">
+                            <ThumbsUp className="w-8 h-8" />
                         </div>
+                        <h3 className="font-serif text-xl text-[#5D4037] mb-3">Premium Quality</h3>
+                        <p className="text-[#8D6E63] text-xs leading-relaxed">
+                            Our jewellery is crafted with 100% authentic 925 Sterling Silver. Each piece undergoes varying quality checks to ensure lasting shine and durability.
+                        </p>
+                    </motion.div>
 
-                        {/* Card 3 */}
-                        <div className="value-card w-[80vw] md:w-[40vw] flex-shrink-0">
-                            <div className="border-t border-white/20 pt-8">
-                                <HeartHandshake className="w-12 h-12 text-[#D39A9F] mb-6" />
-                                <h3 className="text-4xl font-display mb-4">Integrity</h3>
-                                <p className="text-gray-400 font-serif text-lg leading-relaxed">
-                                    Sustainable sourcing and fair trade practices. We care about the hands that make our jewelry as much as the hands that wear it.
-                                </p>
-                            </div>
+                    {/* Feature 3 */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                        className="flex flex-col items-center max-w-xs"
+                    >
+                        <div className="w-16 h-16 rounded-full bg-[#8D6E63] text-white flex items-center justify-center mb-6 shadow-lg">
+                            <Lock className="w-8 h-8" />
                         </div>
-
-                        {/* Card 4 */}
-                        <div className="value-card w-[80vw] md:w-[40vw] flex-shrink-0 pr-20">
-                            <div className="border-t border-white/20 pt-8">
-                                <Truck className="w-12 h-12 text-[#D39A9F] mb-6" />
-                                <h3 className="text-4xl font-display mb-4">Experience</h3>
-                                <p className="text-gray-400 font-serif text-lg leading-relaxed">
-                                    From seamless browsing to unboxing, we craft an experience of delight. Fast shipping, secure packaging, and minimal hassle.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                        <h3 className="font-serif text-xl text-[#5D4037] mb-3">100% Secure Checkout</h3>
+                        <p className="text-[#8D6E63] text-xs leading-relaxed">
+                            Shop with confidence using our encrypted payment gateways. Your privacy and security are our top priority for a seamless shopping experience.
+                        </p>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Final Call to Action */}
-            <section className="py-32 container mx-auto px-4 text-center fade-in-section">
-                <div className="relative inline-block">
-                    <img src={aboutCraft2} alt="CTA" className="absolute -z-10 w-full h-full object-cover opacity-10 blur-xl scale-125" />
-                    <h2 className="text-5xl md:text-8xl font-display text-black mb-8 mix-blend-multiply">
-                        Ready to Shine?
-                    </h2>
+            {/* Bottom Instagram Section Peek */}
+            <section className="container mx-auto px-4 pt-10 border-t border-[#EFEBE9]">
+                <div className="text-center mb-10">
+                    <h2 className="font-serif text-3xl text-[#5D4037]">Follow Our Instagram</h2>
                 </div>
-
-                <p className="text-gray-600 font-serif text-xl mb-12 max-w-2xl mx-auto">
-                    Explore our latest collection and find the piece that speaks to your soul.
-                </p>
-                <Link to="/shop" className="inline-block px-12 py-4 bg-black text-white hover:bg-[#D39A9F] rounded-full text-sm font-bold uppercase tracking-widest transition-all transform hover:scale-105">
-                    View Collections
-                </Link>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 opacity-50">
+                    {/* Just placeholders to mimic the bottom peek */}
+                    <div className="h-64 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover" alt="Insta 1" />
+                    </div>
+                    <div className="h-64 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover" alt="Insta 2" />
+                    </div>
+                    <div className="h-64 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover" alt="Insta 3" />
+                    </div>
+                    <div className="h-64 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1615655114865-4cc1bda5901e?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover" alt="Insta 4" />
+                    </div>
+                </div>
             </section>
-
         </div>
     );
 };

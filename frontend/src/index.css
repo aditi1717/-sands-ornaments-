@@ -5,6 +5,14 @@
     --font-display: 'Cinzel', serif;
     --font-body: 'Lato', sans-serif;
     --font-serif: 'Cormorant Garamond', serif;
+
+    --color-pure-white: #FFFFFF;
+    --color-primary: #D39A9F;
+    --color-dark: #1F1F1F;
+    --color-muted: #6B6B6B;
+    --color-gold: #C9A24D;
+    --color-wine: #7A2E3A;
+    --color-beige: #F7F2EF;
 }
 
 /* Disable Zooming on Mobile & Horizontal Scroll */

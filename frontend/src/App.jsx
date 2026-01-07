@@ -19,6 +19,7 @@ import HelpCenter from './modules/user/pages/HelpCenter';
 import TermsAndConditions from './modules/user/pages/TermsAndConditions';
 import PrivacyPolicy from './modules/user/pages/PrivacyPolicy';
 import Notifications from './modules/user/pages/Notifications';
+import AnnouncementBar from './modules/user/components/AnnouncementBar';
 
 // Admin Imports
 import AdminLogin from './modules/admin/pages/Login';
@@ -46,6 +47,7 @@ const AppContent = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-[#FDF5F6]">
+      {!isAdminPath && <AnnouncementBar />}
       {!isAdminPath && <Navbar />}
       {!isAdminPath && <CategoryNav />}
       <main className={`flex-grow ${!isAdminPath ? 'pb-16 md:pb-0' : ''}`}>

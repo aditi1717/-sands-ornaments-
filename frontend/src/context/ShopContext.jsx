@@ -68,6 +68,11 @@ export const ShopProvider = ({ children }) => {
     });
 
     const [notification, setNotification] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = (state) => {
+        setIsMenuOpen(state !== undefined ? state : !isMenuOpen);
+    };
 
     // Notification Preferences & List
     const [notificationsEnabled, setNotificationsEnabled] = useState(() => {
@@ -293,7 +298,8 @@ export const ShopProvider = ({ children }) => {
             addAddress, removeAddress, updateAddress, setDefaultAddress,
             defaultAddressId, createTicket, updateTicketStatus, addTicketReply, deleteTicket,
             showNotification, deleteAccount,
-            notificationsEnabled, userNotifications, toggleNotificationSettings, deleteUserNotification
+            notificationsEnabled, userNotifications, toggleNotificationSettings, deleteUserNotification,
+            isMenuOpen, toggleMenu
         }}>
             {children}
 

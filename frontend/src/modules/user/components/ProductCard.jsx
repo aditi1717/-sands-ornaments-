@@ -101,7 +101,6 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                         <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={2} />
                     </button>
 
-                    {/* Add to Bag - Desktop Only */}
                     {/* Rating Badge - Bottom Left (Image Overlay) */}
                     <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded flex items-center gap-1 shadow-sm z-10">
                         <span className="text-[10px] font-bold text-black">{product.rating || 4.8}</span>
