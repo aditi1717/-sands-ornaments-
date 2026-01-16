@@ -72,7 +72,7 @@ const StyleItYourWay = () => {
 
     return (
         <section className="pt-16 pb-2 md:pt-24 md:pb-4 bg-white relative">
-            <div className="container mx-auto px-4 md:px-8">
+            <div className="container mx-auto px-2 md:px-4">
 
                 {/* Header */}
                 <div className="flex justify-between items-end mb-12">

@@ -9,7 +9,7 @@ import bridesmaidImg from '../assets/hero_slide_3.png';
 const OccasionalSpecial = () => {
     return (
         <section className="py-12 bg-white">
-            <div className="container mx-auto px-4 lg:px-8">
+            <div className="container mx-auto px-2 md:px-4">
                 {/* Section Header */}
                 <div className="text-center mb-8">
                     <h2 className="font-display text-4xl md:text-5xl text-[#2F0A0F] mb-4">Curated For You</h2>

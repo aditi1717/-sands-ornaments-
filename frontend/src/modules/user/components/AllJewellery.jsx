@@ -10,7 +10,7 @@ const AllJewellery = () => {
 
     return (
         <section className="py-16 md:py-24 bg-white">
-            <div className="container mx-auto px-6 md:px-12 lg:px-20">
+            <div className="container mx-auto px-2 md:px-4">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div className="space-y-2">

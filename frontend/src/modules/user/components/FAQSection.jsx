@@ -30,7 +30,7 @@ const FAQSection = () => {
 
     return (
         <section className="py-20 bg-[#FAF9F6] relative overflow-hidden">
-            <div className="container mx-auto px-4 md:px-8 max-w-4xl relative z-10">
+            <div className="container mx-auto px-2 md:px-4 max-w-4xl relative z-10">
                 <div className="text-center mb-16">
                     <span className="text-[#C9A24D] text-sm font-bold tracking-[0.2em] uppercase mb-2 block">Common Questions</span>
                     <h2 className="font-display text-4xl md:text-5xl text-[#2F0A0F]">Frequently Asked Questions</h2>
@@ -41,8 +41,8 @@ const FAQSection = () => {
                         <div
                             key={index}
                             className={`bg-white rounded-2xl border transition-all duration-300 ${activeFaq === index
-                                    ? 'border-[#722F37] shadow-[0_10px_30px_rgba(114,47,55,0.1)]'
-                                    : 'border-transparent shadow-sm hover:shadow-md'
+                                ? 'border-[#722F37] shadow-[0_10px_30px_rgba(114,47,55,0.1)]'
+                                : 'border-transparent shadow-sm hover:shadow-md'
                                 }`}
                         >
                             <button

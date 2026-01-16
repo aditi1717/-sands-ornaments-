@@ -26,7 +26,7 @@ const MostGifted = () => {
                     100% { transform: translateX(1200%) rotate(45deg); }
                 }
             `}</style>
-            <div className="container mx-auto px-4 md:px-8">
+            <div className="container mx-auto px-2 md:px-4">
 
                 <div className="flex flex-col lg:flex-row gap-4 md:gap-6 h-auto lg:h-[450px]">
 

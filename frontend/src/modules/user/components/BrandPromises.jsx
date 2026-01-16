@@ -32,7 +32,7 @@ const BrandPromises = () => {
 
     return (
         <section className="pt-16 pb-16 md:pb-24 bg-white relative overflow-hidden">
-            <div className="container mx-auto px-4 md:px-8">
+            <div className="container mx-auto px-2 md:px-4">
 
                 {/* Header */}
                 <div className="text-center mb-16">

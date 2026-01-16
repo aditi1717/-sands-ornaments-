@@ -18,8 +18,8 @@ const recipients = [
 
 const PerfectGift = () => {
     return (
-        <section className="py-8 md:py-12 bg-gradient-to-b from-[#1a1a1a] to-black text-white"> {/* Adjusted symmetric padding */}
-            <div className="container mx-auto px-4 md:px-12">
+        <section className="py-8 md:py-12 bg-gradient-to-b from-[#58252F] to-[#2F0A0F] text-white"> {/* Adjusted symmetric padding */}
+            <div className="container mx-auto px-2 md:px-4">
                 <div className="text-center mb-12">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ const PerfectGift = () => {
                 </div>
 
                 {/* V-Shape Row Layout */}
-                <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 md:gap-6 px-4 mb-24">
+                <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 md:gap-10 px-4 mb-24">
                     {recipients.map((item, index) => {
                         // V-Shape Logic:
                         // 0 & 5: Top (No margin)
@@ -55,7 +55,7 @@ const PerfectGift = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-50px" }}
                                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                                className={`w-[45%] md:w-64 lg:w-80 ${marginTopClass}`}
+                                className={`w-[42%] md:w-56 lg:w-72 ${marginTopClass}`}
                             >
                                 <Link
                                     to={item.path}

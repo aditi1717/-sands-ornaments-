@@ -47,8 +47,15 @@ const AppContent = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-[#FDF5F6]">
-      {!isAdminPath && <AnnouncementBar />}
-      {!isAdminPath && <Navbar />}
+      {!isAdminPath && (
+        <>
+          <div className="fixed top-0 left-0 right-0 z-[100] w-full">
+            <AnnouncementBar />
+            <Navbar />
+          </div>
+          <div className="h-[84px] md:h-[104px] w-full"></div>
+        </>
+      )}
       {!isAdminPath && <CategoryNav />}
       <main className={`flex-grow ${!isAdminPath ? 'pb-16 md:pb-0' : ''}`}>
         <Routes>

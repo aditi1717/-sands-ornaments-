@@ -140,17 +140,17 @@ const CategoryNav = () => {
                                                     className="col-span-4 grid grid-cols-5 gap-x-6 gap-y-10"
                                                 >
                                                     {item.subcategories.map((subCat) => (
-                                                        <div key={subCat.id} className="flex items-center gap-4 group">
-                                                            <Link to={item.id === 'shop-by-category' ? `/category/${subCat.path}` : `/shop?filter=${subCat.path}`} onClick={() => setHoveredCategory(null)} className="flex-shrink-0">
-                                                                <div className="w-16 h-16 rounded-full overflow-hidden border border-gray-100 shadow-sm transition-shadow group-hover:shadow-md">
+                                                        <div key={subCat.id} className="flex flex-col items-center text-center gap-3 group">
+                                                            <Link to={item.id === 'shop-by-category' ? `/category/${subCat.path}` : `/shop?filter=${subCat.path}`} onClick={() => setHoveredCategory(null)}>
+                                                                <div className="w-20 h-20 rounded-full overflow-hidden border border-gray-100 shadow-sm transition-shadow group-hover:shadow-md mx-auto">
                                                                     <img src={subCat.image} alt={subCat.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                                                 </div>
                                                             </Link>
-                                                            <div className="flex flex-col justify-center">
+                                                            <div className="flex flex-col items-center">
                                                                 <Link to={item.id === 'shop-by-category' ? `/category/${subCat.path}` : `/shop?filter=${subCat.path}`} onClick={() => setHoveredCategory(null)}>
-                                                                    <h4 className="font-display font-bold text-black text-sm group-hover:text-[#D39A9F] transition-colors whitespace-nowrap">{subCat.name}</h4>
+                                                                    <h4 className="font-display font-bold text-black text-sm group-hover:text-[#D39A9F] transition-colors">{subCat.name}</h4>
                                                                 </Link>
-                                                                <Link to={item.id === 'shop-by-category' ? `/category/${subCat.path}` : `/shop?filter=${subCat.path}`} onClick={() => setHoveredCategory(null)} className="text-[10px] font-bold text-[#D39A9F] uppercase tracking-wider mt-1 hover:underline opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-1 group-hover:translate-y-0">
+                                                                <Link to={item.id === 'shop-by-category' ? `/category/${subCat.path}` : `/shop?filter=${subCat.path}`} onClick={() => setHoveredCategory(null)} className="text-[10px] font-bold text-[#D39A9F] uppercase tracking-wider mt-2 hover:underline opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-1 group-hover:translate-y-0">
                                                                     View Collection
                                                                 </Link>
                                                             </div>

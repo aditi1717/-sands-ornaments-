@@ -23,8 +23,8 @@ const categories = [
 const CategoryShowcase = () => {
     return (
         <section className="py-4 bg-white">
-            <div className="container mx-auto px-4">
-                <div className="flex flex-nowrap overflow-x-auto justify-start md:justify-center gap-4 md:gap-8 p-8 md:p-10 pb-12 scrollbar-hide">
+            <div className="container mx-auto px-2 md:px-4">
+                <div className="flex flex-nowrap overflow-x-auto justify-start gap-4 md:gap-8 p-8 md:p-10 pb-12 scrollbar-hide">
                     {categories.map((cat, index) => (
                         <Link to={cat.path} key={cat.id} className="group flex flex-col items-center flex-shrink-0">
                             {/* Card with Wine Background */}

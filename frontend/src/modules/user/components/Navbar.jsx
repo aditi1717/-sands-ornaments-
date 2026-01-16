@@ -46,7 +46,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className={`z-50 transition-all duration-300 border-b ${isHome ? 'fixed top-0 left-0 right-0 w-full border-transparent bg-white/95 backdrop-blur-md shadow-sm md:bg-white/95 md:backdrop-blur-sm md:sticky md:top-0 md:border-[#EBCDD0]' : 'sticky top-0 border-[#EBCDD0] bg-white/95 backdrop-blur-sm shadow-sm'}`}>
+            <nav className={`w-full transition-all duration-300 border-b bg-white/95 backdrop-blur-md shadow-sm ${isHome ? 'border-transparent md:border-[#EBCDD0]' : 'border-[#EBCDD0]'}`}>
                 {/* Top Bar - Asymmetric padding: Top 6, Bottom 3 */}
                 <div className="container mx-auto px-4 md:px-6 pt-1 md:pt-1.5 pb-1 md:pb-1 flex items-center justify-between gap-4">
 

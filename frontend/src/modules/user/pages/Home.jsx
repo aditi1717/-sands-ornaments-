@@ -188,7 +188,7 @@ const Home = () => {
                             />
                             {/* Enhanced Gradient Overlay - Light for Dark Text */}
                             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-white/70 via-white/20 to-transparent flex items-end md:items-center pb-20 md:pb-0">
-                                <div className="container mx-auto px-6 md:px-16">
+                                <div className="container mx-auto px-2 md:px-4">
                                     <div className="max-w-xl text-[#1F1F1F] space-y-4 md:space-y-6 text-center md:text-left">
 
                                         {/* Typography */}
