@@ -31,7 +31,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="relative bg-white pt-12 pb-8 overflow-hidden">
+        <footer className="relative bg-white pt-8 pb-4 overflow-hidden">
             {/* Decorative Top Border - Luxury Gradient */}
             <div className="absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r from-[#722F37] via-[#C9A24D] to-[#722F37]"></div>
 
@@ -39,15 +39,15 @@ const Footer = () => {
             <div className="absolute top-0 right-0 w-1/3 h-full bg-[#FDF8F8] -z-0 skew-x-[-15deg] translate-x-1/2"></div>
 
             <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-8">
 
                     {/* Brand Identity Section */}
-                    <div className="lg:col-span-4 space-y-4">
+                    <div className="lg:col-span-4 space-y-3">
                         <Link to="/" className="inline-block">
-                            <img src={logo} alt="Sands Ornaments" className="h-16 w-auto object-contain brightness-90 hover:brightness-100 transition-all" />
+                            <img src={logo} alt="Sands Ornaments" className="h-12 w-auto object-contain brightness-90 hover:brightness-100 transition-all" />
                         </Link>
-                        <div className="space-y-2">
-                            <h3 className="text-2xl font-display text-[#722F37] leading-tight">
+                        <div className="space-y-1.5">
+                            <h3 className="text-xl font-display text-[#722F37] leading-tight">
                                 Timeless Elegance, <br />
                                 <span className="italic font-serif text-[#C9A24D]">Handcrafted for You.</span>
                             </h3>
@@ -57,36 +57,36 @@ const Footer = () => {
                         </div>
 
                         {/* Trust Badges */}
-                        <div className="flex gap-6 pt-2">
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-[#FDF8F8] flex items-center justify-center text-[#C9A24D]">
-                                    <ShieldCheck className="w-5 h-5" />
+                        <div className="flex gap-4 pt-1">
+                            <div className="flex flex-col items-center gap-1.5">
+                                <div className="w-8 h-8 rounded-full bg-[#FDF8F8] flex items-center justify-center text-[#C9A24D]">
+                                    <ShieldCheck className="w-4 h-4" />
                                 </div>
-                                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Secure</span>
+                                <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Secure</span>
                             </div>
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-[#FDF8F8] flex items-center justify-center text-[#C9A24D]">
-                                    <Star className="w-5 h-5" />
+                            <div className="flex flex-col items-center gap-1.5">
+                                <div className="w-8 h-8 rounded-full bg-[#FDF8F8] flex items-center justify-center text-[#C9A24D]">
+                                    <Star className="w-4 h-4" />
                                 </div>
-                                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">925 Pure</span>
+                                <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">925 Pure</span>
                             </div>
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-[#FDF8F8] flex items-center justify-center text-[#C9A24D]">
-                                    <Heart className="w-5 h-5" />
+                            <div className="flex flex-col items-center gap-1.5">
+                                <div className="w-8 h-8 rounded-full bg-[#FDF8F8] flex items-center justify-center text-[#C9A24D]">
+                                    <Heart className="w-4 h-4" />
                                 </div>
-                                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Verified</span>
+                                <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Verified</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Links Grid */}
                     <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
-                        <div className="space-y-4">
-                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.25em] text-[11px] border-b border-[#EBCDD0] pb-2 inline-block">Experience</h4>
-                            <ul className="space-y-3">
+                        <div className="space-y-2">
+                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">Experience</h4>
+                            <ul className="space-y-1.5">
                                 {footerLinks.customerCare.map(link => (
                                     <li key={link.name}>
-                                        <Link to={link.path} className="text-sm text-gray-500 hover:text-[#722F37] transition-all hover:pl-2 flex items-center gap-2 group">
+                                        <Link to={link.path} className="text-xs text-gray-500 hover:text-[#722F37] transition-all hover:pl-2 flex items-center gap-2 group">
                                             <span className="w-1 h-1 bg-[#C9A24D] rounded-full opacity-0 group-hover:opacity-100 transition-all"></span>
                                             {link.name}
                                         </Link>
@@ -95,12 +95,12 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        <div className="space-y-4">
-                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.25em] text-[11px] border-b border-[#EBCDD0] pb-2 inline-block">Policies</h4>
-                            <ul className="space-y-3">
+                        <div className="space-y-2">
+                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">Policies</h4>
+                            <ul className="space-y-1.5">
                                 {footerLinks.policies.map(link => (
                                     <li key={link.name}>
-                                        <Link to={link.path} className="text-sm text-gray-500 hover:text-[#722F37] transition-all hover:pl-2 flex items-center gap-2 group">
+                                        <Link to={link.path} className="text-xs text-gray-500 hover:text-[#722F37] transition-all hover:pl-2 flex items-center gap-2 group">
                                             <span className="w-1 h-1 bg-[#C9A24D] rounded-full opacity-0 group-hover:opacity-100 transition-all"></span>
                                             {link.name}
                                         </Link>
@@ -109,12 +109,12 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        <div className="space-y-4">
-                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.25em] text-[11px] border-b border-[#EBCDD0] pb-2 inline-block">Our World</h4>
-                            <ul className="space-y-3">
+                        <div className="space-y-2">
+                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">Our World</h4>
+                            <ul className="space-y-1.5">
                                 {footerLinks.extra.map(link => (
                                     <li key={link.name}>
-                                        <Link to={link.path} className="text-sm text-gray-500 hover:text-[#722F37] transition-all hover:pl-2 flex items-center gap-2 group">
+                                        <Link to={link.path} className="text-xs text-gray-500 hover:text-[#722F37] transition-all hover:pl-2 flex items-center gap-2 group">
                                             <span className="w-1 h-1 bg-[#C9A24D] rounded-full opacity-0 group-hover:opacity-100 transition-all"></span>
                                             {link.name}
                                         </Link>
@@ -125,43 +125,43 @@ const Footer = () => {
                     </div>
 
                     {/* Contact & Newsletter */}
-                    <div className="lg:col-span-3 space-y-6 bg-white/50 backdrop-blur-md p-6 rounded-[2.5rem] border border-[#EBCDD0]/50 shadow-xl shadow-[#722F37]/5">
-                        <div className="space-y-4">
-                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.2em] text-[11px]">Connect Directly</h4>
-                            <div className="space-y-3">
-                                <a href="mailto:support@sandsornaments.com" className="flex items-center gap-4 group">
-                                    <div className="w-10 h-10 bg-[#722F37] text-white rounded-xl flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
-                                        <Mail className="w-4 h-4" />
+                    <div className="lg:col-span-3 space-y-4 bg-white/50 backdrop-blur-md p-5 rounded-[2rem] border border-[#EBCDD0]/50 shadow-lg shadow-[#722F37]/5">
+                        <div className="space-y-3">
+                            <h4 className="font-display text-[#722F37] font-bold uppercase tracking-[0.2em] text-[10px]">Connect Directly</h4>
+                            <div className="space-y-2">
+                                <a href="mailto:support@sandsornaments.com" className="flex items-center gap-3 group">
+                                    <div className="w-8 h-8 bg-[#722F37] text-white rounded-lg flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
+                                        <Mail className="w-3.5 h-3.5" />
                                     </div>
-                                    <span className="text-sm font-medium text-gray-700 hover:text-[#722F37] transition-colors">support@sandsornaments.com</span>
+                                    <span className="text-xs font-medium text-gray-700 hover:text-[#722F37] transition-colors">support@sandsornaments.com</span>
                                 </a>
-                                <a href="tel:+919876543210" className="flex items-center gap-4 group">
-                                    <div className="w-10 h-10 bg-[#722F37] text-white rounded-xl flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
-                                        <Phone className="w-4 h-4" />
+                                <a href="tel:+919876543210" className="flex items-center gap-3 group">
+                                    <div className="w-8 h-8 bg-[#722F37] text-white rounded-lg flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
+                                        <Phone className="w-3.5 h-3.5" />
                                     </div>
-                                    <span className="text-sm font-medium text-gray-700 hover:text-[#722F37] transition-colors">+91 98765 43210</span>
+                                    <span className="text-xs font-medium text-gray-700 hover:text-[#722F37] transition-colors">+91 98765 43210</span>
                                 </a>
-                                <div className="flex items-start gap-4 group">
-                                    <div className="w-10 h-10 bg-[#722F37] text-white rounded-xl flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
-                                        <MapPin className="w-4 h-4" />
+                                <div className="flex items-start gap-3 group">
+                                    <div className="w-8 h-8 bg-[#722F37] text-white rounded-lg flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
+                                        <MapPin className="w-3.5 h-3.5" />
                                     </div>
-                                    <span className="text-sm font-serif italic text-gray-500 leading-tight">123 Silver Arcade, Heritage Marg, Jaipur</span>
+                                    <span className="text-xs font-serif italic text-gray-500 leading-tight">123 Silver Arcade, Heritage Marg, Jaipur</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Social Icons - Premium Style */}
-                        <div className="space-y-4 pt-2 border-t border-gray-100">
-                            <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">Social Gallery</p>
-                            <div className="flex gap-4">
+                        <div className="space-y-3 pt-2 border-t border-gray-100">
+                            <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">Social Gallery</p>
+                            <div className="flex gap-3">
                                 {[
                                     { Icon: Facebook, link: "#" },
                                     { Icon: Twitter, link: "#" },
                                     { Icon: Instagram, link: "#" },
                                     { Icon: Youtube, link: "#" }
                                 ].map((social, i) => (
-                                    <a key={i} href={social.link} className="w-10 h-10 border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:border-[#722F37] hover:bg-[#722F37] hover:text-white hover:-translate-y-1 transition-all duration-500 shadow-sm">
-                                        <social.Icon className="w-4 h-4" />
+                                    <a key={i} href={social.link} className="w-8 h-8 border border-gray-200 rounded-md flex items-center justify-center text-gray-500 hover:border-[#722F37] hover:bg-[#722F37] hover:text-white hover:-translate-y-1 transition-all duration-500 shadow-sm">
+                                        <social.Icon className="w-3.5 h-3.5" />
                                     </a>
                                 ))}
                             </div>
@@ -169,8 +169,16 @@ const Footer = () => {
                     </div>
                 </div>
 
+                {/* Fraud Disclaimer */}
+                <div className="mb-4 border border-red-100 bg-red-50/50 rounded-lg p-3 flex items-start gap-3 md:items-center justify-center max-w-4xl mx-auto">
+                    <ShieldCheck className="w-4 h-4 text-red-500 shrink-0 mt-0.5 md:mt-0" />
+                    <p className="text-[10px] text-gray-500 font-medium leading-relaxed md:text-center text-left">
+                        <span className="font-bold text-[#722F37]">BEWARE OF FRAUD:</span> Sands Ornaments will NEVER ask for OTPs, passwords, or sensitive financial information via unsolicited calls, WhatsApp, or emails. Please stay vigilant against fraudulent activities.
+                    </p>
+                </div>
+
                 {/* Bottom Bar: Delivery & Copyright */}
-                <div className="pt-6 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="pt-4 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-center gap-4 bg-[#722F37]/5 px-6 py-2 rounded-full border border-[#722F37]/10">
                         <Truck className="w-4 h-4 text-[#722F37]" />
                         <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#722F37]">Safe & Insured Express Worldwide Delivery</span>
