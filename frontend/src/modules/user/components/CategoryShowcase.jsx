@@ -28,10 +28,10 @@ const CategoryShowcase = () => {
                     {categories.map((cat, index) => (
                         <Link to={cat.path} key={cat.id} className="group flex flex-col items-center flex-shrink-0">
                             {/* Card with Wine Background */}
-                            <div className="relative w-36 h-36 md:w-52 md:h-52 bg-[#722F37] rounded-[1.5rem] md:rounded-[2rem] shadow-md border-2 border-[#C9A24D] overflow-hidden transition-transform duration-300 transform group-hover:-translate-y-2 group-hover:shadow-xl">
+                            <div className="relative w-36 h-36 md:w-52 md:h-52 bg-[#4A1015] rounded-[1.5rem] md:rounded-[2rem] shadow-md border-2 border-[#C9A24D] overflow-hidden transition-transform duration-300 transform group-hover:-translate-y-2 group-hover:shadow-xl">
 
                                 {/* Top Tag - Gold/Beige */}
-                                <div className="absolute top-0 left-0 right-0 bg-[#F5E6D3] py-0.5 md:py-1 text-center font-bold text-[8px] md:text-xs text-[#722F37] tracking-wider z-10">
+                                <div className="absolute top-0 left-0 right-0 bg-[#F5E6D3] py-0.5 md:py-1 text-center font-bold text-[8px] md:text-xs text-[#4A1015] tracking-wider z-10">
                                     UPTO 15% OFF
                                 </div>
 
@@ -47,10 +47,10 @@ const CategoryShowcase = () => {
 
                             {/* Category Name Below */}
                             <div className="mt-2 md:mt-3 flex items-center justify-center gap-1 md:gap-2">
-                                <span className="font-display font-medium text-xs md:text-lg text-black group-hover:text-[#722F37] transition-colors">
+                                <span className="font-display font-medium text-xs md:text-lg text-black group-hover:text-[#4A1015] transition-colors">
                                     {cat.name}
                                 </span>
-                                <ArrowRight className="w-3 h-3 md:w-5 md:h-5 text-[#722F37] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                                <ArrowRight className="w-3 h-3 md:w-5 md:h-5 text-[#4A1015] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                             </div>
                         </Link>
                     ))}

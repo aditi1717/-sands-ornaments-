@@ -227,7 +227,7 @@ const Home = () => {
                                             transition={{ duration: 1.0, ease: "easeOut", delay: 0.4 }}
                                             className="flex items-center justify-center md:justify-start space-x-6 pt-2 md:pt-4"
                                         >
-                                            <Link to="/shop" className="bg-[#722F37] text-white w-full md:w-auto px-8 py-4 md:px-12 md:py-5 rounded-full font-medium tracking-wide hover:bg-[#5C242B] transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 group/btn text-sm md:text-base">
+                                            <Link to="/shop" className="bg-[#4A1015] text-white w-full md:w-auto px-8 py-4 md:px-12 md:py-5 rounded-full font-medium tracking-wide hover:bg-[#2F0005] transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 group/btn text-sm md:text-base">
                                                 <span>Shop Now</span>
                                                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                                             </Link>

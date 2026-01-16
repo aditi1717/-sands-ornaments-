@@ -25,7 +25,7 @@ const LatestDrop = () => {
                 {/* Header - Centered Layout */}
                 <div className="relative flex flex-col md:block items-center justify-center mb-12">
                     <div className="flex flex-col items-center justify-center text-center md:w-full">
-                        <span className="text-[#722F37] font-display tracking-[0.2em] font-bold text-sm uppercase mb-2 block">
+                        <span className="text-[#4A1015] font-display tracking-[0.2em] font-bold text-sm uppercase mb-2 block">
                             Fresh Arrivals
                         </span>
                         <h2 className="font-display text-4xl md:text-5xl text-[#1F1F1F]">
@@ -36,7 +36,7 @@ const LatestDrop = () => {
                     <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2">
                         <Link
                             to="/shop?sort=newest"
-                            className="group flex items-center gap-2 text-[#1F1F1F] font-medium border-b border-black pb-1 hover:text-[#722F37] hover:border-[#722F37] transition-all"
+                            className="group flex items-center gap-2 text-[#1F1F1F] font-medium border-b border-black pb-1 hover:text-[#4A1015] hover:border-[#4A1015] transition-all"
                         >
                             Explore Collection
                             <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
@@ -56,11 +56,11 @@ const LatestDrop = () => {
                             className="group cursor-pointer"
                         >
                             <Link to={item.path}>
-                                {/* Card Styled Container - Dark Wine Theme from User Reference */}
-                                <div className="bg-[#58252F] rounded-[1.5rem] border border-[#6D303C] shadow-[0_5px_15px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_40px_rgba(88,37,47,0.4)] transition-all duration-500 hover:-translate-y-1 group overflow-hidden">
+                                {/* Card Styled Container - Dark Wine Theme (Unified #4A1015) */}
+                                <div className="bg-[#4A1015] rounded-[1.5rem] border border-[#5C242B] shadow-[0_5px_15px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_40px_rgba(74,16,21,0.4)] transition-all duration-500 hover:-translate-y-1 group overflow-hidden">
 
                                     {/* Image Container - Full Width */}
-                                    <div className="relative overflow-hidden aspect-[4/3] bg-[#3A181F]">
+                                    <div className="relative overflow-hidden aspect-[4/3] bg-[#2F0005]">
                                         <img
                                             src={item.image}
                                             alt={item.name}

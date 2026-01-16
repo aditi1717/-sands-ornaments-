@@ -20,7 +20,7 @@ const newLaunches = [
 
 const NewLaunchSection = () => {
     return (
-        <section className="py-10 bg-[#FFF0F0] relative overflow-hidden">
+        <section className="py-16 md:py-24 bg-[#FFF0F0] relative overflow-hidden">
 
             <div className="container mx-auto px-2 md:px-4 relative z-10">
 

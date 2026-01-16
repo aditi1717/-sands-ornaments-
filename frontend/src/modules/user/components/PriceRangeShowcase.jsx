@@ -17,7 +17,7 @@ const priceRanges = [
 
 const PriceRangeShowcase = () => {
     return (
-        <section className="pt-6 pb-12 md:pt-10 md:pb-16 bg-white">
+        <section className="pt-6 pb-16 md:pt-10 md:pb-24 bg-white">
             <div className="container mx-auto px-2 md:px-4">
                 <div className="text-center mb-10">
                     <motion.h2

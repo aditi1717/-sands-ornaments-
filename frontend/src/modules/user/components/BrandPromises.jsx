@@ -37,7 +37,7 @@ const BrandPromises = () => {
                 {/* Header */}
                 <div className="text-center mb-16">
                     <span className="text-[#C9A24D] text-sm font-bold tracking-[0.2em] uppercase mb-2 block">Our Commitments</span>
-                    <h2 className="font-display text-4xl md:text-5xl text-[#722F37]">Why Choose Us</h2>
+                    <h2 className="font-display text-4xl md:text-5xl text-[#4A1015]">Why Choose Us</h2>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 lg:gap-8 pt-10">
@@ -47,7 +47,7 @@ const BrandPromises = () => {
                             className="relative group flex flex-col items-center"
                         >
                             {/* Diamond Box */}
-                            <div className="w-40 h-40 md:w-52 md:h-52 bg-[#722F37] rotate-45 rounded-[2rem] flex items-center justify-center shadow-[0_20px_40px_rgba(114,47,55,0.25)] relative z-10 border-4 border-white cursor-pointer transition-colors duration-300 hover:bg-[#8B3A44]">
+                            <div className="w-40 h-40 md:w-52 md:h-52 bg-[#4A1015] rotate-45 rounded-[2rem] flex items-center justify-center shadow-[0_20px_40px_rgba(74,16,21,0.25)] relative z-10 border-4 border-white cursor-pointer transition-colors duration-300 hover:bg-[#5C242B]">
                                 {/* Content (Rotated back for upright position) */}
                                 <div className="-rotate-45 flex flex-col items-center justify-center text-white p-4 text-center">
                                     <item.icon strokeWidth={1.2} className="w-8 h-8 md:w-10 md:h-10 mb-3 text-[#EBCDD0]" />
@@ -61,7 +61,7 @@ const BrandPromises = () => {
                             </div>
 
                             {/* Glow effect */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#722F37]/10 blur-3xl rounded-full -z-10 group-hover:bg-[#722F37]/20 transition-all duration-500" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#4A1015]/10 blur-3xl rounded-full -z-10 group-hover:bg-[#4A1015]/20 transition-all duration-500" />
                         </div>
                     ))}
                 </div>

@@ -18,7 +18,7 @@ const recipients = [
 
 const PerfectGift = () => {
     return (
-        <section className="py-8 md:py-12 bg-gradient-to-b from-[#58252F] to-[#2F0A0F] text-white"> {/* Adjusted symmetric padding */}
+        <section className="py-16 md:py-24 bg-gradient-to-b from-[#4A1015] to-[#2A0505] text-white"> {/* Increased spacing */}
             <div className="container mx-auto px-2 md:px-4">
                 <div className="text-center mb-12">
                     <motion.h2
