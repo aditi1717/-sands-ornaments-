@@ -4,18 +4,14 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Import images
-import giftHusband from '../assets/gift_husband_silver.png';
 import giftMother from '../assets/gift_mother_silver.png';
 import giftFriends from '../assets/gift_friends_silver.png';
-import giftBrother from '../assets/gift_brother_silver.png';
 import giftWife from '../assets/gift_wife_silver.png';
 import giftSister from '../assets/gift_sister_silver.png';
 
 const recipients = [
-    { id: 'husband', name: "Husband", image: giftHusband, path: "/shop?recipient=husband" },
     { id: 'mother', name: "Mother", image: giftMother, path: "/shop?recipient=mother" },
     { id: 'friends', name: "Friends", image: giftFriends, path: "/shop?recipient=friends" },
-    { id: 'brother', name: "Brother", image: giftBrother, path: "/shop?recipient=brother" },
     { id: 'wife', name: "Wife", image: giftWife, path: "/shop?recipient=wife" },
     { id: 'sister', name: "Sister", image: giftSister, path: "/shop?recipient=sister" }
 ];
@@ -49,9 +45,8 @@ const PerfectGift = () => {
                         // 1 & 4: Middle (mt-12)
                         // 2 & 3: Bottom (mt-24)
                         const marginTopClass =
-                            (index === 0 || index === 5) ? 'mt-0' :
-                                (index === 1 || index === 4) ? 'mt-12' :
-                                    'mt-24';
+                            (index === 0 || index === 3) ? 'mt-0' :
+                                'mt-24'; // Simplified deep V for 4 items
 
                         return (
                             <motion.div
@@ -60,11 +55,11 @@ const PerfectGift = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-50px" }}
                                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                                className={`w-[45%] md:w-48 ${marginTopClass}`}
+                                className={`w-[45%] md:w-64 lg:w-80 ${marginTopClass}`}
                             >
                                 <Link
                                     to={item.path}
-                                    className="group relative rounded-[2rem] overflow-hidden w-full h-full aspect-[3/5] shadow-[0_10px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_30px_60px_rgba(114,47,55,0.3)] transition-all duration-700 block border border-black/5 hover:border-[#C9A24D]"
+                                    className="group relative rounded-[2rem] overflow-hidden w-full h-full aspect-[3/4] shadow-[0_10px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_30px_60px_rgba(114,47,55,0.3)] transition-all duration-700 block border border-black/5 hover:border-[#C9A24D]"
                                 >
                                     {/* Image */}
                                     <img

@@ -5,11 +5,18 @@ import { banners, categories, products } from '../assets/data';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import CategoryShowcase from '../components/CategoryShowcase';
+import PriceRangeShowcase from '../components/PriceRangeShowcase';
 import PerfectGift from '../components/PerfectGift';
+import NewLaunchSection from '../components/NewLaunchSection';
+import LatestDrop from '../components/LatestDrop';
 import MostGifted from '../components/MostGifted';
+import OccasionalSpecial from '../components/OccasionalSpecial';
+import ProposalBanner from '../components/ProposalBanner';
 import StyleItYourWay from '../components/StyleItYourWay';
 import AllJewellery from '../components/AllJewellery';
 import BrandPromises from '../components/BrandPromises';
+import FAQSection from '../components/FAQSection';
+import ChitChatSection from '../components/ChitChatSection';
 
 import heroSlide1 from '../assets/hero_slide_1.png';
 import heroSlide2 from '../assets/hero_slide_2.png';
@@ -110,29 +117,6 @@ const Home = () => {
             image2: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=600&q=80"
         }
     ];
-
-    const faqs = [
-        {
-            question: "Is your jewellery made of real silver?",
-            answer: "Yes, all our jewellery is crafted from high-quality 925 Sterling Silver. Each piece comes with a hallmark stamp of authenticity so you can shop with confidence."
-        },
-        {
-            question: "How do I take care of my silver jewellery?",
-            answer: "To keep your silver shining, store it in the provided zip-lock bag when not in use. Avoid direct contact with perfumes, lotions, and harsh chemicals. You can gently clean it with a soft cloth."
-        },
-        {
-            question: "Do you offer a warranty on the plating?",
-            answer: "Absolutely! We offer a 6-month warranty on the gold and rose gold plating of our silver jewellery. If you face any issues, just reach out to us."
-        },
-        {
-            question: "What is your return and exchange policy?",
-            answer: "We offer a hassle-free 7-day return and exchange policy. If you are not completely satisfied with your purchase, you can return it in its original condition within 7 days."
-        }
-    ];
-
-    const toggleFaq = (index) => {
-        setActiveFaq(activeFaq === index ? null : index);
-    };
 
     // Animation Variants
     const fadeUp = {
@@ -312,11 +296,26 @@ const Home = () => {
             {/* CATEGORY SHOWCASE - Replaces Mobile Stories */}
             <CategoryShowcase />
 
+            {/* PRICE RANGE SHOWCASE - Luxury Within Reach */}
+            <PriceRangeShowcase />
+
             {/* PERFECT GIFT SECTION */}
             <PerfectGift />
 
+            {/* NEW LAUNCH / LIMITED EDITION SECTION */}
+            <NewLaunchSection />
+
+            {/* LATEST DROP SECTION */}
+            <LatestDrop />
+
             {/* MOST GIFTED ITEMS */}
             <MostGifted />
+
+            {/* PROPOSAL BANNER */}
+            <ProposalBanner />
+
+            {/* OCCASIONAL SPECIALS */}
+            <OccasionalSpecial />
 
             {/* STYLE IT YOUR WAY SECTION */}
             <StyleItYourWay />
@@ -325,8 +324,14 @@ const Home = () => {
             {/* ALL JEWELLERY SECTION */}
             <AllJewellery />
 
-            {/* BRAND PROMISES SECTION */}
+            {/* BRAND PROMISES SECTION (Why Choose Us) */}
             <BrandPromises />
+
+            {/* CHIT CHAT SECTION */}
+            <ChitChatSection />
+
+            {/* FAQ SECTION */}
+            <FAQSection />
 
         </div>
     );

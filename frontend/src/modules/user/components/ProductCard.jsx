@@ -92,17 +92,22 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                         </span>
                     ) : null}
 
-                    {/* Wishlist Heart - Top Left */}
+                    {/* Tag: 9 to 5 Silver Jewellery - Top Left */}
+                    <div className="absolute top-4 left-2 bg-white/95 backdrop-blur-md px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#722F37] rounded-sm shadow-md z-20 border border-[#722F37]/10">
+                        9 to 5 Silver Jewellery
+                    </div>
+
+                    {/* Wishlist Heart - Bottom Right */}
                     <button
                         onClick={handleWishlist}
-                        className={`absolute top-2 left-2 z-20 p-2 transition-all duration-300 hover:scale-110 rounded-full ${isWishlisted ? 'bg-transparent text-[#EBCDD0] fill-[#EBCDD0]' : 'bg-transparent text-[#EBCDD0]'}`}
+                        className={`absolute bottom-2 right-2 z-20 p-2 bg-white/20 hover:bg-white rounded-full backdrop-blur-md border border-white/30 transition-all duration-300 hover:scale-110 shadow-sm ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-white hover:text-red-500'}`}
                         title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                     >
-                        <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={2} />
+                        <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} strokeWidth={2} />
                     </button>
 
                     {/* Rating Badge - Bottom Left (Image Overlay) */}
-                    <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded flex items-center gap-1 shadow-sm z-10">
+                    <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded flex items-center gap-1 shadow-sm z-10 w-fit">
                         <span className="text-[10px] font-bold text-black">{product.rating || 4.8}</span>
                         <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />
                         <span className="text-[10px] text-gray-500 border-l border-gray-300 pl-1 ml-0.5">{product.reviews || 133}</span>
