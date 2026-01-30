@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit2, Trash2, Eye, EyeOff } from 'lucide-react';
-import PageHeader from '../components/common/PageHeader';
-import DataTable from '../components/common/DataTable';
+import PageHeader from '../../components/common/PageHeader';
+import DataTable from '../../components/common/DataTable';
 
-const CategoryManagement = () => {
+const CategoryPage = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([
         { id: 1, name: 'Rings', count: 124, status: 'Active', showInCollection: true, showInNavbar: true, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=100&h=100&fit=crop' },
@@ -37,7 +37,6 @@ const CategoryManagement = () => {
                     </div>
                     <div>
                         <p className="font-bold text-gray-800">{item.name}</p>
-                        <p className="text-[10px] text-gray-400">{item.count} Products</p>
                     </div>
                 </div>
             )
@@ -148,4 +147,4 @@ const CategoryManagement = () => {
     );
 };
 
-export default CategoryManagement;
+export default CategoryPage;

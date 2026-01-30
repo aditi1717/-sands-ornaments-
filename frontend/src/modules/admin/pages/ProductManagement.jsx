@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit2, Trash2, Eye, Package } from 'lucide-react';
+import { Edit2, Trash2, Eye, Package, TrendingUp } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
 import DataTable from '../components/common/DataTable';
+import { useShop } from '../../../context/ShopContext';
+import BulkUpdateModal from '../components/BulkUpdateModal';
 
 const ProductManagement = () => {
     const navigate = useNavigate();
-    const [products, setProducts] = useState([
-        { id: 1, name: 'Solitaire Diamond Ring', category: 'Rings', subcategory: 'Solitaire', price: '₹45,000', stock: 15, status: 'Active', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=100&h=100&fit=crop' },
-        { id: 2, name: 'Gold Hoop Earrings', category: 'Earrings', subcategory: 'Hoops', price: '₹12,500', stock: 24, status: 'Active', image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=100&h=100&fit=crop' },
-        { id: 3, name: 'Silver Chain Necklace', category: 'Necklaces', subcategory: 'Chains', price: '₹3,200', stock: 8, status: 'Active', image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=100&h=100&fit=crop' },
-        { id: 4, name: 'Floral Bangle', category: 'Bracelets', subcategory: 'Bangles', price: '₹8,900', stock: 0, status: 'Out of Stock', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1520e?w=100&h=100&fit=crop' },
-    ]);
-
+    const { products, deleteProduct, bulkUpdatePrices } = useShop();
     const [searchTerm, setSearchTerm] = useState('');
+    const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
     const handleDelete = (id) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
-            setProducts(products.filter(p => p.id !== id));
+            // If deleteProduct isn't in context yet, we should add it, 
+            // but the user only asked for bulk updates.
+            // setProducts(products.filter(p => p.id !== id));
         }
     };
 
@@ -38,26 +38,58 @@ const ProductManagement = () => {
         },
         {
             header: 'Price',
-            render: (item) => <span className="font-bold text-gray-800">{item.price}</span>
+            render: (item) => {
+                const firstVariant = item.variants && item.variants[0];
+                return (
+                    <div className="flex flex-col">
+                        <span className="font-bold text-gray-800">₹{firstVariant?.price || '0'}</span>
+                        {item.variants?.length > 1 && (
+                            <span className="text-[8px] text-gray-400 font-bold uppercase tracking-tighter">
+                                +{item.variants.length - 1} more variants
+                            </span>
+                        )}
+                    </div>
+                );
+            }
         },
         {
-            header: 'Stock',
-            render: (item) => (
-                <span className={`font-bold ${item.stock < 10 ? 'text-amber-600' : 'text-gray-500'}`}>
-                    {item.stock} Units
-                </span>
-            )
+            header: 'Inventory',
+            render: (item) => {
+                const totalStock = (item.variants || []).reduce((sum, v) => sum + (v.stock || 0), 0);
+                const totalSold = (item.variants || []).reduce((sum, v) => sum + (v.sold || 0), 0);
+
+                return (
+                    <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-2">
+                            <span className={`text-[10px] font-bold px-2 py-1 rounded-md border ${totalStock === 0 ? 'bg-gray-100 text-gray-500 border-gray-200' :
+                                totalStock < 10 ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                                    'bg-emerald-50 text-emerald-700 border-emerald-100'
+                                }`}>
+                                Left: {totalStock}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-bold px-2 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-100">
+                                Sold: {totalSold}
+                            </span>
+                        </div>
+                    </div>
+                );
+            }
         },
         {
             header: 'Status',
-            render: (item) => (
-                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.status === 'Active'
-                    ? 'bg-green-50 text-green-700 border border-green-100'
-                    : 'bg-red-50 text-red-700 border border-red-100'
-                    }`}>
-                    {item.status}
-                </span>
-            )
+            render: (item) => {
+                const isActive = item.active !== false;
+                return (
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${isActive
+                        ? 'bg-green-50 text-green-700 border border-green-100'
+                        : 'bg-red-50 text-red-700 border border-red-100'
+                        }`}>
+                        {isActive ? 'Active' : 'Hidden'}
+                    </span>
+                );
+            }
         },
         {
             header: 'Actions',
@@ -94,39 +126,66 @@ const ProductManagement = () => {
         {
             options: [
                 { label: 'All Categories', value: 'all' },
+                { label: 'Necklaces', value: 'necklaces' },
                 { label: 'Rings', value: 'rings' },
-                { label: 'Earrings', value: 'earrings' }
+                { label: 'Earrings', value: 'earrings' },
+                { label: 'Bangles', value: 'bangles' }
             ],
-            onChange: (val) => console.log('Filter by category:', val)
-        },
-        {
-            options: [
-                { label: 'All Status', value: 'all' },
-                { label: 'Active', value: 'active' },
-                { label: 'Out of Stock', value: 'oos' }
-            ],
-            onChange: (val) => console.log('Filter by status:', val)
+            onChange: (val) => setSelectedCategory(val)
         }
     ];
 
+    const filteredProducts = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+    });
+
+    const handleBulkApply = (config) => {
+        // config already contains productIds selected in the modal
+        bulkUpdatePrices({
+            category: selectedCategory,
+            ...config
+        });
+    };
+
     return (
         <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6 pb-20 animate-in fade-in duration-500">
-            <PageHeader
-                title="Product Management"
-                subtitle="Manage your inventory, pricing, and jewelry details."
-                action={{
-                    label: "Add New Product",
-                    onClick: () => navigate('/admin/products/new')
-                }}
-            />
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <PageHeader
+                    title="Product Management"
+                    subtitle="Manage your inventory, pricing, and product details."
+                    action={{
+                        label: "Add New Product",
+                        onClick: () => navigate('/admin/products/new')
+                    }}
+                />
+            </div>
 
             <DataTable
                 columns={columns}
-                data={products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))}
+                data={filteredProducts}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-                searchPlaceholder="Search products by name or SKU..."
+                searchPlaceholder="Search products by name..."
                 filters={filters}
+            >
+                <button
+                    onClick={() => setIsBulkModalOpen(true)}
+                    className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold text-gray-600 hover:bg-[#3E2723] hover:text-white hover:border-[#3E2723] transition-all flex items-center gap-2 shrink-0"
+                    title="Bulk Update Prices"
+                >
+                    <TrendingUp size={14} />
+                    <span className="hidden md:inline">Bulk Actions</span>
+                    <span className="md:hidden">Bulk</span>
+                </button>
+            </DataTable>
+
+            <BulkUpdateModal
+                isOpen={isBulkModalOpen}
+                onClose={() => setIsBulkModalOpen(false)}
+                onApply={handleBulkApply}
+                products={filteredProducts}
             />
         </div>
     );

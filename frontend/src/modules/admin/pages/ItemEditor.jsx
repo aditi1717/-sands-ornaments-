@@ -36,6 +36,11 @@ const ItemEditor = () => {
         parentId: '',
         subCategoryId: '',
         description: '',
+        showInCollection: true,
+        showInNavbar: true,
+        // Product Display Labels
+        cardLabel: '',
+        cardBadge: '',
         // Product Specific Fields
         material: '925 Silver',
         specifications: '', // New field
@@ -47,10 +52,11 @@ const ItemEditor = () => {
         status: 'Active',
         images: [], // Multiple images
         sizes: [], // Selected sizes
+        variantStock: {}, // Stock per variant
         tags: {
             isNewArrival: false,
-            isTrending: false,
-            isFeatured: false
+            isMostGifted: false,
+            isNewLaunch: false
         }
     });
 
@@ -80,6 +86,8 @@ const ItemEditor = () => {
                 parentId: '1',
                 subCategoryId: isProduct ? '1' : '',
                 description: 'A masterpiece created with precision and care, representing timeless beauty.',
+                cardLabel: '9 TO 5 SILVER JEWELLERY',
+                cardBadge: 'NEW',
                 material: '925 Sterling Silver',
                 specifications: 'Weight: 4.5g, Purity: 92.5%, Stone: Cubic Zirconia',
                 supplierInfo: 'Everlast Jewelry Wholesalers',
@@ -93,10 +101,11 @@ const ItemEditor = () => {
                     'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=400&fit=crop'
                 ],
                 sizes: ['7', '8', 'Adjustable'],
+                variantStock: { '7': 10, '8': 15, 'Adjustable': 5 },
                 tags: {
                     isNewArrival: true,
-                    isTrending: true,
-                    isFeatured: false
+                    isMostGifted: true,
+                    isNewLaunch: false
                 }
             });
         }
@@ -149,7 +158,7 @@ const ItemEditor = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* Side/Utility Column (Spans 4) */}
                     <div className="lg:col-span-4 space-y-6">
-                        <FormSection title="Visual Gallery (Max 5)">
+                        <FormSection title={isProduct ? "Visual Gallery (Max 5)" : "Cover Image"}>
                             <div className="grid grid-cols-2 gap-3">
                                 {formData.images.map((img, idx) => (
                                     <div key={idx} className="relative aspect-square rounded-xl overflow-hidden group border border-gray-100 shadow-sm">
@@ -162,11 +171,11 @@ const ItemEditor = () => {
                                         </button>
                                     </div>
                                 ))}
-                                {formData.images.length < 5 && (
+                                {formData.images.length < (isProduct ? 5 : 1) && (
                                     <label className="aspect-square rounded-xl bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-[#3E2723] hover:bg-[#3E2723]/5 transition-all group">
                                         <Upload className="w-5 h-5 text-gray-300 group-hover:text-[#3E2723]" />
                                         <span className="text-[9px] font-bold text-gray-400 mt-1">Add Shot</span>
-                                        <input type="file" multiple className="hidden" onChange={handleImageUpload} accept="image/*" />
+                                        <input type="file" multiple={isProduct} className="hidden" onChange={handleImageUpload} accept="image/*" />
                                     </label>
                                 )}
                             </div>
@@ -174,12 +183,29 @@ const ItemEditor = () => {
 
                         {isProduct && (
                             <>
+                                <FormSection title="Card Display Labels">
+                                    <div className="space-y-4">
+                                        <Input
+                                            label="Top Label (Left)"
+                                            value={formData.cardLabel}
+                                            onChange={(e) => setFormData({ ...formData, cardLabel: e.target.value })}
+                                            placeholder="e.g. 9 TO 5 SILVER JEWELLERY"
+                                        />
+                                        <Input
+                                            label="Corner Badge (Right)"
+                                            value={formData.cardBadge}
+                                            onChange={(e) => setFormData({ ...formData, cardBadge: e.target.value })}
+                                            placeholder="e.g. NEW"
+                                        />
+                                    </div>
+                                </FormSection>
+
                                 <FormSection title="Discovery & Tags">
                                     <div className="space-y-3">
                                         {[
                                             { key: 'isNewArrival', label: 'New Arrival', color: 'bg-blue-600' },
-                                            { key: 'isTrending', label: 'Trending Item', color: 'bg-amber-600' },
-                                            { key: 'isFeatured', label: 'Featured Choice', color: 'bg-[#3E2723]' }
+                                            { key: 'isMostGifted', label: 'Most Gifted', color: 'bg-purple-600' },
+                                            { key: 'isNewLaunch', label: 'New Launch', color: 'bg-green-600' }
                                         ].map(tag => (
                                             <div key={tag.key} className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 shadow-sm">
                                                 <span className="text-[11px] font-bold text-gray-700">{tag.label}</span>
@@ -198,19 +224,55 @@ const ItemEditor = () => {
                                 </FormSection>
 
                                 <FormSection title="Size Availability">
-                                    <div className="flex flex-wrap gap-2">
-                                        {sizeOptions.map(size => (
-                                            <button
-                                                key={size}
-                                                onClick={() => toggleSize(size)}
-                                                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all border ${formData.sizes.includes(size)
+                                    <div className="space-y-4">
+                                        <div className="flex flex-wrap gap-2">
+                                            {sizeOptions.map(size => (
+                                                <button
+                                                    key={size}
+                                                    onClick={() => toggleSize(size)}
+                                                    className={`px-3 py-2 rounded-lg text-xs font-bold transition-all border ${formData.sizes.includes(size)
                                                         ? 'bg-[#3E2723] text-white border-[#3E2723] shadow-md'
                                                         : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'
-                                                    }`}
-                                            >
-                                                {size}
-                                            </button>
-                                        ))}
+                                                        }`}
+                                                >
+                                                    {size}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        {formData.sizes.length > 0 && (
+                                            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 animate-in fade-in slide-in-from-top-2">
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <div className="w-1 h-4 bg-[#3E2723] rounded-full"></div>
+                                                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Variant Stock Allocation</h4>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {formData.sizes.map(size => (
+                                                        <div key={size} className="bg-white p-2.5 rounded-lg border border-gray-200 shadow-sm flex items-center gap-3">
+                                                            <div className="w-8 h-8 rounded-md bg-[#3E2723]/10 text-[#3E2723] flex items-center justify-center text-xs font-bold shrink-0">
+                                                                {size}
+                                                            </div>
+                                                            <div className="flex-1">
+                                                                <label className="text-[9px] font-bold text-gray-400 block mb-0.5 uppercase">Quantity</label>
+                                                                <input
+                                                                    type="number"
+                                                                    placeholder="0"
+                                                                    className="w-full text-sm font-semibold text-gray-800 outline-none placeholder-gray-300"
+                                                                    value={formData.variantStock[size] || ''}
+                                                                    onChange={(e) => setFormData(prev => ({
+                                                                        ...prev,
+                                                                        variantStock: {
+                                                                            ...prev.variantStock,
+                                                                            [size]: e.target.value
+                                                                        }
+                                                                    }))}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </FormSection>
 
@@ -235,34 +297,68 @@ const ItemEditor = () => {
                     <div className="lg:col-span-8 space-y-6">
                         <FormSection title="Core Information" className="space-y-6">
                             <Input
-                                label="Product Title"
+                                label={isCategory ? "Category Name" : (isSubcategory ? "Subcategory Name" : "Product Title")}
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                placeholder="e.g. 925 Silver Solitaire Ring"
+                                placeholder={isCategory ? "e.g. Rings" : (isSubcategory ? "e.g. Solitaire" : "e.g. 925 Silver Solitaire Ring")}
                             />
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Select
-                                    label="Primary Collection"
-                                    value={formData.parentId}
-                                    onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
-                                    options={[
-                                        { label: 'Select Category...', value: '' },
-                                        ...categories.map(c => ({ label: c.name, value: c.id }))
-                                    ]}
-                                />
-                                {isProduct && (
+                            {isCategory && (
+                                <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                                    <label className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-all flex-1 ${formData.showInCollection
+                                        ? 'border-[#8D6E63] bg-[#8D6E63]/5 ring-1 ring-[#8D6E63]/20'
+                                        : 'border-gray-200 hover:border-[#8D6E63]/30 hover:bg-gray-50'
+                                        }`}>
+                                        <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${formData.showInCollection
+                                            ? 'bg-[#8D6E63] border-[#8D6E63]'
+                                            : 'bg-white border-gray-300'
+                                            }`}>
+                                            {formData.showInCollection && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                                        </div>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.showInCollection}
+                                            onChange={(e) => setFormData({ ...formData, showInCollection: e.target.checked })}
+                                            className="hidden"
+                                        />
+                                        <span className={`text-sm font-medium ${formData.showInCollection ? 'text-[#3E2723]' : 'text-gray-700'}`}>Show in Collection</span>
+                                    </label>
+
+                                    <label className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-all flex-1 ${formData.showInNavbar
+                                        ? 'border-[#8D6E63] bg-[#8D6E63]/5 ring-1 ring-[#8D6E63]/20'
+                                        : 'border-gray-200 hover:border-[#8D6E63]/30 hover:bg-gray-50'
+                                        }`}>
+                                        <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${formData.showInNavbar
+                                            ? 'bg-[#8D6E63] border-[#8D6E63]'
+                                            : 'bg-white border-gray-300'
+                                            }`}>
+                                            {formData.showInNavbar && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                                        </div>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.showInNavbar}
+                                            onChange={(e) => setFormData({ ...formData, showInNavbar: e.target.checked })}
+                                            className="hidden"
+                                        />
+                                        <span className={`text-sm font-medium ${formData.showInNavbar ? 'text-[#3E2723]' : 'text-gray-700'}`}>Show in Navbar</span>
+                                    </label>
+                                </div>
+                            )}
+
+                            {!isCategory && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Select
-                                        label="Select Subtype"
-                                        value={formData.subCategoryId}
-                                        onChange={(e) => setFormData({ ...formData, subCategoryId: e.target.value })}
+                                        label="Primary Collection"
+                                        value={formData.parentId}
+                                        onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
                                         options={[
-                                            { label: 'Select Subcategory...', value: '' },
-                                            ...subcategories.filter(s => s.parentId === formData.parentId).map(s => ({ label: s.name, value: s.id }))
+                                            { label: 'Select Category...', value: '' },
+                                            ...categories.map(c => ({ label: c.name, value: c.id }))
                                         ]}
                                     />
-                                )}
-                            </div>
+
+                                </div>
+                            )}
                         </FormSection>
 
                         {isProduct && (
@@ -291,21 +387,7 @@ const ItemEditor = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-gray-100 pt-6">
-                                    <Input
-                                        label="Metal / Material"
-                                        value={formData.material}
-                                        onChange={(e) => setFormData({ ...formData, material: e.target.value })}
-                                        placeholder="e.g. 925 Silver"
-                                    />
-                                    <Input
-                                        label="Stock Inventory"
-                                        type="number"
-                                        value={formData.stock}
-                                        onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-                                        placeholder="Quantity"
-                                    />
-                                </div>
+
                             </FormSection>
                         )}
 
@@ -321,15 +403,17 @@ const ItemEditor = () => {
                             </FormSection>
                         )}
 
-                        <FormSection title="Product Narrative & Description">
-                            <TextArea
-                                label="Public Story & Features"
-                                value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                placeholder="Tell the story behind this jewelry piece..."
-                                rows={6}
-                            />
-                        </FormSection>
+                        {isProduct && (
+                            <FormSection title="Product Narrative & Description">
+                                <TextArea
+                                    label="Public Story & Features"
+                                    value={formData.description}
+                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    placeholder="Tell the story behind this jewelry piece..."
+                                    rows={6}
+                                />
+                            </FormSection>
+                        )}
                     </div>
                 </div>
             </div>

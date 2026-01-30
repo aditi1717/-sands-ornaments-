@@ -8,7 +8,7 @@ import {
     Boxes,
     ShoppingBag,
     RefreshCcw,
-    TicketPercent,
+    Ticket,
     Settings,
     LogOut,
     ChevronDown,
@@ -40,10 +40,10 @@ const AdminSidebar = () => {
         { icon: Layers, label: 'Categories', path: '/admin/categories' },
         { icon: Layers, label: 'Sub-categories', path: '/admin/sub-categories' },
         { icon: Package, label: 'Products', path: '/admin/products' },
-        { icon: Monitor, label: 'Banners', path: '/admin/banners' },
+        { icon: Ticket, label: 'Coupons', path: '/admin/coupons' },
         { icon: ShoppingBag, label: 'Orders', path: '/admin/orders' },
         { icon: RefreshCcw, label: 'Returns', path: '/admin/returns' },
-        { icon: TicketPercent, label: 'Coupons', path: '/admin/coupons' },
+        { icon: Monitor, label: 'Banners', path: '/admin/banners' },
         { icon: Share2, label: 'Referrals', path: '/admin/referrals' },
     ];
 

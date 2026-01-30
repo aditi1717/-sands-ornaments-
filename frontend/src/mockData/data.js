@@ -1,148 +1,75 @@
-import almondImg from '../assets/baadaam.png';
-import cashewImg from '../assets/cashew.png';
-import datesImg from '../assets/dates.png';
-import anjeerImg from '../assets/anjeer.png';
-import walnutImg from '../assets/walnut.png';
-import dailyPackImg from '../assets/daily_pack.png';
+// Product Images
+import necklaceImg from '../assets/gold_necklace.png';
+import ringImg from '../assets/diamond_ring.png';
+import banglesImg from '../assets/gold_bangles.png';
+
+const necklaceUrl = necklaceImg;
+const ringUrl = ringImg;
+const banglesUrl = banglesImg;
+const earringsUrl = ringImg; // Reusing ring image as placeholder for earrings if needed, or keep remote
+// Actually, let's keep remote for ones we don't have to ensure variety, or reuse.
+// The user asked to use assets from folder. I will use what I have.
+// Let's keep the other remote URLs for variety if they work, or just reuse.
+// To be safe and follow instruction "assets folder se lo", I should try to minimize remote usage if possible, 
+// but I only have 3 files.
+// let's stick to the 3 local and keep others remote for now to avoid broken images if possible.
+// Wait, the user said "user ek asets folder se lo photos". 
+// I will use the 3 I have.
+
+const earringsPlaceholder = "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop";
+const braceletPlaceholder = "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=600&auto=format&fit=crop";
+const setPlaceholder = "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=600&auto=format&fit=crop";
+const braceletUrl = "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=600&auto=format&fit=crop"; // Reusing for now
+const setUrl = "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=600&auto=format&fit=crop";
 
 export const SKUS = [
-    { id: 'sku_1', name: 'California Almonds', unit: 'kg', price: 900, category: 'Nuts' },
-    { id: 'sku_2', name: 'Cashew W320', unit: 'kg', price: 1100, category: 'Nuts' },
-    { id: 'sku_3', name: 'Pistachios Roasted', unit: 'kg', price: 1400, category: 'Nuts' },
-    { id: 'sku_4', name: 'Walnuts Kernels', unit: 'kg', price: 1300, category: 'Nuts' },
-    { id: 'sku_5', name: 'Raisins Indian', unit: 'kg', price: 400, category: 'Berries' },
-    { id: 'sku_6', name: 'Dried Cranberries', unit: 'kg', price: 950, category: 'Berries' },
-    { id: 'sku_7', name: 'Chia Seeds', unit: 'kg', price: 600, category: 'Seeds' },
-    { id: 'sku_8', name: 'Pumpkin Seeds', unit: 'kg', price: 700, category: 'Seeds' },
+    { id: 'sku_1', name: 'Gold Necklace 22k', unit: 'pc', price: 45000, category: 'Necklaces' },
+    { id: 'sku_2', name: 'Diamond Ring 18k', unit: 'pc', price: 25000, category: 'Rings' },
+    { id: 'sku_3', name: 'Silver Anklets', unit: 'pair', price: 2500, category: 'Anklets' },
+    { id: 'sku_4', name: 'Gold Bangles Set', unit: 'set', price: 35000, category: 'Bangles' },
+    { id: 'sku_5', name: 'Pearl Earrings', unit: 'pair', price: 1500, category: 'Earrings' },
+    { id: 'sku_6', name: 'Platinum Band', unit: 'pc', price: 18000, category: 'Rings' },
+    { id: 'sku_7', name: 'Nose Pin Gold', unit: 'pc', price: 800, category: 'Nose Pins' },
+    { id: 'sku_8', name: 'Silver Bracelet', unit: 'pc', price: 1200, category: 'Bracelets' },
 ];
 
 export const PACKS = [
     {
         id: '1',
-        brand: 'FARMLYF ANMOL',
-        name: 'Farmlyf Anmol Jumbo Size Sonora Almonds 500gm',
-        category: 'nuts',
-        subcategory: 'Almonds',
-        mrp: 929,
-        price: 782,
-        unitPrice: '156.4/100g',
-        rating: 4.9,
-        tag: 'PREMIUM',
-        discount: '15%off',
-        image: almondImg,
-        description: 'Experience the crunch of premium quality Sonora Almonds. Handpicked for size and quality, these almonds are perfect for snacking or gifting. Rich in protein, healthy fats, and antioxidants.'
-    },
-    {
-        id: '2',
-        brand: 'FARMLYF PREMIUM',
-        name: 'Farmlyf Jumbo Roasted Royale Cashews 500g',
-        category: 'nuts',
-        subcategory: 'Cashews',
-        mrp: 1200,
-        price: 980,
-        unitPrice: '196/100g',
-        rating: 4.8,
-        tag: 'BESTSELLER',
-        discount: '18%off',
-        image: cashewImg,
-        description: 'Indulge in the buttery taste of our Jumbo Roasted Royale Cashews. Perfectly roasted to golden perfection, they serve as an excellent party snack or a healthy treat.'
-    },
-    {
-        id: '3',
-        brand: 'FARMLYF CLASSIC',
-        name: 'Farmlyf Premium Walnuts (Akhrot) 250g',
-        category: 'nuts',
-        subcategory: 'Walnuts (Akhrot)',
-        mrp: 450,
-        price: 399,
-        unitPrice: '159.6/100g',
-        rating: 4.7,
-        tag: 'FRESH',
-        discount: '11%off',
-        image: walnutImg,
-        description: 'Our Premium Walnuts (Akhrot) are essential for brain health. Sourced from the finest orchards, they offer a rich, nutty flavor and are packed with Omega-3 fatty acids.'
-    },
-    {
-        id: '4',
-        brand: 'FARMLYF PREMIUM',
-        name: 'Farmlyf Medjool Dates Large (Imported) 500g',
-        category: 'dried-fruits',
-        subcategory: 'Dates',
-        mrp: 1800,
-        price: 1450,
-        unitPrice: '290/100g',
-        rating: 4.9,
-        tag: 'PREMIUM',
-        discount: '19%off',
-        image: datesImg,
-        description: 'Taste the luxury with our Imported Large Medjool Dates. Known for their natural sweetness and soft texture, they are a perfect energy booster and distinctively delicious.'
-    },
-    {
-        id: '5',
-        brand: 'FARMLYF ANMOL',
-        name: 'Farmlyf Premium Dried Figs (Anjeer) 250g',
-        category: 'dried-fruits',
-        subcategory: 'Dried Figs (Anjeer)',
-        mrp: 650,
-        price: 549,
-        unitPrice: '219.6/100g',
-        rating: 4.8,
-        tag: 'HIGH FIBER',
-        discount: '15%off',
-        image: anjeerImg,
-        description: 'Enjoy the chewy goodness of Farmlyf Premium Dried Figs. High in fiber and essential minerals, these figs are a healthy addition to your diet, supporting digestion and heart health.'
-    },
-    {
-        id: '6',
-        brand: 'FARMLYF PACKS',
-        name: 'Farmlyf Daily Health & Fitness Pack',
-        category: 'combos-packs',
-        subcategory: 'Daily Packs',
-        mrp: 1500,
-        price: 1299,
-        individualTotal: 1572,
-        savings: 273,
-        discountPercentage: 18,
-        unitPrice: '129.9/100g',
+        brand: 'SANDS ROYAL',
+        name: 'Bridal Wedding Set - 22k Gold',
+        category: 'sets',
+        subcategory: 'Bridal Sets',
+        mrp: 150000,
+        price: 135000,
+        unitPrice: 'N/A',
         rating: 5.0,
-        tag: 'SUPER VALUE',
-        discount: '18% OFF',
-        image: dailyPackImg,
-        galleryImages: [almondImg, cashewImg],
-        stock: 50,
-        stockStatus: 'In Stock',
-        benefits: ['Perfect Post-Workout', 'Rich either Protein', 'Boosts Immunity'],
-        description: 'A curated mix of the finest nuts and seeds designed for the fitness enthusiast. This Daily Health & Fitness Pack provides the perfect balance of proteins and energy for your active lifestyle.',
+        tag: 'LUXURY',
+        discount: '10% OFF',
+        image: setUrl,
+        description: 'A magnificent 22k gold bridal set including a heavy necklace, long haram, earrings, and maang tikka. Intricate temple craftsmanship.',
         contents: [
-            { productId: 'p1', productName: 'Farmlyf Anmol Jumbo Size Sonora Almonds', quantity: 1, variant: '250g' },
-            { productId: 'p2', productName: 'Farmlyf Jumbo Roasted Royale Cashews', quantity: 1, variant: '250g' },
-            { productId: 'p3', productName: 'Farmlyf Premium Walnuts (Akhrot)', quantity: 1, variant: '250g' }
+            { productId: 'p1', productName: 'Royal Temple Necklace', quantity: 1, variant: 'Standard' },
+            { productId: 'p2', productName: 'Matching Jhumkas', quantity: 1, variant: 'Standard' }
         ]
     },
     {
-        id: '7',
-        brand: 'FARMLYF GIFTING',
-        name: 'Royal Festival Gift Hamper',
-        category: 'combos-packs',
-        subcategory: 'Festival Combos',
-        mrp: 3500,
-        price: 2999,
-        individualTotal: 3897,
-        savings: 898,
-        discountPercentage: 23,
+        id: '2',
+        brand: 'SANDS DAILY',
+        name: 'Office Wear Combo - Silver',
+        category: 'combos',
+        subcategory: 'Office Wear',
+        mrp: 5000,
+        price: 3999,
         unitPrice: 'N/A',
-        rating: 4.9,
-        tag: 'FESTIVAL SPECIAL',
-        discount: '23% OFF',
-        image: dailyPackImg, // using placeholder
-        galleryImages: [datesImg, anjeerImg],
-        stock: 15,
-        stockStatus: 'Limited',
-        benefits: ['Premium Gift Box', 'Handpicked Selection', 'Exotic Dry Fruits'],
-        description: 'Celebrate the festive season with our Royal Festival Gift Hamper. A luxurious collection of premium Medjool Dates, Dried Figs, and Roasted Pistachios presented in an elegant box.',
+        rating: 4.8,
+        tag: 'BESTSELLER',
+        discount: '20% OFF',
+        image: earringsUrl,
+        description: 'Elegant and minimal silver jewelry set perfect for daily office wear. Includes delicate studs and a thin chain pendant.',
         contents: [
-            { productId: 'p4', productName: 'Farmlyf Medjool Dates Large (Imported)', quantity: 2, variant: '500g' },
-            { productId: 'p5', productName: 'Farmlyf Premium Dried Figs (Anjeer)', quantity: 1, variant: '500g' }
+            { productId: 'p5', productName: 'Sterling Silver Studs', quantity: 1, variant: 'Standard' },
+            { productId: 'p8', productName: 'Minimal Pendant Chain', quantity: 1, variant: 'Standard' }
         ]
     }
 ];
@@ -150,139 +77,130 @@ export const PACKS = [
 export const PRODUCTS = [
     {
         id: 'p1',
-        brand: 'FARMLYF ANMOL',
-        name: 'Farmlyf Anmol Jumbo Size Sonora Almonds',
-        category: 'nuts',
-        subcategory: 'Almonds',
+        brand: 'SANDS TRADITIONAL',
+        name: 'Royal Kundan Gold Necklace',
+        category: 'necklaces',
+        subcategory: 'Kundan',
         rating: 4.9,
         tag: 'PREMIUM',
-        image: almondImg,
-        description: 'Experience the crunch of premium quality Sonora Almonds. Handpicked for size and quality, these almonds are perfect for snacking or gifting. Rich in protein, healthy fats, and antioxidants.',
-        benefits: ['Heart-Healthy', 'Rich in Vitamin E', 'Supports Brain Health', 'Gluten Free'],
+        image: necklaceUrl,
+        description: 'Exquisite handcrafted Kundan necklace set in 22k gold. Featuring semi-precious stones and pearl drops, this piece is a masterpiece of traditional artistry.',
+        benefits: ['Hallmarked Gold', 'Authentic Kundan', 'Lifetime Polish Warranty'],
         specifications: [
-            { label: 'Origin', value: 'California, USA' },
-            { label: 'Shelf Life', value: '6 Months' },
-            { label: 'Ingredients', value: 'Raw Almonds' }
+            { label: 'Material', value: '22k Gold' },
+            { label: 'Weight', value: '45g' },
+            { label: 'Stone', value: 'Kundan & Pearls' }
         ],
         faqs: [
-            { q: 'Are these roasted?', a: 'No, these are raw jumbo almonds.' },
-            { q: 'How to store?', a: 'Keep in an airtight container in a cool place.' }
+            { q: 'Is it hallmarked?', a: 'Yes, it comes with BIS Hallmark.' },
+            { q: 'Does it include earrings?', a: 'Yes, matching earrings are included.' }
         ],
-        nutrition: { energy: '579 Kcal', protein: '21g', fat: '50g', carbs: '22g' },
         variants: [
-            { id: 'p1-v1', weight: '250g', mrp: 480, price: 399, discount: '17%off', unitPrice: '159.6/100g', stock: 5 },
-            { id: 'p1-v2', weight: '500g', mrp: 929, price: 782, discount: '15%off', unitPrice: '156.4/100g', stock: 25 },
-            { id: 'p1-v3', weight: '1kg', mrp: 1800, price: 1499, discount: '17%off', unitPrice: '149.9/100g', stock: 50 }
+            { id: 'p1-v1', name: 'Standard', mrp: 160000, price: 145000, discount: '9%off', stock: 3, sold: 12 },
+            { id: 'p1-v2', name: 'Heavy', mrp: 220000, price: 198000, discount: '10%off', stock: 1, sold: 4 }
         ]
     },
     {
         id: 'p2',
-        brand: 'FARMLYF PREMIUM',
-        name: 'Farmlyf Jumbo Roasted Royale Cashews',
-        category: 'nuts',
-        subcategory: 'Cashews',
+        brand: 'SANDS SOLITAIRE',
+        name: 'Classic Diamond Solitaire Ring',
+        category: 'rings',
+        subcategory: 'Solitaire',
         rating: 4.8,
-        tag: 'BESTSELLER',
-        image: cashewImg,
-        description: 'Indulge in the buttery taste of our Jumbo Roasted Royale Cashews. Perfectly roasted to golden perfection, they serve as an excellent party snack or a healthy treat.',
-        benefits: ['High Magnesium', 'Good for Heart', 'Instant Energy Boost'],
+        tag: 'ENGAGEMENT',
+        image: ringUrl,
+        description: 'A timeless solitaire diamond ring set in 18k white gold. The perfect symbol of love and commitment.',
+        benefits: ['Certified Diamond', '18k White Gold', 'Free Resizing'],
         specifications: [
-            { label: 'Origin', value: 'Vijayawada, India' },
-            { label: 'Shelf Life', value: '4 Months' },
-            { label: 'Roast Type', value: 'Dry Roasted' }
+            { label: 'Diamond', value: '0.50 ct, VVS1' },
+            { label: 'Metal', value: '18k White Gold' },
+            { label: 'Setting', value: 'Prong' }
         ],
         faqs: [
-            { q: 'Is it salted?', a: 'No, these are plane dry roasted jumbo cashews.' }
+            { q: 'Is the diamond certified?', a: 'Yes, typically IGI or GIA certified.' }
         ],
-        nutrition: { energy: '553 Kcal', protein: '18g', fat: '44g', carbs: '30g' },
         variants: [
-            { id: 'p2-v1', weight: '250g', mrp: 650, price: 549, discount: '15%off', unitPrice: '219.6/100g', stock: 12 },
-            { id: 'p2-v2', weight: '500g', mrp: 1200, price: 980, discount: '18%off', unitPrice: '196/100g', stock: 40 },
-            { id: 'p2-v3', weight: '1kg', mrp: 2300, price: 1899, discount: '17%off', unitPrice: '189.9/100g', stock: 15 }
+            { id: 'p2-v1', name: 'Size 6', mrp: 65000, price: 58000, discount: '11%off', stock: 5, sold: 8 },
+            { id: 'p2-v2', name: 'Size 7', mrp: 65000, price: 58000, discount: '11%off', stock: 8, sold: 15 },
+            { id: 'p2-v3', name: 'Size 8', mrp: 65000, price: 58000, discount: '11%off', stock: 4, sold: 6 }
         ]
     },
     {
         id: 'p3',
-        brand: 'FARMLYF CLASSIC',
-        name: 'Farmlyf Premium Walnuts (Akhrot)',
-        category: 'nuts',
-        subcategory: 'Walnuts (Akhrot)',
+        brand: 'SANDS HERITAGE',
+        name: 'Antique Gold Temple Bangles',
+        category: 'bangles',
+        subcategory: 'Temple Jewellery',
         rating: 4.7,
-        tag: 'FRESH',
-        image: walnutImg,
-        description: 'Our Premium Walnuts (Akhrot) are essential for brain health. Sourced from the finest orchards, they offer a rich, nutty flavor and are packed with Omega-3 fatty acids.',
-        benefits: ['Omega-3 Rich', 'Improves Brain Function', 'Anti-inflammatory'],
+        tag: 'WEDDING',
+        image: banglesUrl,
+        description: 'Stunning antique finish gold bangles featuring intricate carvings of goddesses and floral motifs. Perfect for weddings and traditional ceremonies.',
+        benefits: ['Solid Gold', 'Antique Finish', 'Screw Open Mechanism'],
         specifications: [
-            { label: 'Origin', value: 'Kashmir, India' },
-            { label: 'Type', value: 'Kernels (Extra White)' }
+            { label: 'Material', value: '22k Gold' },
+            { label: 'Type', value: 'Kada' },
+            { label: 'Size', value: '2.4, 2.6, 2.8' }
         ],
         faqs: [
-            { q: 'How many should I eat?', a: 'Daily consumption of 2-3 kernels is recommended.' }
+            { q: 'Is the size adjustable?', a: 'No, but it has a screw opening for easy wear.' }
         ],
-        nutrition: { energy: '654 Kcal', protein: '15g', fat: '65g', carbs: '14g' },
         variants: [
-            { id: 'p3-v1', weight: '250g', mrp: 450, price: 399, discount: '11%off', unitPrice: '159.6/100g', stock: 8 },
-            { id: 'p3-v2', weight: '500g', mrp: 850, price: 749, discount: '12%off', unitPrice: '149.8/100g', stock: 20 }
+            { id: 'p3-v1', name: 'Size 2.4', mrp: 95000, price: 89000, discount: '6%off', stock: 6, sold: 20 },
+            { id: 'p3-v2', name: 'Size 2.6', mrp: 98000, price: 92000, discount: '6%off', stock: 10, sold: 35 },
+            { id: 'p3-v3', name: 'Size 2.8', mrp: 102000, price: 95000, discount: '7%off', stock: 4, sold: 10 }
         ]
     },
     {
         id: 'p4',
-        brand: 'FARMLYF PREMIUM',
-        name: 'Farmlyf Medjool Dates Large (Imported)',
-        category: 'dried-fruits',
-        subcategory: 'Dates',
+        brand: 'SANDS MODERN',
+        name: 'Rose Gold Diamond Earrings',
+        category: 'earrings',
+        subcategory: 'Studs',
         rating: 4.9,
-        tag: 'PREMIUM',
-        image: datesImg,
-        description: 'Taste the luxury with our Imported Large Medjool Dates. Known for their natural sweetness and soft texture, they are a perfect energy booster and distinctively delicious.',
-        benefits: ['Flash Energy', 'Natural Sugar', 'Rich in Potassium', 'Good for Digestion'],
+        tag: 'TRENDING',
+        image: earringsUrl,
+        description: 'Chic and contemporary rose gold studs embedded with sparkling diamonds. Perfect for modern women who love understated luxury.',
+        benefits: ['Real Diamonds', '14k Rose Gold', 'Secure Back'],
         specifications: [
-            { label: 'Origin', value: 'Middle East' },
-            { label: 'Variety', value: 'Medjool' }
+            { label: 'Diamond Weight', value: '0.25 ct total' },
+            { label: 'Metal', value: '14k Rose Gold' }
         ],
         faqs: [
-            { q: 'Do they contain pits?', a: 'Yes, these are whole dates with seeds.' }
+            { q: 'Are these suitable for daily wear?', a: 'Yes, absolutely.' }
         ],
-        nutrition: { energy: '277 Kcal', protein: '1.8g', fat: '0.2g', carbs: '75g' },
         variants: [
-            { id: 'p4-v1', weight: '500g', mrp: 1800, price: 1450, discount: '19%off', unitPrice: '290/100g', stock: 30 },
-            { id: 'p4-v2', weight: '1kg', mrp: 3400, price: 2799, discount: '18%off', unitPrice: '279.9/100g', stock: 10 }
+            { id: 'p4-v1', name: 'Standard', mrp: 25000, price: 19999, discount: '20%off', stock: 15, sold: 50 }
         ]
     },
     {
         id: 'p5',
-        brand: 'FARMLYF ANMOL',
-        name: 'Farmlyf Premium Dried Figs (Anjeer)',
-        category: 'dried-fruits',
-        subcategory: 'Dried Figs (Anjeer)',
-        rating: 4.8,
-        tag: 'HIGH FIBER',
-        image: anjeerImg,
-        description: 'Enjoy the chewy goodness of Farmlyf Premium Dried Figs. High in fiber and essential minerals, these figs are a healthy addition to your diet, supporting digestion and heart health.',
-        benefits: ['High Fiber', 'Bone Health', 'Natural Sweetness'],
+        brand: 'SANDS SILVER',
+        name: 'Oxidized Silver Choker',
+        category: 'necklaces',
+        subcategory: 'Oxidized',
+        rating: 4.6,
+        tag: 'BOHO',
+        image: braceletUrl, // Using placeholder
+        description: 'Trendy oxidized silver choker necklace with tribal motifs. Adds a boho-chic vibe to any outfit, indian or western.',
+        benefits: ['925 Sterling Silver', 'Adjustable Length', 'Skin Friendly'],
         specifications: [
-            { label: 'Origin', value: 'Afghanistan' },
-            { label: 'Process', value: 'Sun Dried' }
+            { label: 'Material', value: '925 Silver' },
+            { label: 'Finish', value: 'Oxidized' }
         ],
-        faqs: [
-            { q: 'Should I soak them?', a: 'Soaking overnight makes them easier to digest and softer.' }
-        ],
-        nutrition: { energy: '249 Kcal', protein: '3.3g', fat: '0.9g', carbs: '64g' },
+        faqs: [],
         variants: [
-            { id: 'p5-v1', weight: '250g', mrp: 650, price: 549, discount: '15%off', unitPrice: '219.6/100g', stock: 4 },
-            { id: 'p5-v2', weight: '500g', mrp: 1200, price: 999, discount: '17%off', unitPrice: '199.8/100g', stock: 18 }
+            { id: 'p5-v1', name: 'Standard', mrp: 4500, price: 3200, discount: '29%off', stock: 25, sold: 100 }
         ]
     }
 ];
 
-// Coupon Codes
 export const COUPONS = [
     {
         id: 'COUP-001',
-        code: 'WELCOME50',
+        code: 'WELCOME500',
         type: 'flat',
-        value: 50,
-        minOrderValue: 500,
+        value: 500,
+        minOrderValue: 5000,
         maxDiscount: null,
         validFrom: '2026-01-01',
         validUntil: '2026-12-31',
@@ -292,14 +210,14 @@ export const COUPONS = [
         applicableCategories: [],
         userEligibility: 'new',
         active: true,
-        description: 'Flat ₹50 OFF on your first order!'
+        description: 'Flat ₹500 OFF on your first jewelry order above ₹5000!'
     },
     {
         id: 'COUP-002',
-        code: 'SAVE100',
+        code: 'GOLD1000',
         type: 'flat',
-        value: 100,
-        minOrderValue: 1000,
+        value: 1000,
+        minOrderValue: 20000,
         maxDiscount: null,
         validFrom: '2026-01-01',
         validUntil: '2026-12-31',
@@ -309,57 +227,23 @@ export const COUPONS = [
         applicableCategories: [],
         userEligibility: 'all',
         active: true,
-        description: 'Get ₹100 OFF on orders above ₹1000'
+        description: 'Get ₹1000 OFF on gold purchase above ₹20000'
     },
     {
         id: 'COUP-003',
-        code: 'NUTS15',
+        code: 'DIAMOND5',
         type: 'percentage',
-        value: 15,
-        minOrderValue: 800,
-        maxDiscount: 200,
+        value: 5,
+        minOrderValue: 10000,
+        maxDiscount: 5000,
         validFrom: '2026-01-01',
         validUntil: '2026-12-31',
         usageLimit: 300,
         usageCount: 0,
         perUserLimit: 2,
-        applicableCategories: ['nuts'],
+        applicableCategories: ['rings', 'earrings'],
         userEligibility: 'all',
         active: true,
-        description: '15% OFF on all nuts (Max ₹200)'
-    },
-    {
-        id: 'COUP-004',
-        code: 'MEGA20',
-        type: 'percentage',
-        value: 20,
-        minOrderValue: 1500,
-        maxDiscount: 300,
-        validFrom: '2026-01-01',
-        validUntil: '2026-12-31',
-        usageLimit: 200,
-        usageCount: 0,
-        perUserLimit: 1,
-        applicableCategories: [],
-        userEligibility: 'all',
-        active: true,
-        description: '20% OFF on orders above ₹1500 (Max ₹300)'
-    },
-    {
-        id: 'COUP-005',
-        code: 'FREESHIP',
-        type: 'free_shipping',
-        value: 0,
-        minOrderValue: 499,
-        maxDiscount: null,
-        validFrom: '2026-01-01',
-        validUntil: '2026-12-31',
-        usageLimit: 10000,
-        usageCount: 0,
-        perUserLimit: 10,
-        applicableCategories: [],
-        userEligibility: 'all',
-        active: true,
-        description: 'Free shipping on all orders!'
+        description: '5% OFF on Diamonds (Max ₹5000)'
     }
 ];

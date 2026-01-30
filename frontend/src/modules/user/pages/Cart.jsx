@@ -182,13 +182,7 @@ const Cart = () => {
                                         <span className="text-black">₹{shipping}</span>
                                     )}
                                 </div>
-                                <div className="bg-gray-50 border-2 border-dashed border-[#EBCDD0] p-4 rounded-2xl flex items-center justify-between group cursor-pointer hover:border-[#D39A9F] transition-colors">
-                                    <div className="flex items-center gap-3">
-                                        <Gift className="w-4 h-4 text-[#D39A9F]" />
-                                        <span className="text-xs md:text-sm font-bold text-black uppercase tracking-wider">Apply Coupon</span>
-                                    </div>
-                                    <ArrowRight className="w-4 h-4 text-gray-300 group-hover:translate-x-1 transition-transform" />
-                                </div>
+
                             </div>
 
                             <div className="pt-8 border-t border-gray-100">

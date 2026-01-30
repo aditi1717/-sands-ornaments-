@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
+import { PRODUCTS as initialProducts } from '../mockData/data';
 
 const ShopContext = createContext();
 
@@ -63,8 +64,24 @@ export const ShopProvider = ({ children }) => {
             }
         ];
     });
+    const [coupons, setCoupons] = useState(() => {
+        const saved = localStorage.getItem('farmlyf_coupons');
+        if (saved) return JSON.parse(saved);
+
+        // Initial Coupons matching Checkout.jsx
+        return [
+            { id: '1', code: 'WELCOME500', amount: 500, minOrder: 2000, desc: 'Flat ₹500 off on orders above ₹2000', type: 'flat', active: true, validUntil: '2025-12-31' },
+            { id: '2', code: 'SANDS10', amount: 10, minOrder: 1000, desc: '10% off up to ₹1000', type: 'percentage', active: true, validUntil: '2025-12-31' },
+            { id: '3', code: 'SPECIAL200', amount: 200, minOrder: 500, desc: 'Flat ₹200 off description', type: 'flat', active: true, validUntil: '2025-12-31' }
+        ];
+    });
     const [defaultAddressId, setDefaultAddressId] = useState(() => {
         return localStorage.getItem('defaultAddressId') || null;
+    });
+
+    const [products, setProducts] = useState(() => {
+        const saved = localStorage.getItem('farmlyf_products');
+        return saved ? JSON.parse(saved) : initialProducts;
     });
 
     const [notification, setNotification] = useState(null);
@@ -119,6 +136,16 @@ export const ShopProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
     }, [supportTickets]);
+
+    // Persist Coupons
+    useEffect(() => {
+        localStorage.setItem('farmlyf_coupons', JSON.stringify(coupons));
+    }, [coupons]);
+
+    // Persist Products
+    useEffect(() => {
+        localStorage.setItem('farmlyf_products', JSON.stringify(products));
+    }, [products]);
 
     useEffect(() => {
         if (defaultAddressId) {
@@ -281,6 +308,87 @@ export const ShopProvider = ({ children }) => {
         showNotification("Account deleted successfully.");
     };
 
+    // Coupon Management
+    const addCoupon = (coupon) => {
+        setCoupons(prev => [...prev, { ...coupon, id: Date.now().toString() }]);
+        showNotification("Coupon created successfully");
+    };
+
+    const updateCoupon = (id, updatedData) => {
+        setCoupons(prev => prev.map(c => c.id === id ? { ...c, ...updatedData } : c));
+        showNotification("Coupon updated successfully");
+    };
+
+    const deleteCoupon = (id) => {
+        setCoupons(prev => prev.filter(c => c.id !== id));
+        showNotification("Coupon deleted successfully");
+    };
+
+    // Product & Bulk Management
+    const updateProduct = (id, updatedData) => {
+        setProducts(prev => prev.map(p => p.id === id ? { ...p, ...updatedData } : p));
+    };
+
+    const bulkUpdatePrices = (config) => {
+        const { type, value, category, productIds } = config;
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) return;
+
+        setProducts(prev => prev.map(product => {
+            // Filter logic
+            const matchCategory = !category || category === 'all' || product.category === category;
+            const matchIds = !productIds || productIds.includes(product.id);
+
+            if (matchCategory && matchIds) {
+                // Products in mockData have variants. We need to update prices in variants.
+                const updatedVariants = (product.variants || []).map(variant => {
+                    let newPrice = variant.price;
+                    let newMrp = variant.mrp;
+
+                    switch (type) {
+                        case 'increase_amount':
+                            newPrice += numValue;
+                            newMrp += numValue;
+                            break;
+                        case 'decrease_amount':
+                            newPrice = Math.max(0, newPrice - numValue);
+                            newMrp = Math.max(0, newMrp - numValue);
+                            break;
+                        case 'increase_percent':
+                            newPrice = Math.round(newPrice * (1 + numValue / 100));
+                            newMrp = Math.round(newMrp * (1 + numValue / 100));
+                            break;
+                        case 'decrease_percent':
+                            newPrice = Math.round(newPrice * (1 - numValue / 100));
+                            newMrp = Math.round(newMrp * (1 - numValue / 100));
+                            break;
+                        case 'set_price':
+                            newPrice = numValue;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    return {
+                        ...variant,
+                        price: newPrice,
+                        mrp: newMrp,
+                        discount: newMrp > 0 ? `${Math.round(((newMrp - newPrice) / newMrp) * 100)}%off` : '0%off'
+                    };
+                });
+
+                return { ...product, variants: updatedVariants };
+            }
+            return product;
+        }));
+
+        showNotification("Bulk price update completed successfully!");
+    };
+
+    const getActiveCoupons = () => {
+        return coupons.filter(c => c.active);
+    };
+
     // Persist Notifications
     useEffect(() => {
         localStorage.setItem('notificationsEnabled', notificationsEnabled);
@@ -297,9 +405,13 @@ export const ShopProvider = ({ children }) => {
             removeFromCart, removeFromWishlist, updateQuantity, clearCart,
             addAddress, removeAddress, updateAddress, setDefaultAddress,
             defaultAddressId, createTicket, updateTicketStatus, addTicketReply, deleteTicket,
+
             showNotification, deleteAccount,
+            coupons, addCoupon, updateCoupon, deleteCoupon, getActiveCoupons,
             notificationsEnabled, userNotifications, toggleNotificationSettings, deleteUserNotification,
-            isMenuOpen, toggleMenu
+            isMenuOpen, toggleMenu,
+
+            products, updateProduct, bulkUpdatePrices
         }}>
             {children}
 

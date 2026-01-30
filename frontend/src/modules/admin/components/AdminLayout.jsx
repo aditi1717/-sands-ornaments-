@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard, Package, ShoppingCart, Users, Image as ImageIcon,
     Bell, ChevronRight, Star, HelpCircle, LogOut, Menu, X, ListTree,
-    FileText, MessageSquare
+    FileText, MessageSquare, Ticket
 } from 'lucide-react';
 import logo from '../assets/sands-logo.png';
 import logoName from '../assets/sands-logoname.png';
@@ -18,6 +18,7 @@ const AdminLayout = ({ children }) => {
         { name: 'Categories', icon: ImageIcon, path: '/admin/categories' },
         { name: 'Subcategories', icon: ListTree, path: '/admin/subcategories' },
         { name: 'Products', icon: Package, path: '/admin/products' },
+        { name: 'Coupons', icon: Ticket, path: '/admin/coupons' },
         { name: 'Orders', icon: ShoppingCart, path: '/admin/orders' },
         { name: 'Users', icon: Users, path: '/admin/users' },
         { name: 'Reviews', icon: Star, path: '/admin/reviews' },

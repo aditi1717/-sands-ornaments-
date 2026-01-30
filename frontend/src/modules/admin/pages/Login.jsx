@@ -111,6 +111,12 @@ const AdminLogin = () => {
                                 </>
                             )}
                         </button>
+                        <div className="mt-4 text-center">
+                            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Use these credentials</p>
+                            <p className="text-xs font-mono text-[#3E2723] font-bold bg-[#FDFBF7] inline-block px-3 py-1 rounded border border-[#EFEBE9]">
+                                admin@sands.com / admin123
+                            </p>
+                        </div>
                     </form>
                 </div>
 

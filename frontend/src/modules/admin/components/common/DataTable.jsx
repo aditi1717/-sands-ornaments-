@@ -39,6 +39,7 @@ const DataTable = ({
                         ))}
                     </div>
                 )}
+                {children}
             </div>
 
             {/* Table */}

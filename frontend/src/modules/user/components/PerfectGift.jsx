@@ -8,6 +8,7 @@ import giftMother from '../assets/gift_mother_silver.png';
 import giftFriends from '../assets/gift_friends_silver.png';
 import giftWife from '../assets/gift_wife_silver.png';
 import giftSister from '../assets/gift_sister_silver.png';
+import dividerImg from '../assets/ornament-divider.png';
 
 const recipients = [
     { id: 'mother', name: "Mother", image: giftMother, path: "/shop?recipient=mother" },
@@ -18,7 +19,7 @@ const recipients = [
 
 const PerfectGift = () => {
     return (
-        <section className="py-16 md:py-24 bg-gradient-to-b from-[#4A1015] to-[#2A0505] text-white"> {/* Increased spacing */}
+        <section className="py-8 md:py-12 bg-gradient-to-b from-[#4A1015] to-[#2A0505] text-white"> {/* Reduced spacing */}
             <div className="container mx-auto px-2 md:px-4">
                 <div className="text-center mb-12">
                     <motion.h2
@@ -36,6 +37,8 @@ const PerfectGift = () => {
                         className="h-1 bg-[#C9A24D] mx-auto rounded-full"
                     ></motion.div>
                 </div>
+
+
 
                 {/* V-Shape Row Layout */}
                 <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 md:gap-10 px-4 mb-24">
@@ -59,32 +62,46 @@ const PerfectGift = () => {
                             >
                                 <Link
                                     to={item.path}
-                                    className="group relative rounded-[2rem] overflow-hidden w-full h-full aspect-[3/4] shadow-[0_10px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_30px_60px_rgba(114,47,55,0.3)] transition-all duration-700 block border border-black/5 hover:border-[#C9A24D]"
+                                    className="group relative block w-full aspect-[3/4] rounded-[2rem] overflow-hidden border border-[#C9A24D]/20 shadow-lg transition-all duration-500 hover:shadow-[0_0_25px_rgba(201,162,77,0.3)] hover:border-[#C9A24D]/60 hover:-translate-y-2"
                                 >
-                                    {/* Image */}
-                                    <img
-                                        src={item.image}
-                                        alt={`Gift for ${item.name}`}
-                                        className="w-full h-full object-cover transform duration-1000 group-hover:scale-110"
-                                    />
+                                    {/* Image with Zoom Effect */}
+                                    <div className="absolute inset-0 overflow-hidden">
+                                        <img
+                                            src={item.image}
+                                            alt={`Gift for ${item.name}`}
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-60" />
+                                    </div>
 
-                                    {/* Gradients */}
-                                    <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/70 opacity-70 group-hover:opacity-50 transition-opacity duration-700" />
-                                    <div className="absolute inset-0 bg-[#722F37]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 mix-blend-overlay" />
-
-                                    {/* Content */}
-                                    <div className="absolute bottom-6 left-0 right-0 z-20 flex flex-col items-center px-4">
-                                        <div className="text-center transform transition-all duration-500 group-hover:-translate-y-3">
-                                            <span className="font-display font-bold text-white text-base md:text-lg tracking-[0.2em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-                                                For {item.name}
+                                    {/* Elegant Content Overlay */}
+                                    <div className="absolute bottom-0 inset-x-0 p-6 flex flex-col items-center justify-end h-full text-center">
+                                        <div className="relative z-10 transform translate-y-2 transition-transform duration-500 group-hover:translate-y-0">
+                                            <span className="font-display text-sm tracking-[0.2em] text-[#C9A24D] uppercase mb-2 block opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                                                Gift For
                                             </span>
-                                            <div className="h-[1.5px] w-0 group-hover:w-full bg-[#C9A24D] mx-auto mt-2 transition-all duration-700 rounded-full shadow-[0_0_15px_rgba(201,162,77,0.8)]"></div>
+                                            <h3 className="text-3xl font-display text-white mb-2 drop-shadow-md">
+                                                {item.name}
+                                            </h3>
+                                            <div className="w-12 h-0.5 bg-[#C9A24D] mx-auto rounded-full transition-all duration-500 group-hover:w-24 group-hover:bg-white" />
                                         </div>
                                     </div>
                                 </Link>
                             </motion.div>
                         );
                     })}
+                </div>
+
+                {/* Divider */}
+                <div className="flex justify-center w-full px-4 mt-[-40px] relative z-10">
+                    <motion.img
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 3.5 }}
+                        transition={{ duration: 0.8 }}
+                        src={dividerImg}
+                        alt="Decorative Divider"
+                        className="h-20 md:h-32 w-auto object-contain opacity-90"
+                    />
                 </div>
             </div>
         </section>

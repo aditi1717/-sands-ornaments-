@@ -17,11 +17,12 @@ import {
 } from 'lucide-react';
 import { useShop } from '../../../context/ShopContext';
 import { PRODUCTS as mockProducts } from '../../../mockData/data'; // Fallback / Helper
+import PageHeader from '../components/common/PageHeader';
 
 const CouponFormPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { products } = useShop();
+    const { products, coupons, addCoupon, updateCoupon } = useShop();
     const isEdit = Boolean(id);
 
     // Hardcoded Categories for simplicty (usually from context)
@@ -57,16 +58,18 @@ const CouponFormPage = () => {
     });
 
     useEffect(() => {
-        if (isEdit) {
-            const storedCoupons = JSON.parse(localStorage.getItem('farmlyf_coupons')) || [];
-            const coupon = storedCoupons.find(c => c.id === id);
+        if (isEdit && coupons) {
+            const coupon = coupons.find(c => c.id === id);
             if (coupon) setFormData({
                 ...coupon,
+                value: coupon.amount || coupon.value || '', // Handle both structures
+                minOrderValue: coupon.minOrder || coupon.minOrderValue || '',
+                description: coupon.desc || coupon.description || '',
                 applicabilityType: coupon.applicabilityType || 'all',
                 targetItems: coupon.targetItems || []
             });
         }
-    }, [id, isEdit]);
+    }, [id, isEdit, coupons]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -90,58 +93,45 @@ const CouponFormPage = () => {
     const handleSave = (e) => {
         e.preventDefault();
 
-        const storedCoupons = JSON.parse(localStorage.getItem('farmlyf_coupons')) || [];
-
         const payload = {
             ...formData,
-            id: isEdit ? id : `COUP-${Date.now()}`,
-            usageCount: isEdit ? formData.usageCount : 0,
+            // Map to standard structure
+            amount: Number(formData.value),
+            minOrder: Number(formData.minOrderValue),
+            desc: formData.description,
+            // Keep original fields too for compatibility if needed, but standardize on above
             value: Number(formData.value),
             minOrderValue: Number(formData.minOrderValue),
+            description: formData.description,
+
+            usageCount: isEdit ? formData.usageCount : 0,
             maxDiscount: Number(formData.maxDiscount) || null,
             usageLimit: Number(formData.usageLimit) || 1000,
             perUserLimit: Number(formData.perUserLimit) || 1
         };
 
-        let updatedCoupons;
         if (isEdit) {
-            updatedCoupons = storedCoupons.map(c => c.id === id ? payload : c);
+            updateCoupon(id, payload);
         } else {
-            updatedCoupons = [payload, ...storedCoupons];
+            addCoupon(payload);
         }
-
-        localStorage.setItem('farmlyf_coupons', JSON.stringify(updatedCoupons));
-        alert("Coupon successfully saved!");
         navigate('/admin/coupons');
     };
 
+    const handleSaveAction = {
+        label: isEdit ? 'Update Coupon' : 'Deploy Coupon',
+        icon: <Save size={16} />,
+        onClick: handleSave
+    };
+
     return (
-        <div className="space-y-10 pb-20 text-left">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-6">
-                    <button
-                        onClick={() => navigate('/admin/coupons')}
-                        className="p-3 bg-white text-footerBg rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:bg-footerBg hover:text-white transition-all group"
-                    >
-                        <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                    </button>
-                    <div>
-                        <h1 className="text-xl font-black text-footerBg uppercase tracking-tight">
-                            {isEdit ? 'Configure Coupon' : 'New Promo Campaign'}
-                        </h1>
-                        <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-[0.2em]">
-                            {isEdit ? `Modifying settings for ${formData.code}` : 'Design a new high-conversion discount code'}
-                        </p>
-                    </div>
-                </div>
-                <button
-                    onClick={handleSave}
-                    className="bg-footerBg text-white px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:bg-black transition-all shadow-xl shadow-footerBg/20"
-                >
-                    <Save size={18} /> {isEdit ? 'Update Coupon' : 'Deploy Coupon'}
-                </button>
-            </div>
+        <div className="space-y-10 pb-20 text-left animate-in fade-in duration-500">
+            <PageHeader
+                title={isEdit ? 'Configure Coupon' : 'New Promo Campaign'}
+                subtitle={isEdit ? `Modifying settings for ${formData.code}` : 'Design a new high-conversion discount code'}
+                backPath="/admin/coupons"
+                action={handleSaveAction}
+            />
 
             <form className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 {/* Left: Core Logic */}
@@ -255,8 +245,8 @@ const CouponFormPage = () => {
                                                 }
                                             }}
                                             className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${isActive
-                                                    ? 'bg-white text-footerBg shadow-sm'
-                                                    : 'text-gray-400 hover:text-gray-600'
+                                                ? 'bg-white text-footerBg shadow-sm'
+                                                : 'text-gray-400 hover:text-gray-600'
                                                 }`}
                                         >
                                             {scope.label}
@@ -308,7 +298,7 @@ const CouponFormPage = () => {
 
                                 {formData.applicabilityType === 'product' && formData.userEligibility !== 'new' && (
                                     <div className="space-y-2">
-                                        {products.length > 0 ? products.map(p => (
+                                        {(products || []).length > 0 ? (products || []).map(p => (
                                             <label key={p.id} className="flex items-center gap-3 p-2 bg-white rounded-xl border border-gray-100 cursor-pointer hover:border-primary/30 transition-all">
                                                 <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 ${formData.targetItems.includes(p.id) ? 'bg-primary border-primary' : 'border-gray-300'}`}>
                                                     {formData.targetItems.includes(p.id) && <CheckCircle2 size={12} className="text-white" />}
@@ -367,7 +357,7 @@ const CouponFormPage = () => {
                         </div>
                     </div>
 
-                    {/* Usage Restraints (Moved to Right Column) */}
+                    {/* Usage Restraints */}
                     <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-6 text-left">
                         <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
                             <Settings size={18} className="text-gray-400" />

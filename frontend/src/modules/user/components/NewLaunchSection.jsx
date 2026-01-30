@@ -41,16 +41,6 @@ const NewLaunchSection = () => {
                         </h3>
                     </div>
 
-                    {/* Right Aligned Button (Absolute on Desktop) */}
-                    <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2">
-                        <Link
-                            to="/shop?new=true"
-                            className="flex items-center gap-2 bg-black text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#722F37] transition-all shadow-md group border border-[#C9A24D]/30"
-                        >
-                            Explore Collection
-                            <ChevronRight className="w-4 h-4 text-[#C9A24D] group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                    </div>
                 </div>
 
                 {/* Cards Row */}
@@ -62,31 +52,46 @@ const NewLaunchSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="w-[45%] md:w-48 lg:w-56"
+                            className="w-[45%] md:w-56 lg:w-64"
                         >
-                            <Link to={item.path} className="group block text-center">
-                                {/* Card Image Container */}
-                                <div className="relative rounded-[2.5rem] overflow-hidden aspect-square mb-6 bg-white border-2 border-gray-100 shadow-[0_8px_0_#F3F4F6,0_15px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_16px_0_#E5E7EB,0_30px_60px_rgba(0,0,0,0.15)] transform transition-all duration-300 ease-out group-hover:-translate-y-2">
+                            <Link to={item.path} className="group block relative">
+                                {/* Arch Shaped Card Container */}
+                                <div className="relative rounded-t-full rounded-b-[2rem] overflow-hidden aspect-[3/4] bg-white shadow-[0_15px_35px_rgba(0,0,0,0.2)] group-hover:shadow-[0_25px_50px_rgba(114,47,55,0.4)] transition-all duration-500 transform group-hover:-translate-y-2 isolate">
 
-                                    {/* 'New' Tag - Gold Background, Wine Text */}
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#C9A24D] text-[#722F37] text-[10px] md:text-xs font-bold px-3 py-1 rounded-b-lg shadow-sm z-20 flex items-center gap-1">
-                                        <Sparkles className="w-2 md:w-3 h-2 md:h-3" /> New
+
+
+                                    {/* Image */}
+                                    <div className="absolute inset-0 overflow-hidden">
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
                                     </div>
 
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        className="w-full h-full object-cover transform duration-500 group-hover:scale-110"
-                                    />
+                                    {/* Gradient Overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#2A0505]/90 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
 
-                                    {/* Overlay */}
-                                    <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300"></div>
+                                    {/* Content - Bottom Center */}
+                                    <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center justify-end text-center z-10">
+
+                                        {/* Name */}
+                                        <h4 className="font-display font-medium text-xl text-white tracking-wide mb-1 transform transition-transform duration-300 group-hover:-translate-y-1">
+                                            {item.name}
+                                        </h4>
+
+                                        {/* Divider */}
+                                        <div className="w-8 h-0.5 bg-[#C9A24D] rounded-full mb-2 opacity-50 group-hover:w-16 group-hover:opacity-100 transition-all duration-500"></div>
+
+                                        {/* Action Text */}
+                                        <span className="text-[#C9A24D] text-xs font-medium uppercase tracking-[0.2em] opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                                            Discover
+                                        </span>
+                                    </div>
+
+                                    {/* Border Glow Effect */}
+                                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#C9A24D]/30 rounded-t-full rounded-b-[2rem] transition-colors duration-300 pointer-events-none"></div>
                                 </div>
-
-                                {/* Label */}
-                                <h4 className="font-display font-medium text-lg text-gray-800 group-hover:text-[#722F37] transition-colors">
-                                    {item.name}
-                                </h4>
                             </Link>
                         </motion.div>
                     ))}

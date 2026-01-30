@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { useNavigate } from 'react-router-dom';
-import { Truck, CreditCard, Banknote, ShieldCheck, Lock, Plus, Check, MapPin, ChevronRight, LayoutDashboard } from 'lucide-react';
+import { Truck, CreditCard, Banknote, ShieldCheck, Lock, Plus, Check, MapPin, ChevronRight, LayoutDashboard, Gift, ArrowRight, X, Tag } from 'lucide-react';
 
 const Checkout = () => {
-    const { cart, placeOrder, user, login, addresses, addAddress, defaultAddressId } = useShop();
+    const { cart, placeOrder, user, login, addresses, addAddress, defaultAddressId, coupons } = useShop();
     const navigate = useNavigate();
 
     // Login State
@@ -30,10 +30,34 @@ const Checkout = () => {
     const [addressSelection, setAddressSelection] = useState(addresses.length > 0 ? 'saved' : 'new');
     const [saveNewAddress, setSaveNewAddress] = useState(false);
 
+    const [showCouponModal, setShowCouponModal] = useState(false);
+    const [couponCode, setCouponCode] = useState('');
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const [discount, setDiscount] = useState(0);
+
     // Calculate totals
     const subtotal = cart.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
     const shipping = subtotal > 499 ? 0 : 50;
-    const total = subtotal + shipping;
+    const total = subtotal + shipping - discount;
+
+    // Get active coupons from context
+    const availableCoupons = coupons ? coupons.filter(c => c.active) : [];
+
+    const handleApplyCoupon = (coupon) => {
+        if (subtotal < coupon.minOrder) {
+            alert(`Minimum order value of ₹${coupon.minOrder} required`);
+            return;
+        }
+        setAppliedCoupon(coupon);
+        setDiscount(coupon.amount > subtotal ? subtotal : coupon.amount); // Discount can't exceed subtotal
+        setShowCouponModal(false);
+    };
+
+    const removeCoupon = () => {
+        setAppliedCoupon(null);
+        setDiscount(0);
+        setCouponCode('');
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -526,21 +550,60 @@ const Checkout = () => {
                             ))}
                         </div>
 
+                        <div className="mb-6">
+                            {!appliedCoupon ? (
+                                <div
+                                    onClick={() => setShowCouponModal(true)}
+                                    className="bg-gray-50 border-2 border-dashed border-[#EBCDD0] p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:border-[#D39A9F] transition-colors"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Gift className="w-4 h-4 text-[#D39A9F]" />
+                                        <span className="text-xs font-bold text-black uppercase tracking-wider">Apply Coupon</span>
+                                    </div>
+                                    <ArrowRight className="w-4 h-4 text-gray-300 group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            ) : (
+                                <div className="bg-[#EBCDD0]/20 border border-[#EBCDD0] p-4 rounded-xl flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="bg-[#D39A9F] p-1.5 rounded text-white">
+                                            <Tag className="w-3.5 h-3.5" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-black uppercase tracking-wider">{appliedCoupon.code}</p>
+                                            <p className="text-[10px] text-gray-500">₹{parseFloat(discount).toFixed(0)} saved</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={removeCoupon}
+                                        className="text-xs font-bold text-red-500 hover:text-red-600 uppercase tracking-wider"
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
                         <div className="space-y-3 text-sm text-gray-600 mb-6 pt-4 border-t border-[#EBCDD0]">
-                            <div className="flex justify-between font-serif">
-                                <span>Subtotal</span>
-                                <span className="text-black font-medium">₹{subtotal.toLocaleString()}</span>
+                            <div className="flex justify-between items-center">
+                                <span className="font-serif">Subtotal</span>
+                                <span className="text-black font-bold font-sans">₹{subtotal.toLocaleString()}</span>
                             </div>
-                            <div className="flex justify-between font-serif">
-                                <span>Shipping</span>
-                                <span>{shipping === 0 ? <span className="text-emerald-600 font-medium">Free</span> : `₹${shipping}`}</span>
+                            <div className="flex justify-between items-center">
+                                <span className="font-serif">Shipping</span>
+                                <span className="font-sans font-bold">{shipping === 0 ? <span className="text-emerald-600">Free</span> : `₹${shipping}`}</span>
                             </div>
+                            {appliedCoupon && (
+                                <div className="flex justify-between items-center text-[#D39A9F]">
+                                    <span className="font-serif">Discount</span>
+                                    <span className="font-bold font-sans">- ₹{parseFloat(discount).toFixed(0)}</span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="border-t border-[#EBCDD0] pt-4 mb-6">
                             <div className="flex justify-between items-center">
                                 <span className="font-bold text-lg text-black font-display uppercase tracking-wide">Total</span>
-                                <span className="font-bold text-2xl text-black">₹{total.toLocaleString()}</span>
+                                <span className="font-bold text-2xl text-black font-sans">₹{total.toLocaleString()}</span>
                             </div>
                             <p className="text-[10px] text-gray-400 mt-1 text-right font-medium uppercase tracking-wider">Inclusive of all taxes</p>
                         </div>
@@ -567,6 +630,72 @@ const Checkout = () => {
                     </div>
                 </div>
             </div>
+            {/* Coupon Modal */}
+            {showCouponModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
+                    <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                            <h3 className="font-bold text-lg font-display uppercase tracking-wide">Available Coupons</h3>
+                            <button
+                                onClick={() => setShowCouponModal(false)}
+                                className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+                            >
+                                <X className="w-5 h-5 text-gray-500" />
+                            </button>
+                        </div>
+
+                        <div className="p-6 space-y-6">
+                            {/* Manual Input */}
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    placeholder="Enter Coupon Code"
+                                    value={couponCode}
+                                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                    className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-black font-medium uppercase placeholder:normal-case"
+                                />
+                                <button
+                                    onClick={() => {
+                                        // Mock manual check
+                                        const mockForce = { code: couponCode, amount: 100, minOrder: 0 };
+                                        handleApplyCoupon(mockForce);
+                                    }}
+                                    className="bg-black text-white px-6 py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider hover:bg-[#D39A9F] transition-colors"
+                                >
+                                    Apply
+                                </button>
+                            </div>
+
+                            {/* List */}
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Best Offers For You</p>
+                                <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
+                                    {availableCoupons.map((coupon, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="border border-gray-200 rounded-xl p-4 hover:border-[#D39A9F] transition-all group relative overflow-hidden"
+                                        >
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div className="bg-[#EBCDD0]/30 px-3 py-1 rounded border border-[#EBCDD0] text-[#D39A9F] font-bold text-xs uppercase tracking-wider">
+                                                    {coupon.code}
+                                                </div>
+                                                <button
+                                                    onClick={() => handleApplyCoupon(coupon)}
+                                                    className="text-black font-bold text-xs uppercase tracking-wider hover:text-[#D39A9F] transition-colors"
+                                                >
+                                                    Apply
+                                                </button>
+                                            </div>
+                                            <p className="text-sm font-bold text-black mb-0.5">Save ₹{typeof coupon.amount === 'number' ? coupon.amount.toFixed(0) : coupon.amount}</p>
+                                            <p className="text-xs text-gray-500 font-serif">{coupon.desc}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -25,7 +25,7 @@ import AnnouncementBar from './modules/user/components/AnnouncementBar';
 import AdminLogin from './modules/admin/pages/Login';
 import AdminLayout from './modules/admin/components/AdminLayout';
 import AdminProtectedRoute from './modules/admin/components/AdminProtectedRoute';
-import CategoryManagement from './modules/admin/pages/CategoryManagement';
+import CategoryPage from './modules/admin/pages/categories/CategoryPage';
 import SubcategoryManagement from './modules/admin/pages/SubcategoryManagement';
 import ProductManagement from './modules/admin/pages/ProductManagement';
 import ProductView from './modules/admin/pages/ProductView';
@@ -40,6 +40,8 @@ import BannerManagement from './modules/admin/pages/BannerManagement';
 import GlobalNotificationManager from './modules/admin/pages/GlobalNotificationManager';
 import FAQManagement from './modules/admin/pages/FAQManagement';
 import ContentManagement from './modules/admin/pages/ContentManagement';
+import CouponListPage from './modules/admin/pages/CouponListPage';
+import CouponFormPage from './modules/admin/pages/CouponFormPage';
 
 const AppContent = () => {
   const location = useLocation();
@@ -89,7 +91,7 @@ const AppContent = () => {
               <AdminLayout>
                 <Routes>
                   <Route path="/" element={<AdminDashboard />} />
-                  <Route path="/categories" element={<CategoryManagement />} />
+                  <Route path="/categories" element={<CategoryPage />} />
                   <Route path="/categories/new" element={<ItemEditor />} />
                   <Route path="/categories/edit/:id" element={<ItemEditor />} />
                   <Route path="/subcategories" element={<SubcategoryManagement />} />
@@ -99,6 +101,9 @@ const AppContent = () => {
                   <Route path="/products/view/:id" element={<ProductView />} />
                   <Route path="/products/new" element={<ItemEditor />} />
                   <Route path="/products/edit/:id" element={<ItemEditor />} />
+                  <Route path="/coupons" element={<CouponListPage />} />
+                  <Route path="/coupons/add" element={<CouponFormPage />} />
+                  <Route path="/coupons/edit/:id" element={<CouponFormPage />} />
                   <Route path="/orders" element={<OrderManagement />} />
                   <Route path="/orders/view/:id" element={<OrderView />} />
                   <Route path="/users" element={<UserManagement />} />
