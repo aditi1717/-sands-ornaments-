@@ -276,19 +276,7 @@ const ItemEditor = () => {
                                     </div>
                                 </FormSection>
 
-                                <FormSection title="Supplier Reference">
-                                    <div className="space-y-4">
-                                        <Input
-                                            label="Vendor / Source"
-                                            value={formData.supplierInfo}
-                                            onChange={(e) => setFormData({ ...formData, supplierInfo: e.target.value })}
-                                            placeholder="Internal reference..."
-                                        />
-                                        <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider px-1">
-                                            * PRIVATE DATA
-                                        </p>
-                                    </div>
-                                </FormSection>
+
                             </>
                         )}
                     </div>
@@ -391,17 +379,7 @@ const ItemEditor = () => {
                             </FormSection>
                         )}
 
-                        {isProduct && (
-                            <FormSection title="Detailed Specifications">
-                                <TextArea
-                                    label="Technical Details"
-                                    value={formData.specifications}
-                                    onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
-                                    placeholder="e.g. Weight: 4.5g, Purity: 92.5%, Stone: Cubic Zirconia..."
-                                    rows={4}
-                                />
-                            </FormSection>
-                        )}
+
 
                         {isProduct && (
                             <FormSection title="Product Narrative & Description">

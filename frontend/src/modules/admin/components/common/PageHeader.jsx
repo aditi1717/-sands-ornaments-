@@ -6,7 +6,7 @@ const PageHeader = ({ title, subtitle, action, backPath }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 mb-4 md:mb-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
+        <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 mb-4 md:mb-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="flex items-center gap-3 md:gap-4">
                 {backPath && (
                     <button

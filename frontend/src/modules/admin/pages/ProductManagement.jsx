@@ -151,16 +151,14 @@ const ProductManagement = () => {
 
     return (
         <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6 pb-20 animate-in fade-in duration-500">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <PageHeader
-                    title="Product Management"
-                    subtitle="Manage your inventory, pricing, and product details."
-                    action={{
-                        label: "Add New Product",
-                        onClick: () => navigate('/admin/products/new')
-                    }}
-                />
-            </div>
+            <PageHeader
+                title="Products"
+                subtitle="Manage your inventory, pricing, and product details."
+                action={{
+                    label: "Add New Product",
+                    onClick: () => navigate('/admin/products/new')
+                }}
+            />
 
             <DataTable
                 columns={columns}

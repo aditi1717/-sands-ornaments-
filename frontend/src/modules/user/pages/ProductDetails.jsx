@@ -14,7 +14,7 @@ const AccordionItem = ({ title, children, isOpen, onClick }) => (
             className="w-full py-4 flex items-center justify-between text-left focus:outline-none group"
             onClick={onClick}
         >
-            <span className={`font-serif text-lg font-bold transition-colors ${isOpen ? 'text-black' : 'text-gray-800 group-hover:text-black'}`}>
+            <span className={`font-sans text-lg font-semibold transition-colors ${isOpen ? 'text-black' : 'text-gray-800 group-hover:text-black'}`}>
                 {title}
             </span>
             <span className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
@@ -24,7 +24,7 @@ const AccordionItem = ({ title, children, isOpen, onClick }) => (
         <div
             className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}
         >
-            <div className="text-sm text-gray-500 leading-relaxed font-serif">
+            <div className="text-sm text-black leading-relaxed font-sans">
                 {children}
             </div>
         </div>
@@ -87,7 +87,8 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (product) setSelectedImage(product.image);
-    }, [product]);
+        setOpenSection('description'); // Reset to open description whenever ID changes
+    }, [product, id]);
 
     // Derived State
     const isWishlisted = wishlist.some(item => item.id === product?.id);
@@ -424,28 +425,9 @@ const ProductDetails = () => {
                                 <p>Whether you're dressing up for a special occasion or adding a touch of sparkle to your daily look, this piece versatile enough to complement any style.</p>
                             </AccordionItem>
 
-                            <AccordionItem
-                                title="Specification"
-                                isOpen={openSection === 'specification'}
-                                onClick={() => toggleSection('specification')}
-                            >
-                                <ul className="list-disc pl-5 space-y-1">
-                                    <li><strong>Material:</strong> 925 Sterling Silver</li>
-                                    <li><strong>Plating:</strong> Rhodium / 18K Gold Polish</li>
-                                    <li><strong>Stone:</strong> {product.name.includes("Stone") || product.name.includes("Gem") ? "Semi-precious Gemstone" : "High Quality Box Zircon"}</li>
-                                    <li><strong>Water Resistant:</strong> Yes</li>
-                                    <li><strong>Anti-Tarnish:</strong> UV Coated for longevity</li>
-                                </ul>
-                            </AccordionItem>
 
-                            <AccordionItem
-                                title="Supplier Information"
-                                isOpen={openSection === 'supplier'}
-                                onClick={() => toggleSection('supplier')}
-                            >
-                                <p>Manufactured and Marketed by: <strong>Sands Ornaments Pvt Ltd.</strong></p>
-                                <p>Country of Origin: <strong>India</strong></p>
-                            </AccordionItem>
+
+
 
                             <AccordionItem
                                 title="Returns"

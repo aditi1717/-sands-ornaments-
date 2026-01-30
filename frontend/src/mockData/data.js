@@ -1,26 +1,41 @@
-// Product Images
-import necklaceImg from '../assets/gold_necklace.png';
-import ringImg from '../assets/diamond_ring.png';
-import banglesImg from '../assets/gold_bangles.png';
+// Product Images - Using User Module Assets
+import necklaceImg from '../modules/user/assets/latest_drop_necklace.png';
+import ringImg from '../modules/user/assets/latest_drop_ring.png';
+// Let's check the user asset list again.
+// I see:
+// cat_anklets.png
+// cat_bracelets.png
+// cat_earrings.png
+// cat_rings.png
+// cat_pendant.png
+// latest_drop_necklace.png
+// latest_drop_ring.png
+// latest_drop_bracelet.png
+// silver_bracelet_product.png
+// silver_earrings_product.png
 
-const necklaceUrl = necklaceImg;
-const ringUrl = ringImg;
-const banglesUrl = banglesImg;
-const earringsUrl = ringImg; // Reusing ring image as placeholder for earrings if needed, or keep remote
-// Actually, let's keep remote for ones we don't have to ensure variety, or reuse.
-// The user asked to use assets from folder. I will use what I have.
-// Let's keep the other remote URLs for variety if they work, or just reuse.
-// To be safe and follow instruction "assets folder se lo", I should try to minimize remote usage if possible, 
-// but I only have 3 files.
-// let's stick to the 3 local and keep others remote for now to avoid broken images if possible.
-// Wait, the user said "user ek asets folder se lo photos". 
-// I will use the 3 I have.
+// Re-mapping based on available user assets:
+import necklaceAsset from '../modules/user/assets/latest_drop_necklace.png';
+import ringAsset from '../modules/user/assets/latest_drop_ring.png';
+import banglesAsset from '../modules/user/assets/pink_bracelets_1767775488371.png'; // Using bracelet as bangle placeholder or maybe there is no bangle.
+// Actually `cat_bracelets.png` or `latest_drop_bracelet.png` is better for bracelet/bangle.
+import earringsAsset from '../modules/user/assets/latest_drop_earrings.png';
+import braceletAsset from '../modules/user/assets/latest_drop_bracelet.png';
+import ankletAsset from '../modules/user/assets/cat_anklets.png';
 
-const earringsPlaceholder = "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop";
-const braceletPlaceholder = "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=600&auto=format&fit=crop";
-const setPlaceholder = "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=600&auto=format&fit=crop";
-const braceletUrl = "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=600&auto=format&fit=crop"; // Reusing for now
-const setUrl = "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=600&auto=format&fit=crop";
+const necklaceUrl = necklaceAsset;
+const ringUrl = ringAsset;
+const banglesUrl = braceletAsset; // Using bracelet image for bangles for now or maybe 'cat_bracelets.png'
+const earringsUrl = earringsAsset;
+const braceletUrl = braceletAsset;
+const setUrl = necklaceAsset; // Reuse necklace for set
+const ankletUrl = ankletAsset;
+
+const earringsPlaceholder = earringsAsset;
+const braceletPlaceholder = braceletAsset;
+const setPlaceholder = necklaceAsset;
+
+
 
 export const SKUS = [
     { id: 'sku_1', name: 'Gold Necklace 22k', unit: 'pc', price: 45000, category: 'Necklaces' },

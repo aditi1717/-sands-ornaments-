@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
-import { PRODUCTS as initialProducts } from '../mockData/data';
+import { PRODUCTS as initialProducts, COUPONS as initialCoupons } from '../mockData/data';
 
 const ShopContext = createContext();
 
@@ -65,23 +65,16 @@ export const ShopProvider = ({ children }) => {
         ];
     });
     const [coupons, setCoupons] = useState(() => {
-        const saved = localStorage.getItem('farmlyf_coupons');
-        if (saved) return JSON.parse(saved);
-
-        // Initial Coupons matching Checkout.jsx
-        return [
-            { id: '1', code: 'WELCOME500', amount: 500, minOrder: 2000, desc: 'Flat ₹500 off on orders above ₹2000', type: 'flat', active: true, validUntil: '2025-12-31' },
-            { id: '2', code: 'SANDS10', amount: 10, minOrder: 1000, desc: '10% off up to ₹1000', type: 'percentage', active: true, validUntil: '2025-12-31' },
-            { id: '3', code: 'SPECIAL200', amount: 200, minOrder: 500, desc: 'Flat ₹200 off description', type: 'flat', active: true, validUntil: '2025-12-31' }
-        ];
+        // Force refresh coupons from updated mock data
+        return initialCoupons;
     });
     const [defaultAddressId, setDefaultAddressId] = useState(() => {
         return localStorage.getItem('defaultAddressId') || null;
     });
 
     const [products, setProducts] = useState(() => {
-        const saved = localStorage.getItem('farmlyf_products');
-        return saved ? JSON.parse(saved) : initialProducts;
+        // Force refresh products from updated mock data (Bypassing LocalStorage to show new Jewellery data)
+        return initialProducts;
     });
 
     const [notification, setNotification] = useState(null);
