@@ -2,28 +2,34 @@ import React from 'react';
 import { Truck, ThumbsUp, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import logoIcon from '../assets/SANDS JEWELS ICON PINK.png';
 
 const AboutUs = () => {
     return (
-        <div className="bg-[#FDFBF7] min-h-screen text-[#5D4037] font-sans pb-20">
+        <div className="bg-white min-h-screen text-[#5D4037] font-sans pb-20 relative overflow-hidden">
+
             {/* Hero Section */}
-            <section className="container mx-auto px-4 py-20">
-                <div className="flex flex-col lg:flex-row items-center gap-16">
+            <section className="container mx-auto px-4 py-20 relative my-10 overflow-hidden">
+                <div className="relative z-10 flex flex-col lg:flex-row items-center gap-16">
                     {/* Left: Text Content */}
                     <motion.div
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="w-full lg:w-1/2 space-y-6 flex flex-col items-center text-center"
+                        className="w-full lg:w-1/2 space-y-6 flex flex-col items-center text-center relative"
                     >
-                        <h1 className="text-5xl md:text-6xl font-serif text-[#8D6E63] mb-4">About Us</h1>
-                        <p className="text-[#8D6E63] text-sm leading-relaxed max-w-md font-serif">
+                        {/* Background Watermark Logo - Positioned specifically behind text */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[700px] opacity-[0.18] pointer-events-none select-none -z-10">
+                            <img src={logoIcon} alt="" className="w-full h-auto" />
+                        </div>
+                        <h1 className="text-5xl md:text-6xl font-serif text-black mb-4">About Us</h1>
+                        <p className="text-black text-xl leading-relaxed max-w-xl font-serif">
                             Welcome to <strong>Sands Ornaments</strong>, where elegance meets timeless tradition. We are more than just a jewellery brand; we are curators of silver artistry designed to adorn your soul.
                         </p>
-                        <p className="text-[#8D6E63] text-sm leading-relaxed max-w-md font-serif">
+                        <p className="text-black text-xl leading-relaxed max-w-xl font-serif">
                             Our journey began with a passion for bringing high-quality, handcrafted 925 Sterling Silver pieces to the modern woman. Every necklace, ring, and bracelet in our collection tells a story of skilled craftsmanship and attention to detail. We believe that luxury should be an everyday experience, not just for special occasions.
                         </p>
-                        <p className="text-[#8D6E63] text-sm leading-relaxed max-w-md font-serif">
+                        <p className="text-black text-xl leading-relaxed max-w-xl font-serif">
                             At Sands Ornaments, we are committed to sustainability and ethical sourcing, ensuring that beauty does not come at a cost to our planet. Join us in celebrating your unique style with ornaments that shine as bright as you do.
                         </p>
                     </motion.div>
