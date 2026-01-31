@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Upload, X, Save, Plus, ChevronRight } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
 import { FormSection, Input, Select, TextArea } from '../components/common/FormControls';
+
+const CATEGORY_HIERARCHY = {
+    'necklaces': ['Kundan', 'Oxidized', 'Gold Chain', 'Temple', 'Diamond', 'Choker', 'Pendant', 'Mangalsutra'],
+    'rings': ['Solitaire', 'Gold Band', 'Diamond Ring', 'Engagement', 'Cocktail', 'Couple Rings'],
+    'earrings': ['Studs', 'Jhumkas', 'Drops', 'Hoops', 'Sui Dhaga', 'Chandbali'],
+    'bangles': ['Temple Jewellery', 'Gold Bangles', 'Bracelets', 'Kada', 'Cuff'],
+    'anklets': ['Silver Anklets', 'Gold Anklets', 'Chain Anklets'],
+    'sets': ['Bridal Sets', 'Party Wear', 'Minimal Sets'],
+    'combos-packs': ['Office Wear', 'Gift Sets', 'Daily Wear'],
+    'nose-pins': ['Gold', 'Diamond', 'Silver']
+};
 
 const ItemEditor = () => {
     const { id } = useParams();
@@ -53,6 +65,7 @@ const ItemEditor = () => {
         images: [], // Multiple images
         sizes: [], // Selected sizes
         variantStock: {}, // Stock per variant
+        categories: [{ id: Date.now(), category: '', subcategory: '' }], // Multiple categories for product
         tags: {
             isNewArrival: false,
             isMostGifted: false,
@@ -136,6 +149,36 @@ const ItemEditor = () => {
         }));
     };
 
+    // Category Management for Products
+    const addCategory = () => {
+        setFormData(prev => ({
+            ...prev,
+            categories: [...prev.categories, { id: Date.now(), category: '', subcategory: '' }]
+        }));
+    };
+
+    const removeCategory = (id) => {
+        setFormData(prev => ({
+            ...prev,
+            categories: prev.categories.filter(c => c.id !== id)
+        }));
+    };
+
+    const handleCategoryChange = (id, field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            categories: prev.categories.map(c => {
+                if (c.id === id) {
+                    if (field === 'category') {
+                        return { ...c, category: value, subcategory: '' }; // Reset subcategory on category change
+                    }
+                    return { ...c, [field]: value };
+                }
+                return c;
+            })
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         alert(`${resourceType} saved successfully!`);
@@ -200,28 +243,7 @@ const ItemEditor = () => {
                                     </div>
                                 </FormSection>
 
-                                <FormSection title="Discovery & Tags">
-                                    <div className="space-y-3">
-                                        {[
-                                            { key: 'isNewArrival', label: 'New Arrival', color: 'bg-blue-600' },
-                                            { key: 'isMostGifted', label: 'Most Gifted', color: 'bg-purple-600' },
-                                            { key: 'isNewLaunch', label: 'New Launch', color: 'bg-green-600' }
-                                        ].map(tag => (
-                                            <div key={tag.key} className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 shadow-sm">
-                                                <span className="text-[11px] font-bold text-gray-700">{tag.label}</span>
-                                                <button
-                                                    onClick={() => setFormData({
-                                                        ...formData,
-                                                        tags: { ...formData.tags, [tag.key]: !formData.tags[tag.key] }
-                                                    })}
-                                                    className={`w-9 h-5 rounded-full transition-colors relative ${formData.tags[tag.key] ? tag.color : 'bg-gray-300'}`}
-                                                >
-                                                    <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${formData.tags[tag.key] ? 'right-1' : 'left-1'}`} />
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </FormSection>
+
 
                                 <FormSection title="Size Availability">
                                     <div className="space-y-4">
@@ -333,10 +355,10 @@ const ItemEditor = () => {
                                 </div>
                             )}
 
-                            {!isCategory && (
+                            {isSubcategory && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Select
-                                        label="Primary Collection"
+                                        label="Parent Category"
                                         value={formData.parentId}
                                         onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
                                         options={[
@@ -344,7 +366,67 @@ const ItemEditor = () => {
                                             ...categories.map(c => ({ label: c.name, value: c.id }))
                                         ]}
                                     />
+                                </div>
+                            )}
 
+                            {isProduct && (
+                                <div className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <label className="block ml-1 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Product Categories</label>
+                                        <button
+                                            type="button"
+                                            onClick={addCategory}
+                                            className="text-[10px] font-bold text-[#3E2723] uppercase tracking-wider flex items-center gap-1 hover:underline"
+                                        >
+                                            <Plus size={14} /> Add Category
+                                        </button>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {formData.categories.map((cat, index) => (
+                                            <div key={cat.id} className="p-4 rounded-xl bg-gray-50 border border-gray-200 relative group animate-in fade-in slide-in-from-top-2">
+                                                <div className="flex gap-4">
+                                                    <div className="flex-1 space-y-1.5">
+                                                        <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Parent Category</label>
+                                                        <select
+                                                            value={cat.category}
+                                                            onChange={(e) => handleCategoryChange(cat.id, 'category', e.target.value)}
+                                                            className="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-sm font-medium outline-none focus:border-[#3E2723] focus:ring-1 focus:ring-[#3E2723]/20 transition-all"
+                                                        >
+                                                            <option value="">Select Category...</option>
+                                                            {Object.keys(CATEGORY_HIERARCHY).map(key => (
+                                                                <option key={key} value={key}>
+                                                                    {key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                    <div className="flex-1 space-y-1.5">
+                                                        <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Sub-Category</label>
+                                                        <select
+                                                            value={cat.subcategory}
+                                                            onChange={(e) => handleCategoryChange(cat.id, 'subcategory', e.target.value)}
+                                                            disabled={!cat.category}
+                                                            className="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-sm font-medium outline-none focus:border-[#3E2723] focus:ring-1 focus:ring-[#3E2723]/20 transition-all disabled:bg-gray-100 disabled:text-gray-400"
+                                                        >
+                                                            <option value="">Select Sub-Category...</option>
+                                                            {cat.category && CATEGORY_HIERARCHY[cat.category]?.map(sub => (
+                                                                <option key={sub} value={sub}>{sub}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                {formData.categories.length > 1 && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => removeCategory(cat.id)}
+                                                        className="absolute -top-2 -right-2 p-1.5 bg-white text-gray-400 hover:text-red-500 border border-gray-200 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-all"
+                                                    >
+                                                        <Trash2 size={14} />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </FormSection>

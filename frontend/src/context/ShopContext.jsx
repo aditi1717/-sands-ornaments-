@@ -317,6 +317,135 @@ export const ShopProvider = ({ children }) => {
         showNotification("Coupon deleted successfully");
     };
 
+    // Homepage Sections Management
+    const [homepageSections, setHomepageSections] = useState(() => {
+        try {
+            const saved = localStorage.getItem('homepageSections');
+            const parsed = saved ? JSON.parse(saved) : null;
+
+            const defaultState = {
+                'category-showcase': {
+                    id: 'category-showcase',
+                    label: 'Category Showcase',
+                    items: []
+                },
+                'price-range-showcase': {
+                    id: 'price-range-showcase',
+                    label: 'Luxury in Range',
+                    items: []
+                },
+                'perfect-gift': {
+                    id: 'perfect-gift',
+                    label: 'Find the Perfect Gift',
+                    items: []
+                },
+                'new-launch': {
+                    id: 'new-launch',
+                    label: 'Limited Edition',
+                    items: []
+                },
+                'latest-drop': {
+                    id: 'latest-drop',
+                    label: 'Latest Drop',
+                    items: []
+                },
+                'most-gifted': {
+                    id: 'most-gifted',
+                    label: 'Most Gifted Items',
+                    items: []
+                },
+                'proposal-rings': {
+                    id: 'proposal-rings',
+                    label: 'Proposal Rings',
+                    items: []
+                },
+                'curated-for-you': {
+                    id: 'curated-for-you',
+                    label: 'Curated For You',
+                    items: []
+                },
+                'style-it-your-way': {
+                    id: 'style-it-your-way',
+                    label: 'Style It Your Way',
+                    items: []
+                }
+            };
+
+            // Force merge 'category-showcase' if missing (e.g. from older state)
+            if (parsed && !parsed['category-showcase']) {
+                parsed['category-showcase'] = defaultState['category-showcase'];
+            }
+
+            // Force merge 'price-range-showcase' if missing
+            if (parsed && !parsed['price-range-showcase']) {
+                parsed['price-range-showcase'] = defaultState['price-range-showcase'];
+            }
+
+            // Force merge 'perfect-gift' if missing
+            if (parsed && !parsed['perfect-gift']) {
+                parsed['perfect-gift'] = defaultState['perfect-gift'];
+            }
+
+            // Force merge 'new-launch' if missing
+            if (parsed && !parsed['new-launch']) {
+                parsed['new-launch'] = defaultState['new-launch'];
+            }
+
+            // Force merge 'latest-drop' if missing
+            if (parsed && !parsed['latest-drop']) {
+                parsed['latest-drop'] = defaultState['latest-drop'];
+            }
+
+            // Force merge 'most-gifted' if missing
+            if (parsed && !parsed['most-gifted']) {
+                parsed['most-gifted'] = defaultState['most-gifted'];
+            }
+
+            // Force merge 'proposal-rings' if missing
+            if (parsed && !parsed['proposal-rings']) {
+                parsed['proposal-rings'] = defaultState['proposal-rings'];
+            }
+
+            // Force merge 'curated-for-you' if missing
+            if (parsed && !parsed['curated-for-you']) {
+                parsed['curated-for-you'] = defaultState['curated-for-you'];
+            }
+
+            // Force merge 'style-it-your-way' if missing
+            if (parsed && !parsed['style-it-your-way']) {
+                parsed['style-it-your-way'] = defaultState['style-it-your-way'];
+            }
+
+            // Migration: Remove (15% OFF) from label if present
+            if (parsed && parsed['category-showcase'] && parsed['category-showcase'].label.includes('(15% OFF)')) {
+                parsed['category-showcase'].label = 'Category Showcase';
+            }
+
+            return parsed || defaultState;
+        } catch (error) {
+            console.error("Error parsing homepageSections:", error);
+            return {
+                'category-showcase': {
+                    id: 'category-showcase',
+                    label: 'Category Showcase',
+                    items: []
+                }
+            };
+        }
+    });
+
+    useEffect(() => {
+        localStorage.setItem('homepageSections', JSON.stringify(homepageSections));
+    }, [homepageSections]);
+
+    const updateSection = (sectionId, newData) => {
+        setHomepageSections(prev => ({
+            ...prev,
+            [sectionId]: { ...prev[sectionId], ...newData }
+        }));
+        showNotification("Section updated successfully");
+    };
+
     // Product & Bulk Management
     const updateProduct = (id, updatedData) => {
         setProducts(prev => prev.map(p => p.id === id ? { ...p, ...updatedData } : p));
@@ -404,10 +533,12 @@ export const ShopProvider = ({ children }) => {
             notificationsEnabled, userNotifications, toggleNotificationSettings, deleteUserNotification,
             isMenuOpen, toggleMenu,
 
-            products, updateProduct, bulkUpdatePrices
+            products, updateProduct, bulkUpdatePrices,
+
+            // Homepage Sections Management
+            homepageSections, updateSection
         }}>
             {children}
-
             {/* Custom Toast Notification */}
             {notification && (
                 <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-bottom-5 duration-300">

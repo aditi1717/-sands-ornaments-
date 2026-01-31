@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard, Package, ShoppingCart, Users, Image as ImageIcon,
     Bell, ChevronRight, Star, HelpCircle, LogOut, Menu, X, ListTree,
-    FileText, MessageSquare, Ticket
+    FileText, MessageSquare, Ticket, Settings
 } from 'lucide-react';
 import logo from '../assets/sands-logo.png';
 import logoName from '../assets/sands-logoname.png';
@@ -27,6 +27,8 @@ const AdminLayout = ({ children }) => {
         { name: 'Support', icon: HelpCircle, path: '/admin/support' },
         { name: 'FAQ', icon: MessageSquare, path: '/admin/faq' },
         { name: 'Page Content', icon: FileText, path: '/admin/content' },
+        { name: 'Sections', icon: LayoutDashboard, path: '/admin/sections' },
+        { name: 'Global Settings', icon: Settings, path: '/admin/settings' },
     ];
 
     const handleLogout = () => {

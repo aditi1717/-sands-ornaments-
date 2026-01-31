@@ -72,7 +72,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
 
             <Link to={`/product/${product.id}`} className="group relative w-full h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1">
                 {/* Image Container */}
-                <div className="relative aspect-[5/4] overflow-hidden bg-[#F5F5F5] shrink-0">
+                <div className="relative aspect-square md:aspect-[5/4] max-h-[160px] md:max-h-none overflow-hidden bg-[#F5F5F5] shrink-0">
                     <div className="block w-full h-full">
                         <img
                             src={product.image}
@@ -83,17 +83,17 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
 
                     {/* Dynamic Badges */}
                     {product.isNew ? (
-                        <span className="absolute top-4 right-0 bg-[#D39A9F] text-white text-[10px] font-bold px-3 py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%)', paddingLeft: '16px' }}>
+                        <span className="absolute top-2 md:top-4 right-0 bg-[#D39A9F] text-white text-[7px] md:text-[10px] font-bold px-2 py-0.5 md:px-3 md:py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%)', paddingLeft: '12px' }}>
                             NEW
                         </span>
                     ) : product.rating >= 4.5 ? (
-                        <span className="absolute top-4 right-0 bg-[#D39A9F] text-white text-[10px] font-bold px-3 py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%)', paddingLeft: '16px' }}>
+                        <span className="absolute top-2 md:top-4 right-0 bg-[#D39A9F] text-white text-[7px] md:text-[10px] font-bold px-2 py-0.5 md:px-3 md:py-1 shadow-sm tracking-widest z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%)', paddingLeft: '12px' }}>
                             TRENDING
                         </span>
                     ) : null}
 
-                    {/* Tag: 9 to 5 Silver Jewellery - Top Left */}
-                    <div className="absolute top-4 left-2 bg-white/95 backdrop-blur-md px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#722F37] rounded-sm shadow-md z-20 border border-[#722F37]/10">
+                    {/* Tag: 9 to 5 Silver Jewellery - Top Left (Hidden on Mobile) */}
+                    <div className="hidden md:block absolute top-4 left-2 bg-white/95 backdrop-blur-md px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#722F37] rounded-sm shadow-md z-20 border border-[#722F37]/10">
                         9 to 5 Silver Jewellery
                     </div>
 
@@ -114,7 +114,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                     </div>
                 </div>
 
-                <div className={`${isWishlistPage ? 'p-1.5 md:p-3' : 'p-2 md:p-3'} text-left flex flex-col flex-1 pb-2`}>
+                <div className={`${isWishlistPage ? 'p-1.5 md:p-3' : 'p-1.5 md:p-3'} text-left flex flex-col flex-1 pb-1.5 md:pb-2`}>
 
                     {/* Price Section first */}
                     <div className="flex items-baseline gap-2 mb-1">
@@ -125,7 +125,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                     </div>
 
                     {/* Title */}
-                    <h3 className={`text-black font-serif ${isWishlistPage ? 'text-sm' : 'text-lg'} font-medium leading-tight mb-1 line-clamp-2`}>
+                    <h3 className={`text-black font-serif ${isWishlistPage ? 'text-sm' : 'text-base md:text-lg'} font-medium leading-tight mb-1 line-clamp-2`}>
                         {product.name}
                     </h3>
                 </div>
@@ -133,7 +133,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                 {/* Add to Cart Button - Full Width Flush Bottom */}
                 <button
                     onClick={handleAddToCart}
-                    className="w-full bg-[#EBCDD0] text-black py-3 text-sm font-bold hover:bg-[#D39A9F] hover:text-white transition-colors uppercase tracking-widest mt-auto mb-0 rounded-none border-t border-transparent"
+                    className="w-full bg-[#EBCDD0] text-black py-2.5 md:py-3 text-[10px] md:text-sm font-bold hover:bg-[#D39A9F] hover:text-white transition-colors uppercase tracking-widest mt-auto mb-0 rounded-none border-t border-transparent"
                 >
                     Add to Cart
                 </button>

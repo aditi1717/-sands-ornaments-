@@ -9,13 +9,14 @@ const AllJewellery = () => {
     const displayProducts = products.slice(0, 16);
 
     return (
-        <section className="py-16 md:py-24 bg-white">
+        <section className="py-8 md:py-24 bg-white">
             <div className="container mx-auto px-2 md:px-4">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                    <div className="space-y-2">
-                        <h2 className="text-[10px] uppercase tracking-[0.4em] text-[#C9A24D] font-bold">Our Collection</h2>
-                        <h3 className="text-3xl md:text-5xl font-display text-[#722F37]">All Jewellery</h3>
+                {/* Header - Centered for Mobile, Original for Desktop */}
+                <div className="flex flex-col md:flex-row md:justify-between items-center md:items-end text-center md:text-left mb-10 md:mb-16 gap-6">
+                    <div className="flex flex-col items-center md:items-start">
+                        <span className="text-[10px] md:text-sm uppercase tracking-[0.4em] text-[#C9A24D] font-bold mb-1 md:mb-2">Our Collection</span>
+                        <h2 className="text-2xl md:text-5xl font-display text-[#722F37]">All Jewellery</h2>
+                        <div className="h-1 w-12 bg-[#C9A24D] mt-2 rounded-full md:hidden"></div>
                     </div>
                 </div>
 
@@ -27,7 +28,7 @@ const AllJewellery = () => {
                 </div>
 
                 {/* Subtle View All Link at Bottom */}
-                <div className="mt-16 flex justify-center">
+                <div className="mt-8 md:mt-16 flex justify-center">
                     <Link
                         to="/shop"
                         className="group flex items-center gap-3 text-sm font-medium text-[#722F37] transition-all"

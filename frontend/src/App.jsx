@@ -20,6 +20,7 @@ import TermsAndConditions from './modules/user/pages/TermsAndConditions';
 import PrivacyPolicy from './modules/user/pages/PrivacyPolicy';
 import Notifications from './modules/user/pages/Notifications';
 import AnnouncementBar from './modules/user/components/AnnouncementBar';
+import BlogsPage from './modules/user/pages/BlogsPage';
 
 // Admin Imports
 import AdminLogin from './modules/admin/pages/Login';
@@ -42,6 +43,9 @@ import FAQManagement from './modules/admin/pages/FAQManagement';
 import ContentManagement from './modules/admin/pages/ContentManagement';
 import CouponListPage from './modules/admin/pages/CouponListPage';
 import CouponFormPage from './modules/admin/pages/CouponFormPage';
+import GlobalSettings from './modules/admin/pages/GlobalSettings';
+import SectionManagement from './modules/admin/pages/SectionManagement';
+import SectionEditor from './modules/admin/pages/SectionEditor';
 
 const AppContent = () => {
   const location = useLocation();
@@ -83,6 +87,7 @@ const AppContent = () => {
           <Route path="/new-arrivals" element={<Shop />} />
           <Route path="/trending" element={<Shop />} />
           <Route path="/category/:category" element={<Shop />} />
+          <Route path="/blogs" element={<BlogsPage />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
@@ -114,6 +119,9 @@ const AppContent = () => {
                   <Route path="/notifications" element={<GlobalNotificationManager />} />
                   <Route path="/faq" element={<FAQManagement />} />
                   <Route path="/content" element={<ContentManagement />} />
+                  <Route path="/sections" element={<SectionManagement />} />
+                  <Route path="/sections/:id" element={<SectionEditor />} />
+                  <Route path="/settings" element={<GlobalSettings />} />
                 </Routes>
               </AdminLayout>
             </AdminProtectedRoute>

@@ -9,7 +9,7 @@ const AboutUs = () => {
         <div className="bg-white min-h-screen text-[#5D4037] font-sans pb-20 relative overflow-hidden">
 
             {/* Hero Section */}
-            <section className="container mx-auto px-4 py-20 relative my-10 overflow-hidden">
+            <section className="container mx-auto px-10 pt-20 pb-0 relative mt-10 mb-12 overflow-hidden">
                 <div className="relative z-10 flex flex-col lg:flex-row items-center gap-16">
                     {/* Left: Text Content */}
                     <motion.div
@@ -60,7 +60,7 @@ const AboutUs = () => {
             </section>
 
             {/* Features Section */}
-            <section className="container mx-auto px-4 py-20">
+            <section className="container mx-auto px-4 pt-4 pb-20">
                 <div className="flex flex-col md:flex-row justify-center items-start gap-12 md:gap-24 text-center">
                     {/* Feature 1 */}
                     <motion.div
@@ -73,8 +73,8 @@ const AboutUs = () => {
                         <div className="w-16 h-16 rounded-full bg-[#8D6E63] text-white flex items-center justify-center mb-6 shadow-lg">
                             <Truck className="w-8 h-8" />
                         </div>
-                        <h3 className="font-serif text-xl text-[#5D4037] mb-3">Free Shipping</h3>
-                        <p className="text-[#8D6E63] text-xs leading-relaxed">
+                        <h3 className="font-serif text-xl text-black font-bold mb-3">Free Shipping</h3>
+                        <p className="text-[#8D6E63] text-base leading-relaxed">
                             Enjoy free and fast delivery on all orders above ₹2000. We ensure your precious pieces reach you safely and on time, anywhere in the country.
                         </p>
                     </motion.div>
@@ -90,8 +90,8 @@ const AboutUs = () => {
                         <div className="w-16 h-16 rounded-full bg-[#8D6E63] text-white flex items-center justify-center mb-6 shadow-lg">
                             <ThumbsUp className="w-8 h-8" />
                         </div>
-                        <h3 className="font-serif text-xl text-[#5D4037] mb-3">Premium Quality</h3>
-                        <p className="text-[#8D6E63] text-xs leading-relaxed">
+                        <h3 className="font-serif text-xl text-black font-bold mb-3">Premium Quality</h3>
+                        <p className="text-[#8D6E63] text-base leading-relaxed">
                             Our jewellery is crafted with 100% authentic 925 Sterling Silver. Each piece undergoes varying quality checks to ensure lasting shine and durability.
                         </p>
                     </motion.div>
@@ -107,8 +107,8 @@ const AboutUs = () => {
                         <div className="w-16 h-16 rounded-full bg-[#8D6E63] text-white flex items-center justify-center mb-6 shadow-lg">
                             <Lock className="w-8 h-8" />
                         </div>
-                        <h3 className="font-serif text-xl text-[#5D4037] mb-3">100% Secure Checkout</h3>
-                        <p className="text-[#8D6E63] text-xs leading-relaxed">
+                        <h3 className="font-serif text-xl text-black font-bold mb-3">100% Secure Checkout</h3>
+                        <p className="text-[#8D6E63] text-base leading-relaxed">
                             Shop with confidence using our encrypted payment gateways. Your privacy and security are our top priority for a seamless shopping experience.
                         </p>
                     </motion.div>

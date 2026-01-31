@@ -1,9 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import bannerImg from '../assets/proposal_banner.png';
+import { useShop } from '../../../context/ShopContext';
+import bannerImgDefault from '../assets/proposal_banner.png';
 
 const ProposalBanner = () => {
+    const { homepageSections } = useShop();
+    const sectionData = homepageSections?.['proposal-rings'];
+    const displayItems = sectionData?.items || [];
+
+    // Use first item for banner if available
+    const bannerItem = displayItems[0];
+    const bannerImage = bannerItem?.image || bannerImgDefault;
+    const bannerLink = bannerItem?.path || "/category/rings";
+
     return (
         <section className="w-full bg-[#1B0305] relative overflow-hidden">
             {/* Background Gradient Mesh */}
@@ -16,9 +26,9 @@ const ProposalBanner = () => {
                     <div className="w-full md:w-1/2 relative group">
                         <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-[#4A1015]/30">
                             <img
-                                src={bannerImg}
+                                src={bannerImage}
                                 alt="Proposal Ring"
-                                className="w-full h-[300px] md:h-[400px] object-cover hover:scale-105 transition-transform duration-700"
+                                className="w-full h-[220px] md:h-[400px] object-cover hover:scale-105 transition-transform duration-700"
                             />
                             {/* Inner Glow */}
                             <div className="absolute inset-0 bg-gradient-to-tr from-[#3B181C]/60 to-transparent pointer-events-none"></div>
@@ -34,7 +44,7 @@ const ProposalBanner = () => {
                         </div>
 
                         <h2 className="font-display text-4xl md:text-6xl text-white leading-tight">
-                            Proposal Rings <br />
+                            {sectionData?.label || "Proposal Rings"} <br />
                             <span className="italic font-serif font-light text-[#E5E5E5] text-3xl md:text-5xl">For Her</span>
                         </h2>
 
@@ -44,7 +54,7 @@ const ProposalBanner = () => {
 
                         <div className="pt-4">
                             <Link
-                                to="/category/rings"
+                                to={bannerLink}
                                 className="inline-flex items-center gap-3 bg-white text-[#4A1015] px-8 py-4 rounded-full font-medium hover:bg-[#F0F0F0] transition-all transform hover:-translate-y-1 shadow-[0_10px_20px_rgba(0,0,0,0.2)] group"
                             >
                                 <span className="tracking-wide">Explore Collection</span>
@@ -52,8 +62,31 @@ const ProposalBanner = () => {
                             </Link>
                         </div>
                     </div>
-
                 </div>
+
+                {/* Additional Items Grid (Satisfies "item add karne ka") */}
+                {displayItems.length > 1 && (
+                    <div className="pb-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                        {displayItems.slice(1).map((item, index) => (
+                            <Link
+                                key={item.id}
+                                to={item.path}
+                                className="group relative rounded-2xl overflow-hidden aspect-square bg-[#2A0505] border border-[#4A1015]/50 shadow-xl"
+                            >
+                                <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                <div className="absolute bottom-4 left-0 right-0 text-center">
+                                    <h4 className="text-white font-display text-lg tracking-wide uppercase">{item.name}</h4>
+                                    <div className="w-8 h-[1px] bg-[#D4AF37] mx-auto mt-1 group-hover:w-16 transition-all duration-500"></div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

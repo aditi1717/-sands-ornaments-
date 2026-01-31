@@ -15,6 +15,17 @@ import {
 import { useShop } from '../../../context/ShopContext';
 import { motion } from 'framer-motion';
 
+const CATEGORY_HIERARCHY = {
+    'necklaces': ['Kundan', 'Oxidized', 'Gold Chain', 'Temple', 'Diamond', 'Choker', 'Pendant', 'Mangalsutra'],
+    'rings': ['Solitaire', 'Gold Band', 'Diamond Ring', 'Engagement', 'Cocktail', 'Couple Rings'],
+    'earrings': ['Studs', 'Jhumkas', 'Drops', 'Hoops', 'Sui Dhaga', 'Chandbali'],
+    'bangles': ['Temple Jewellery', 'Gold Bangles', 'Bracelets', 'Kada', 'Cuff'],
+    'anklets': ['Silver Anklets', 'Gold Anklets', 'Chain Anklets'],
+    'sets': ['Bridal Sets', 'Party Wear', 'Minimal Sets'],
+    'combos-packs': ['Office Wear', 'Gift Sets', 'Daily Wear'],
+    'nose-pins': ['Gold', 'Diamond', 'Silver']
+};
+
 const ProductFormPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -25,8 +36,9 @@ const ProductFormPage = () => {
     const [formData, setFormData] = useState({
         name: '',
         brand: 'FARMLYF',
-        category: 'nuts',
-        subcategory: '',
+        categories: [
+            { id: Date.now(), category: 'nuts', subcategory: '' }
+        ],
         tag: '',
         image: '',
         description: '',
@@ -64,11 +76,23 @@ const ProductFormPage = () => {
                     }));
                 }
 
+                // Normalize categories - migrate from old format if needed
+                let normalizedCategories = product.categories;
+                if (!normalizedCategories && product.category) {
+                    // Migrate old format to new array format
+                    normalizedCategories = [{
+                        id: Date.now(),
+                        category: product.category,
+                        subcategory: product.subcategory || ''
+                    }];
+                }
+
                 setFormData({
                     ...product,
                     variants: product.variants || [],
                     nutrition: normalizedNutrition || [],
-                    contents: product.contents || [] // Ensure contents is always an array
+                    contents: product.contents || [],
+                    categories: normalizedCategories || [{ id: Date.now(), category: 'nuts', subcategory: '' }]
                 });
             }
         }
@@ -99,6 +123,29 @@ const ProductFormPage = () => {
         setFormData(prev => ({
             ...prev,
             variants: prev.variants.filter(v => v.id !== vId)
+        }));
+    };
+
+    const addCategory = () => {
+        setFormData(prev => ({
+            ...prev,
+            categories: [...prev.categories, { id: Date.now(), category: 'nuts', subcategory: '' }]
+        }));
+    };
+
+    const removeCategory = (catId) => {
+        setFormData(prev => ({
+            ...prev,
+            categories: prev.categories.filter(c => c.id !== catId)
+        }));
+    };
+
+    const handleCategoryChange = (catId, field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            categories: prev.categories.map(c =>
+                c.id === catId ? { ...c, [field]: value } : c
+            )
         }));
     };
 
@@ -536,39 +583,85 @@ const ProductFormPage = () => {
                         </div>
                     </div>
 
-                    {/* Taxonomy */}
+                    {/* Taxonomy - Multiple Categories */}
                     <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-6 text-left">
-                        <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
-                            <TagIcon size={18} className="text-gray-400" />
-                            Classification
-                        </h3>
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
+                                <TagIcon size={18} className="text-gray-400" />
+                                Categories
+                            </h3>
+                            <button
+                                type="button"
+                                onClick={addCategory}
+                                className="text-[10px] font-black text-footerBg uppercase tracking-widest flex items-center gap-1 hover:underline"
+                            >
+                                <Plus size={14} strokeWidth={3} /> Add Category
+                            </button>
+                        </div>
 
-                        <div className="space-y-6">
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 text-left">Parent Category</label>
-                                <select
-                                    name="category"
-                                    value={formData.category}
-                                    onChange={handleChange}
-                                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all cursor-pointer"
-                                >
-                                    <option value="nuts">Nuts & Kernels</option>
-                                    <option value="dried-fruits">Dried Fruits</option>
-                                    <option value="combos-packs">Combos & Packs</option>
-                                    <option value="seeds">Seeds & Spices</option>
-                                </select>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 text-left">Sub-Category</label>
-                                <input
-                                    type="text"
-                                    name="subcategory"
-                                    value={formData.subcategory}
-                                    onChange={handleChange}
-                                    placeholder="e.g., Almonds / Dates"
-                                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all"
-                                />
-                            </div>
+                        <div className="space-y-4">
+                            {formData.categories.map((cat, index) => (
+                                <div key={cat.id} className="p-4 rounded-2xl bg-gray-50 border border-gray-100 space-y-3 relative group">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">Category #{index + 1}</span>
+                                        {formData.categories.length > 1 && (
+                                            <button
+                                                type="button"
+                                                onClick={() => removeCategory(cat.id)}
+                                                className="p-1.5 text-gray-300 hover:text-red-500 transition-colors"
+                                                title="Remove category"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest ml-1">Parent Category</label>
+                                        <select
+                                            value={cat.category}
+                                            onChange={(e) => {
+                                                const newCategory = e.target.value;
+                                                // Reset subcategory when category changes
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    categories: prev.categories.map(c =>
+                                                        c.id === cat.id ? { ...c, category: newCategory, subcategory: '' } : c
+                                                    )
+                                                }));
+                                            }}
+                                            className="w-full bg-white border border-gray-100 rounded-xl p-3 text-xs font-bold outline-none focus:border-footerBg transition-all cursor-pointer"
+                                        >
+                                            <option value="">-- Select Category --</option>
+                                            {Object.keys(CATEGORY_HIERARCHY).map(key => (
+                                                <option key={key} value={key}>
+                                                    {key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest ml-1">Sub-Category</label>
+                                        <div className="relative">
+                                            <select
+                                                value={cat.subcategory}
+                                                onChange={(e) => handleCategoryChange(cat.id, 'subcategory', e.target.value)}
+                                                className="w-full bg-white border border-gray-100 rounded-xl p-3 text-xs font-bold outline-none focus:border-footerBg transition-all appearance-none cursor-pointer"
+                                                disabled={!cat.category}
+                                            >
+                                                <option value="">-- Select Sub-Category --</option>
+                                                {CATEGORY_HIERARCHY[cat.category]?.map(sub => (
+                                                    <option key={sub} value={sub}>{sub}</option>
+                                                ))}
+                                            </select>
+                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                                <ChevronRight size={14} className="rotate-90" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

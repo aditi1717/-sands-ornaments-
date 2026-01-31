@@ -184,12 +184,12 @@ const Home = () => {
                             <img
                                 src={heroSlides[currentSlide].image}
                                 alt={heroSlides[currentSlide].title}
-                                className="w-full h-full object-cover transform scale-100 animate-slow-zoom"
+                                className="absolute inset-0 w-full h-full object-cover transform scale-100 animate-slow-zoom"
                             />
-                            {/* Enhanced Gradient Overlay - Light for Dark Text */}
-                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-white/70 via-white/20 to-transparent flex items-end md:items-center pb-20 md:pb-0">
+                            {/* Enhanced Gradient Overlay - Stronger on mobile for better text visibility */}
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/70 via-black/30 md:from-white/70 md:via-white/20 to-transparent flex items-end md:items-center pb-16 md:pb-0">
                                 <div className="container mx-auto px-2 md:px-4">
-                                    <div className="max-w-xl text-[#1F1F1F] space-y-4 md:space-y-6 text-center md:text-left">
+                                    <div className="max-w-xl text-white md:text-[#1F1F1F] space-y-3 md:space-y-6 text-center md:text-left">
 
                                         {/* Typography */}
                                         <div className="relative inline-block">
@@ -197,7 +197,7 @@ const Home = () => {
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ duration: 1.0, ease: "easeOut", delay: 0.2 }}
-                                                className="text-3xl md:text-5xl font-display font-normal leading-tight tracking-wide text-[#1F1F1F]"
+                                                className="text-2xl md:text-5xl font-display font-normal leading-tight tracking-wide text-white md:text-[#1F1F1F]"
                                             >
                                                 Timeless Jewellery <br />
                                                 <span className="font-serif italic font-light">For Every Moment</span>
@@ -215,7 +215,7 @@ const Home = () => {
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ duration: 1.0, ease: "easeOut", delay: 0.3 }}
-                                            className="text-[#1F1F1F]/80 text-lg md:text-2xl font-serif italic font-light max-w-sm md:max-w-md mx-auto md:mx-0 leading-relaxed"
+                                            className="text-white/90 md:text-[#1F1F1F]/80 text-base md:text-2xl font-serif italic font-light max-w-sm md:max-w-md mx-auto md:mx-0 leading-relaxed"
                                         >
                                             Crafted in Pure 925 Silver
                                         </motion.p>
@@ -227,7 +227,7 @@ const Home = () => {
                                             transition={{ duration: 1.0, ease: "easeOut", delay: 0.4 }}
                                             className="flex items-center justify-center md:justify-start space-x-6 pt-2 md:pt-4"
                                         >
-                                            <Link to="/shop" className="bg-[#4A1015] text-white w-full md:w-auto px-8 py-4 md:px-12 md:py-5 rounded-full font-medium tracking-wide hover:bg-[#2F0005] transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 group/btn text-sm md:text-base">
+                                            <Link to="/shop" className="bg-[#4A1015] text-white w-full md:w-auto px-8 py-4 md:px-12 md:py-5 rounded-full font-semibold tracking-wide hover:bg-[#2F0005] active:scale-95 md:hover:scale-105 transition-all shadow-xl flex items-center justify-center gap-2 group/btn text-base md:text-base min-h-[56px] md:min-h-0">
                                                 <span>Shop Now</span>
                                                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                                             </Link>
@@ -238,13 +238,13 @@ const Home = () => {
                         </motion.div>
                     </AnimatePresence>
 
-                    {/* Pagination Dots - EXACTLY CENTERED */}
-                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+                    {/* Pagination Dots - Larger on mobile for better visibility */}
+                    <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
                         {heroSlides.map((_, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => setCurrentSlide(idx)}
-                                className={`h-1.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'w-10 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'
+                                className={`h-2 md:h-1.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'w-12 md:w-10 bg-white' : 'w-2 md:w-1.5 bg-white/50 md:bg-white/40 active:bg-white/70 md:hover:bg-white/60'
                                     }`}
                                 aria-label={`Go to slide ${idx + 1}`}
                             />
