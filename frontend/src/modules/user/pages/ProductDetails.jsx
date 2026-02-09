@@ -103,17 +103,10 @@ const ProductDetails = () => {
     // ... (rest of the file)
 
     // State for Size Selection
-    const [selectedSize, setSelectedSize] = useState(null);
-    const [sizeError, setSizeError] = useState(false);
+
 
     // Handlers for Animation
     const handleAddToCart = () => {
-        // Validation: Enforce Size Selection
-        if (!selectedSize) {
-            setSizeError(true);
-            // Scroll to size selector if needed (optional, but good UX)
-            return;
-        }
 
         // Add to cart with specific size
         setFlyingType('cart');
@@ -123,9 +116,6 @@ const ProductDetails = () => {
         // Pass 'selectedSize' so the Cart component can display it
         addToCart({
             ...product,
-            id: `${product.id}-${selectedSize}`,
-            originalId: product.id,
-            selectedSize: selectedSize
         });
 
         setTimeout(() => {
@@ -148,18 +138,7 @@ const ProductDetails = () => {
         }
     };
 
-    // State for Size Chart Modal
-    const [isSizeChartOpen, setIsSizeChartOpen] = useState(false);
 
-    // Size Chart Data (Mock for Rings/Bangles)
-    const sizeChartData = [
-        { size: '6', diameter: '16.5 mm', circumference: '51.9 mm' },
-        { size: '7', diameter: '17.3 mm', circumference: '54.4 mm' },
-        { size: '8', diameter: '18.1 mm', circumference: '57.0 mm' },
-        { size: '9', diameter: '18.9 mm', circumference: '59.5 mm' },
-        { size: '10', diameter: '19.8 mm', circumference: '62.1 mm' },
-        { size: '11', diameter: '20.6 mm', circumference: '64.6 mm' },
-    ];
 
     return (
         <div className="bg-white min-h-screen py-8 pb-24 md:pb-8 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out fill-mode-both selection:bg-[#D39A9F] selection:text-white">
@@ -196,42 +175,7 @@ const ProductDetails = () => {
                 `}
             </style>
 
-            {/* Size Chart Modal */}
-            {isSizeChartOpen && (
-                <div className="fixed inset-0 bg-black/60 z-[130] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-                        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-[#FDFBF7]">
-                            <h3 className="font-serif font-bold text-lg text-[#5D4037]">Ring Size Chart</h3>
-                            <button onClick={() => setIsSizeChartOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500">
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-                        <div className="p-0 overflow-x-auto">
-                            <table className="w-full text-sm text-left">
-                                <thead className="text-xs text-[#8D6E63] uppercase bg-[#FDFBF7] font-bold tracking-wider">
-                                    <tr>
-                                        <th className="px-6 py-3 border-b border-gray-100">US Size</th>
-                                        <th className="px-6 py-3 border-b border-gray-100">Diameter</th>
-                                        <th className="px-6 py-3 border-b border-gray-100">Circumference</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sizeChartData.map((row, index) => (
-                                        <tr key={index} className="bg-white border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4 font-bold text-black">{row.size}</td>
-                                            <td className="px-6 py-4 text-gray-600">{row.diameter}</td>
-                                            <td className="px-6 py-4 text-gray-600">{row.circumference}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="p-4 bg-gray-50 text-[10px] text-gray-500 text-center">
-                            * Standard US Sizing. Measure your finger for best fit.
-                        </div>
-                    </div>
-                </div>
-            )}
+
 
             {/* Flying Image Animation Element */}
             {flying && (
@@ -291,8 +235,7 @@ const ProductDetails = () => {
                                     ))}
                                     <span className="ml-2 text-gray-500 font-medium">({product.reviews} Reviews)</span>
                                 </div>
-                                <span className="text-gray-300">|</span>
-                                <span className="text-gray-500 font-mono text-xs">SKU: SO-{product.id}00SIL</span>
+
                             </div>
                         </div>
 
@@ -310,51 +253,7 @@ const ProductDetails = () => {
                         </div>
 
                         <div className="space-y-4 pb-2 md:pb-6">
-                            {/* Size Selector */}
-                            <div>
-                                <div className="flex justify-between items-center mb-2">
-                                    <label className="text-sm font-bold text-black uppercase tracking-wide">
-                                        Select Size
-                                    </label>
-                                    <button
-                                        onClick={() => setIsSizeChartOpen(true)}
-                                        className="text-xs text-[#D39A9F] underline hover:text-black font-bold"
-                                    >
-                                        Size Chart
-                                    </button>
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {(() => {
-                                        // Determine sizes based on product type
-                                        let sizes = ['One Size'];
-                                        const name = product.name.toLowerCase();
-                                        if (name.includes('ring') || name.includes('band')) sizes = ['6', '7', '8', '9', '10', '11'];
-                                        else if (name.includes('chain') || name.includes('necklace')) sizes = ['16"', '18"', '20"', '22"'];
-                                        else if (name.includes('bangle') || name.includes('bracelet')) sizes = ['2.4', '2.5', '2.6', '2.8'];
-                                        else sizes = ['S', 'M', 'L']; // Default Fallback
 
-                                        return sizes.map((size) => (
-                                            <button
-                                                key={size}
-                                                onClick={() => { setSelectedSize(size); setSizeError(false); }}
-                                                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center text-sm font-medium transition-all
-                                                        ${selectedSize === size
-                                                        ? 'border-black bg-black text-white shadow-md scale-105'
-                                                        : 'border-gray-200 text-gray-700 hover:border-[#D39A9F] hover:text-black bg-white'
-                                                    }
-                                                    `}
-                                            >
-                                                {size}
-                                            </button>
-                                        ));
-                                    })()}
-                                </div>
-                                {sizeError && (
-                                    <p className="text-red-500 text-xs mt-2 font-medium animate-pulse flex items-center gap-1">
-                                        <X className="w-3 h-3" /> Please select a size to proceed
-                                    </p>
-                                )}
-                            </div>
 
                             <div className="flex items-center gap-2 text-emerald-700 text-sm font-medium">
                                 <ShieldCheck className="w-4 h-4" />
@@ -379,10 +278,6 @@ const ProductDetails = () => {
                                 </div>
                                 <button
                                     onClick={() => {
-                                        if (!selectedSize) {
-                                            setSizeError(true);
-                                            return;
-                                        }
                                         // Handle Buy Now Logic (Direct Cart + Navigate)
                                         handleAddToCart();
                                     }}
@@ -402,10 +297,6 @@ const ProductDetails = () => {
                                 </button>
                                 <button
                                     onClick={() => {
-                                        if (!selectedSize) {
-                                            setSizeError(true);
-                                            return;
-                                        }
                                         handleAddToCart();
                                     }}
                                     className="flex-1 bg-[#EBCDD0] text-black hover:bg-[#D39A9F] hover:text-white rounded-xl h-12 font-bold uppercase tracking-wide text-[10px] active:scale-95 transition-transform"
