@@ -1,443 +1,766 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
     ArrowLeft,
-    Printer,
-    Download,
-    CheckCircle2,
-    Clock,
+    Box,
     Truck,
-    Package,
-    MapPin,
+    Clock,
     User,
-    CreditCard,
-    MessageCircle,
+    Phone,
+    Mail,
+    MapPin,
     AlertCircle,
+    CheckCircle2,
     XCircle,
-    X,
     FileText,
-    Image as ImageIcon
+    Image as ImageIcon,
+    Video,
+    MessageSquare,
+    ChevronDown,
+    ChevronUp,
+    IndianRupee,
+    CreditCard,
+    Check,
+    X,
+    Send,
+    Printer,
+    Download
 } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import ringImg from '../../../assets/diamond_ring.png';
+import necklaceImg from '../../../assets/gold_necklace.png';
+import banglesImg from '../../../assets/gold_bangles.png';
 
 const ReturnDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [returnRequest, setReturnRequest] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const queryClient = useQueryClient();
 
-    // Approval Workflow State
-    const [showRejectInput, setShowRejectInput] = useState(false);
-    const [rejectionReason, setRejectionReason] = useState('');
-    const [internalComment, setInternalComment] = useState('');
+    // DUMMY DATA CASES - JEWELRY THEMED
+    const DUMMY_CASES = {
+        // CASE 101: PENDING
+        '101': {
+            id: '101',
+            orderId: '5001',
+            type: 'Refund',
+            status: 'Pending',
+            requestDate: '2025-02-06T09:00:00Z',
+            amount: 120000,
+            refundAmount: 120000,
+            reason: 'Damaged Product',
+            userName: 'Rahul Sharma',
+            phone: '+91 98765 00001',
+            email: 'rahul.s@example.com',
+            address: {
+                line1: 'A-12, Green Park',
+                city: 'New Delhi',
+                state: 'Delhi',
+                pincode: '110016',
+                fullName: 'Rahul Sharma'
+            },
+            items: [
+                {
+                    name: "Bridal Gold Necklace Set 22k",
+                    sku: "JWL-NCK-001",
+                    qty: 1,
+                    reason: "Clasp Broken",
+                    condition: "Defective",
+                    price: 120000,
+                    image: necklaceImg
+                }
+            ],
+            evidence: {
+                comment: "The clasp of the necklace was broken when I opened the box.",
+                images: [necklaceImg],
+                video: null
+            },
+            timeline: [
+                { status: 'Return Requested', date: '2025-02-06', done: true },
+                { status: 'Admin Approved', date: null, done: false },
+                { status: 'Pickup Scheduled', date: null, done: false }
+            ],
+            logs: [
+                { type: 'Email', msg: 'Return Request Received', date: '06 Feb 2025, 09:00 AM' }
+            ]
+        },
 
-    useEffect(() => {
-        // Simulate Fetching Data
-        setLoading(true);
-        setTimeout(() => {
-            setReturnRequest({
-                id: id || 'RTN-101',
-                orderId: '#5001',
-                status: 'Pending', // Default to Pending for demo
-                amount: 1200,
-                items: [
-                    {
-                        name: 'Organic Cashew Nuts (W320) 250g',
-                        sku: 'PRO-CAS-250',
-                        qty: 1,
-                        price: 1200,
-                        reason: 'Damaged',
-                        condition: 'Opened',
-                        image: 'https://via.placeholder.com/50'
-                    }
-                ],
-                customer: {
-                    name: 'Rahul Sharma',
-                    phone: '+91 98765 00001',
-                    email: 'rahul.s@example.com'
-                },
-                evidence: {
-                    comment: "The packet was torn on arrival.",
-                    images: ['https://via.placeholder.com/100']
-                },
-                address: {
-                    line1: 'A-12, Green Park',
-                    city: 'New Delhi',
-                    state: 'Delhi',
-                    pincode: '110016'
-                },
-                refund: {
-                    method: 'N/A',
-                    transactionId: 'Pending',
-                    total: 0 // Initially 0 until approved/refunded
-                },
-                timeline: [
-                    { status: 'Return Requested', date: '2025-02-06', completed: true }
-                ]
-            });
-            setLoading(false);
-        }, 500);
-    }, [id]);
-
-    const handleApprove = () => {
-        setReturnRequest(prev => ({
-            ...prev,
+        // CASE 102: APPROVED (Pickup Scheduled)
+        '102': {
+            id: '102',
+            orderId: '5002',
+            type: 'Refund',
             status: 'Approved',
-            refund: { ...prev.refund, total: prev.amount, method: 'Original Payment Source' },
-            pickup: {
-                partner: 'Delhivery Surface',
-                trackingId: 'TRACK-99887766',
-                scheduledDate: 'Tomorrow, 10 AM - 2 PM'
-            }
-        }));
-    };
+            requestDate: '2025-02-04T14:30:00Z',
+            amount: 85000,
+            refundAmount: 85000,
+            reason: 'Wrong Item Received',
+            userName: 'Priya Singh',
+            phone: '+91 98765 00002',
+            email: 'priya.s@example.com',
+            address: {
+                line1: 'B-402, Lotus Tower, Andheri West',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400053',
+                fullName: 'Priya Singh'
+            },
+            items: [
+                {
+                    name: "22k Gold Bangles (Set of 4)",
+                    sku: "JWL-BNG-002",
+                    qty: 1,
+                    reason: "Wrong Design",
+                    condition: "Unopened",
+                    price: 85000,
+                    image: banglesImg
+                }
+            ],
+            evidence: {
+                comment: "I ordered the floral design but received the geometric pattern instead.",
+                images: [banglesImg],
+                video: null
+            },
+            courier: {
+                partner: 'Delhivery',
+                awb: 'RT987654321',
+                pickupDate: '2025-02-07',
+                status: 'Scheduled'
+            },
+            timeline: [
+                { status: 'Return Requested', date: '2025-02-04', done: true },
+                { status: 'Admin Approved', date: '2025-02-05', done: true },
+                { status: 'Pickup Scheduled', date: '2025-02-05', done: true },
+                { status: 'Picked Up', date: null, done: false }
+            ],
+            logs: [
+                { type: 'Email', msg: 'Return Request Received', date: '04 Feb 2025, 02:30 PM' },
+                { type: 'System', msg: 'Pickup Scheduled via Delhivery', date: '05 Feb 2025, 10:00 AM' }
+            ]
+        },
 
-    const confirmReject = () => {
-        if (!rejectionReason.trim()) return;
+        // CASE 103: REFUNDED (Completed)
+        '103': {
+            id: '103',
+            orderId: '5003',
+            type: 'Refund',
+            status: 'Refunded',
+            requestDate: '2025-01-20T09:15:00Z',
+            amount: 250000,
+            refundAmount: 250000,
+            reason: 'Quality Issue',
+            userName: 'Amit Verma',
+            phone: '+91 98765 00003',
+            email: 'amit.v@example.com',
+            address: {
+                line1: 'C-15, Golf Links',
+                city: 'Bangalore',
+                state: 'Karnataka',
+                pincode: '560071',
+                fullName: 'Amit Verma'
+            },
+            items: [
+                {
+                    name: "Diamond Engagement Ring 1.5 Carat",
+                    sku: "JWL-RNG-003",
+                    qty: 1,
+                    reason: "Polish Issue",
+                    condition: "Opened",
+                    price: 250000,
+                    image: ringImg
+                }
+            ],
+            evidence: {
+                comment: "The diamond seems slightly loose and setting is not as expected.",
+                images: [ringImg],
+                video: null
+            },
+            courier: {
+                partner: 'BlueDart',
+                awb: 'RT555666777',
+                pickupDate: '2025-01-22',
+                status: 'Delivered'
+            },
+            refund: {
+                method: 'UPI',
+                amount: 250000,
+                transactionId: 'UPI-1234567890',
+                date: '2025-01-25'
+            },
+            timeline: [
+                { status: 'Return Requested', date: '2025-01-20', done: true },
+                { status: 'Admin Approved', date: '2025-01-21', done: true },
+                { status: 'Picked Up', date: '2025-01-22', done: true },
+                { status: 'Received', date: '2025-01-24', done: true },
+                { status: 'Refund Completed', date: '2025-01-25', done: true }
+            ],
+            logs: [
+                { type: 'Email', msg: 'Refund Processed successfully', date: '25 Jan 2025, 02:00 PM' }
+            ]
+        },
 
-        setReturnRequest(prev => ({
-            ...prev,
+        // CASE 104: REJECTED
+        '104': {
+            id: '104',
+            orderId: '5004',
+            type: 'Refund',
             status: 'Rejected',
-            rejection: {
-                reason: rejectionReason,
-                by: 'Admin',
-                date: new Date().toISOString()
+            requestDate: '2025-02-01T16:45:00Z',
+            amount: 45000,
+            refundAmount: 0,
+            reason: 'Changed Mind',
+            userName: 'Sneha Gupta',
+            phone: '+91 98765 00004',
+            email: 'sneha.g@example.com',
+            address: {
+                line1: 'D-5, Civil Lines',
+                city: 'Jaipur',
+                state: 'Rajasthan',
+                pincode: '302006',
+                fullName: 'Sneha Gupta'
+            },
+            items: [
+                {
+                    name: "Gold Chain 18k (20 inches)",
+                    sku: "JWL-CHN-004",
+                    qty: 1,
+                    reason: "Changed Mind",
+                    condition: "Unopened",
+                    price: 45000,
+                    image: necklaceImg
+                }
+            ],
+            evidence: {
+                comment: "I don't need it anymore.",
+                images: [],
+                video: null
+            },
+            adminComment: 'Return policy does not cover "Change of Mind" for jewelry items.',
+            timeline: [
+                { status: 'Return Requested', date: '2025-02-01', done: true },
+                { status: 'Rejected', date: '2025-02-02', done: true }
+            ],
+            logs: [
+                { type: 'Email', msg: 'Return Request Rejected', date: '02 Feb 2025, 09:30 AM' }
+            ]
+        },
+
+        // CASE 201: REPLACEMENT APPROVED
+        '201': {
+            id: '201',
+            orderId: '6001',
+            type: 'Replacement',
+            status: 'Approved',
+            requestDate: '2025-02-02T14:30:00Z',
+            amount: 180000,
+            reason: 'Wrong Size',
+            userName: 'Priya Verma',
+            phone: '+91 98765 00005',
+            email: 'priya.v@example.com',
+            address: {
+                line1: 'E-20, Park Street',
+                city: 'Kolkata',
+                state: 'West Bengal',
+                pincode: '700016',
+                fullName: 'Priya Verma'
+            },
+            items: [
+                {
+                    name: "Diamond Engagement Ring 1.0 Carat",
+                    sku: "JWL-RNG-005",
+                    qty: 1,
+                    reason: "Wrong Size",
+                    condition: "Unopened",
+                    price: 180000,
+                    image: ringImg
+                }
+            ],
+            evidence: {
+                comment: "The ring is too small for my finger.",
+                images: [ringImg],
+                video: null
+            },
+            courier: {
+                partner: 'Delhivery',
+                awb: 'RPL123456',
+                pickupDate: '2025-02-03',
+                status: 'Scheduled'
+            },
+            timeline: [
+                { status: 'Return Requested', date: '2025-02-02', done: true },
+                { status: 'Approved', date: '2025-02-03', done: true },
+                { status: 'Pickup Scheduled', date: '2025-02-03', done: true }
+            ],
+            logs: []
+        },
+
+        // CASE 202: REPLACEMENT PENDING
+        '202': {
+            id: '202',
+            orderId: '6002',
+            type: 'Replacement',
+            status: 'Pending',
+            requestDate: '2025-02-04T12:00:00Z',
+            amount: 125000,
+            reason: 'Defective',
+            userName: 'Neha Gupta',
+            phone: '+91 99999 88888',
+            email: 'neha.g@example.com',
+            address: {
+                line1: 'F-45, Hitech City',
+                city: 'Hyderabad',
+                state: 'Telangana',
+                pincode: '500081',
+                fullName: 'Neha Gupta'
+            },
+            items: [
+                {
+                    name: "Gold Necklace Set 22k",
+                    sku: "JWL-NCK-006",
+                    qty: 1,
+                    reason: "Defective",
+                    condition: "Opened",
+                    price: 125000,
+                    image: necklaceImg
+                }
+            ],
+            evidence: {
+                comment: "Clasp is not working properly.",
+                images: [necklaceImg],
+                video: null
+            },
+            timeline: [
+                { status: 'Return Requested', date: '2025-02-04', done: true }
+            ],
+            logs: []
+        },
+
+        // CASE 203: REPLACEMENT SHIPPED
+        '203': {
+            id: '203',
+            orderId: '6003',
+            type: 'Replacement',
+            status: 'Shipped',
+            requestDate: '2025-02-06T09:00:00Z',
+            amount: 85000,
+            reason: 'Damaged',
+            userName: 'Rahul Roy',
+            phone: '+91 77777 66666',
+            email: 'rahul.r@example.com',
+            address: {
+                line1: 'G-10, Salt Lake',
+                city: 'Kolkata',
+                state: 'West Bengal',
+                pincode: '700091',
+                fullName: 'Rahul Roy'
+            },
+            items: [
+                {
+                    name: "22k Gold Bangles (Set of 4)",
+                    sku: "JWL-BNG-007",
+                    qty: 1,
+                    reason: "Damaged",
+                    condition: "Opened",
+                    price: 85000,
+                    image: banglesImg
+                }
+            ],
+            evidence: {
+                comment: "Surface has visible scratches.",
+                images: [banglesImg],
+                video: null
+            },
+            courier: {
+                partner: 'BlueDart',
+                awb: 'RPL987654',
+                pickupDate: '2025-02-07',
+                status: 'Picked Up'
+            },
+            timeline: [
+                { status: 'Return Requested', date: '2025-02-06', done: true },
+                { status: 'Approved', date: '2025-02-06', done: true },
+                { status: 'Shipped', date: '2025-02-07', done: true }
+            ],
+            logs: []
+        }
+    };
+
+    const currentDummyData = DUMMY_CASES[id] || DUMMY_CASES['101'];
+
+    // Fetch Return Details (with fallback to dummy data)
+    const { data: ret = currentDummyData, isLoading } = useQuery({
+        queryKey: ['return', id],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`http://localhost:5000/api/returns/${id}`);
+                if (!res.ok) throw new Error('Failed');
+                const data = await res.json();
+                return data || (DUMMY_CASES[id] || DUMMY_CASES['101']);
+            } catch (err) {
+                console.log("Using Dummy Data for ID:", id);
+                return DUMMY_CASES[id] || DUMMY_CASES['101'];
             }
-        }));
-        setShowRejectInput(false);
-        setRejectionReason('');
-    };
-
-    if (loading) return <div className="p-10 text-center text-gray-400 font-bold uppercase tracking-widest">Loading Return Details...</div>;
-    if (!returnRequest) return <div className="p-10 text-center text-red-400 font-bold uppercase tracking-widest">Request not found</div>;
-
-    const statusStyle = (status) => {
-        switch (status) {
-            case 'Approved': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
-            case 'Rejected': return 'bg-red-50 text-red-600 border-red-100';
-            case 'Pending': return 'bg-amber-50 text-amber-600 border-amber-100';
-            default: return 'bg-gray-50 text-gray-600 border-gray-100';
         }
-    };
+    });
 
-    const getTimeline = () => {
-        const steps = [...returnRequest.timeline];
-        if (returnRequest.status === 'Rejected') {
-            steps.push({ status: 'Admin Rejected', date: 'Today', completed: true, isError: true });
-        } else if (returnRequest.status === 'Approved') {
-            steps.push({ status: 'Admin Approved', date: 'Today', completed: true });
-            steps.push({ status: 'Pickup Scheduled', date: 'Today', completed: true });
-            steps.push({ status: 'Item Picked Up', date: 'Pending', completed: false });
-            steps.push({ status: 'Refund Initiated', date: 'Pending', completed: false });
-        } else {
-            steps.push({ status: 'Admin Approval', date: 'Pending', completed: false });
+    // Update Status Mutation
+    // Update Status Mutation
+    const updateStatusMutation = useMutation({
+        mutationFn: async ({ status, comment }) => {
+            await new Promise(r => setTimeout(r, 600)); // Simulate API
+            const updatedData = {
+                ...ret,
+                status,
+                adminComment: comment,
+                // Add dummy courier info if Approved
+                ...(status === 'Approved' && {
+                    courier: {
+                        partner: 'Delhivery',
+                        awb: 'RT987654321',
+                        pickupDate: new Date().toISOString().split('T')[0],
+                        status: 'Scheduled'
+                    },
+                    timeline: ret.timeline.map(t =>
+                        t.status === 'Admin Approved' || t.status === 'Pickup Scheduled'
+                            ? { ...t, date: new Date().toISOString().split('T')[0], done: true }
+                            : t
+                    )
+                })
+            };
+            return updatedData;
+        },
+        onSuccess: (newData) => {
+            queryClient.setQueryData(['return', id], newData);
+            toast.success(`Return request ${newData.status}`);
+        },
+        onError: () => toast.error('Failed to update status')
+    });
+
+    const [adminComment, setAdminComment] = useState('');
+
+    if (isLoading) return <div className="p-20 text-center">Loading Return Details...</div>;
+
+    const isReplacement = ret.type === 'Replacement';
+
+    const getStatusColor = (st) => {
+        switch (st) {
+            case 'Completed':
+            case 'Refunded': return 'text-emerald-600 bg-emerald-50 border-emerald-100';
+            case 'Approved': return 'text-blue-600 bg-blue-50 border-blue-100';
+            case 'Pending': return 'text-amber-600 bg-amber-50 border-amber-100';
+            case 'Rejected': return 'text-red-600 bg-red-50 border-red-100';
+            default: return 'text-gray-600 bg-gray-50 border-gray-100';
         }
-        return steps;
     };
 
     return (
-        <div className="space-y-6 font-sans text-left pb-20 animate-in fade-in duration-500">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-6 pb-20 text-left font-['Inter']">
+            {/* Top Navigation */}
+            <div className="flex items-center justify-between">
                 <button
                     onClick={() => navigate('/admin/returns')}
-                    className="flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-gray-900 uppercase tracking-widest transition-colors"
+                    className="flex items-center gap-2 text-gray-500 hover:text-footerBg font-bold text-xs uppercase tracking-widest transition-colors"
                 >
                     <ArrowLeft size={16} /> Back to Requests
                 </button>
-                <div className="flex gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-gray-50 transition-all shadow-sm">
-                        <Printer size={14} /> Print Slip
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all shadow-lg active:scale-95">
+                <div className="flex gap-2">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-bold uppercase tracking-widest text-black hover:border-footerBg transition-all shadow-sm">
                         <Download size={14} /> Download
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-black rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-all shadow-sm">
+                        <Printer size={14} /> Print Slip
                     </button>
                 </div>
             </div>
 
-            {/* Info Strip */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            {/* 1. Return Summary (Top Card) */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Return ID</p>
-                    <p className="text-xl font-black text-gray-900">#{returnRequest.id}</p>
+                    <p className="text-[10px] font-bold text-footerBg uppercase tracking-widest mb-1">Return ID</p>
+                    <p className="text-lg font-medium text-black select-all">#{ret.id}</p>
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Order ID</p>
-                    <p className="text-sm font-bold text-emerald-600">{returnRequest.orderId}</p>
+                    <p className="text-[10px] font-bold text-footerBg uppercase tracking-widest mb-1">Order ID</p>
+                    <p className="text-sm font-medium text-primary cursor-pointer hover:underline" onClick={() => navigate(`/admin/orders/${ret.orderId}`)}>
+                        #{ret.orderId}
+                    </p>
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Status</p>
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${statusStyle(returnRequest.status)}`}>
-                        {returnRequest.status}
+                    <p className="text-[10px] font-bold text-footerBg uppercase tracking-widest mb-1">Status</p>
+                    <span className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-medium uppercase tracking-widest border ${getStatusColor(ret.status)}`}>
+                        {ret.status}
                     </span>
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Amount</p>
-                    <p className="text-2xl font-black text-gray-900">₹{returnRequest.amount?.toLocaleString()}</p>
+                    <p className="text-[10px] font-bold text-footerBg uppercase tracking-widest mb-1">Amount</p>
+                    <p className="text-xl font-medium text-footerBg">₹{(ret.refundAmount || 0).toLocaleString()}</p>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Left Column */}
+                {/* Left Column: Items, Breakup, Evidence */}
                 <div className="lg:col-span-2 space-y-6">
-                    {/* Return Items */}
+
+                    {/* 4. Return Items Table */}
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                        <div className="p-6 border-b border-gray-50 flex items-center gap-2">
-                            <Package size={16} className="text-gray-400" />
-                            <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Return Items ({returnRequest.items.length})</h3>
+                        <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+                            <h3 className="text-xs font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
+                                <Box size={16} /> Return Items ({ret.items?.length})
+                            </h3>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left">
-                                <thead className="bg-gray-50/50 border-b border-gray-50">
-                                    <tr>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Item Details</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">SKU</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Qty</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">Price</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Reason</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">Condition</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-50">
-                                    {returnRequest.items.map((item, idx) => (
-                                        <tr key={idx}>
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 bg-gray-50 rounded-lg p-1 border border-gray-100 flex-shrink-0">
-                                                        <img src={item.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="border-b border-gray-100 text-xs font-black text-footerBg uppercase tracking-widest">
+                                    <th className="p-4">Item Details</th>
+                                    <th className="p-4 text-center">Qty</th>
+                                    <th className="p-4 text-right">Price</th>
+                                    <th className="p-4">Reason</th>
+                                    <th className="p-4 text-right">Condition</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-50">
+                                {ret.items?.map((item, idx) => (
+                                    <React.Fragment key={idx}>
+                                        <tr className="hover:bg-gray-50/50">
+                                            <td className="p-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 bg-gray-50 rounded-lg border border-gray-200 p-1 shrink-0">
+                                                        <img src={item.image || "https://placehold.co/400x400/png?text=Product"} alt="" className="w-full h-full object-contain" />
                                                     </div>
-                                                    <p className="text-xs font-bold text-gray-900">{item.name}</p>
+                                                    <div>
+                                                        <p className="text-xs font-bold text-footerBg">{item.name}</p>
+                                                    </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 text-center text-[10px] font-bold text-gray-500">{item.sku}</td>
-                                            <td className="px-6 py-4 text-center text-xs font-bold text-gray-900">{item.qty}</td>
-                                            <td className="px-6 py-4 text-right text-xs font-black text-gray-900">₹{item.price.toLocaleString()}</td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className="bg-red-50 text-red-600 border border-red-100 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest">
-                                                    {item.reason}
-                                                </span>
+                                            <td className="p-4 text-center font-bold text-gray-600">{item.qty}</td>
+                                            <td className="p-4 text-right font-bold text-footerBg">₹{item.price.toLocaleString()}</td>
+                                            <td className="p-4">
+                                                <span className="px-2 py-1 bg-red-50 text-red-600 rounded text-[9px] font-black uppercase tracking-wider">{item.reason}</span>
                                             </td>
-                                            <td className="px-6 py-4 text-right text-xs font-medium text-gray-500">{item.condition}</td>
+                                            <td className="p-4 text-right text-xs font-bold text-gray-500">{item.condition}</td>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </React.Fragment>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
 
-                    {/* Customer Evidence */}
+                    {/* 5. Customer Evidence */}
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <div className="flex items-center gap-2 mb-4">
-                            <FileText size={16} className="text-gray-400" />
-                            <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Customer Evidence</h3>
-                        </div>
-                        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 mb-4">
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Customer Comment</p>
-                            <p className="text-xs font-bold text-gray-600 italic">"{returnRequest.evidence.comment}"</p>
+                        <h3 className="text-xs font-black text-footerBg uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <AlertCircle size={16} /> Customer Evidence
+                        </h3>
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
+                            <div className="flex gap-3">
+                                <MessageSquare size={16} className="text-gray-400 mt-0.5 shrink-0" />
+                                <div>
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Customer Comment</p>
+                                    <p className="text-xs font-bold text-footerBg mt-1 italic leading-relaxed">"{ret.evidence?.comment}"</p>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Proof Uploads</p>
-                            <div className="flex gap-4">
-                                {returnRequest.evidence.images.map((img, i) => (
-                                    <div key={i} className="w-20 h-20 bg-gray-50 rounded-lg border border-gray-100 p-1">
-                                        <img src={img} alt="Proof" className="w-full h-full object-cover rounded" />
+                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 pl-1">Proof Uploads</p>
+                            <div className="flex gap-4 overflow-x-auto pb-2">
+                                {ret.evidence?.images?.map((img, i) => (
+                                    <div key={i} className="w-20 h-20 rounded-xl border border-gray-200 overflow-hidden shrink-0 relative group cursor-pointer shadow-sm hover:shadow-md transition-all">
+                                        <img src={img} alt="Proof" className="w-full h-full object-cover" />
                                     </div>
                                 ))}
+                                {ret.evidence?.video && (
+                                    <div className="w-20 h-20 rounded-xl border border-gray-200 bg-gray-100 flex items-center justify-center shrink-0 cursor-pointer shadow-sm hover:shadow-md transition-all">
+                                        <Video className="text-gray-400" size={20} />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
 
-                    {/* Refund Details */}
-                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <div className="flex items-center gap-2 mb-4">
-                            <CreditCard size={16} className="text-gray-400" />
-                            <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Refund Details</h3>
+                    {/* 9. Refund Details (Conditional) */}
+                    {(!isReplacement && (
+                        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                            <h3 className="text-xs font-black text-footerBg uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <IndianRupee size={16} /> Refund Details
+                            </h3>
+                            <div className="space-y-3 text-xs">
+                                <div className="flex justify-between text-gray-500">
+                                    <span className="font-medium">Refund Method</span>
+                                    <span className="font-bold text-footerBg flex items-center gap-1">
+                                        <CreditCard size={12} /> {ret.refund?.method || 'N/A'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between text-gray-500">
+                                    <span className="font-medium">Transaction ID</span>
+                                    <span className="font-mono font-bold text-footerBg">{ret.refund?.transactionId || 'Pending'}</span>
+                                </div>
+                                <div className="border-t border-gray-100 pt-3 flex justify-between items-center text-sm">
+                                    <span className="font-black text-footerBg uppercase tracking-tight">Total Refund Amount</span>
+                                    <span className="text-xl font-black text-emerald-600">₹{ret.refund?.amount || '0'}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="space-y-3">
-                            <div className="flex justify-between text-xs font-bold text-gray-500">
-                                <span>Refund Method</span>
-                                <span className="text-gray-900">{returnRequest.refund.method}</span>
-                            </div>
-                            <div className="flex justify-between text-xs font-bold text-gray-500">
-                                <span>Transaction ID</span>
-                                <span className="text-gray-900">{returnRequest.refund.transactionId}</span>
-                            </div>
-                            <div className="border-t border-gray-100 pt-3 flex justify-between items-center">
-                                <span className="text-[10px] font-black text-gray-900 uppercase tracking-widest">Total Refund Amount</span>
-                                <span className="text-xl font-black text-emerald-600">₹{returnRequest.refund.total.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
+
                 </div>
 
-                {/* Right Column */}
+                {/* Right Column: Customer, Timeline, Actions */}
                 <div className="space-y-6">
-                    {/* Admin Actions */}
-                    {returnRequest.status === 'Pending' && (
-                        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                            <div className="flex items-center gap-2 mb-4">
-                                <AlertCircle size={16} className="text-amber-500" />
-                                <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Admin Actions</h3>
-                            </div>
 
-                            {!showRejectInput ? (
-                                <>
-                                    <textarea
-                                        className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-medium text-gray-900 focus:outline-none focus:border-gray-300 resize-none mb-4"
-                                        rows="3"
-                                        placeholder="Add internal comment..."
-                                        value={internalComment}
-                                        onChange={(e) => setInternalComment(e.target.value)}
-                                    />
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <button
-                                            onClick={handleApprove}
-                                            className="flex flex-col items-center justify-center gap-2 py-3 bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-200"
-                                        >
-                                            <CheckCircle2 size={18} /> Approve
-                                        </button>
-                                        <button
-                                            onClick={() => setShowRejectInput(true)}
-                                            className="flex flex-col items-center justify-center gap-2 py-3 bg-white border border-red-100 text-red-500 rounded-xl text-[10px] font-black uppercase tracking-widest hover:border-red-500 hover:bg-red-50 transition-all"
-                                        >
-                                            <XCircle size={18} /> Reject
-                                        </button>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="space-y-3 animate-in fade-in">
-                                    <div className="bg-red-50 p-3 rounded-xl border border-red-100">
-                                        <label className="text-[9px] font-black text-red-400 uppercase tracking-widest block mb-1">Reason for Rejection</label>
-                                        <textarea
-                                            value={rejectionReason}
-                                            onChange={(e) => setRejectionReason(e.target.value)}
-                                            placeholder="Reason..."
-                                            className="w-full bg-white border border-red-200 rounded-lg p-2 text-xs font-bold text-gray-900 h-20 resize-none focus:outline-none focus:border-red-400"
-                                            autoFocus
-                                        />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <button
-                                            onClick={() => setShowRejectInput(false)}
-                                            className="py-2.5 bg-gray-100 text-gray-600 rounded-xl text-[10px] font-black uppercase tracking-widest"
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button
-                                            onClick={confirmReject}
-                                            className="py-2.5 bg-red-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-red-200"
-                                        >
-                                            Confirm
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    {/* Rejected Details */}
-                    {returnRequest.status === 'Rejected' && returnRequest.rejection && (
-                        <div className="bg-red-50 rounded-2xl border border-red-100 p-6">
-                            <div className="flex items-center gap-2 mb-3">
-                                <XCircle size={16} className="text-red-500" />
-                                <h3 className="text-xs font-black text-red-900 uppercase tracking-widest">Return Rejected</h3>
-                            </div>
-                            <p className="text-xs font-bold text-red-800">{returnRequest.rejection.reason}</p>
-                            <p className="text-[10px] text-red-400 mt-2">By {returnRequest.rejection.by} • {new Date(returnRequest.rejection.date).toLocaleDateString()}</p>
-                        </div>
-                    )}
-
-                    {/* Pickup Details (Equivalent to Shipment Details) - Conditional on Approval */}
-                    {returnRequest.status === 'Approved' && returnRequest.pickup && (
-                        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 animate-in fade-in">
-                            <div className="flex items-center gap-2 mb-4">
-                                <Truck size={16} className="text-gray-400" />
-                                <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Pickup Scheduling</h3>
-                            </div>
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center text-xs">
-                                    <span className="font-bold text-gray-400">Logistics Partner</span>
-                                    <span className="font-black text-gray-900">{returnRequest.pickup.partner}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-xs">
-                                    <span className="font-bold text-gray-400">Tracking ID</span>
-                                    <span className="font-black text-gray-900">{returnRequest.pickup.trackingId}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-xs">
-                                    <span className="font-bold text-gray-400">Scheduled Date</span>
-                                    <span className="font-black text-emerald-600">{returnRequest.pickup.scheduledDate}</span>
-                                </div>
-                                <div className="pt-2">
-                                    <button className="w-full py-2 border border-blue-100 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-100">
-                                        Track Pickup Status
-                                    </button>
-                                </div>
+                    {/* 6. Admin Actions (For New Requests) */}
+                    {ret.status === 'Pending' && (
+                        <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3">
+                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Admin Actions</h3>
+                            <textarea
+                                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-medium outline-none focus:border-primary min-h-[80px] resize-none mb-2"
+                                placeholder="Add internal comment..."
+                                value={adminComment}
+                                onChange={(e) => setAdminComment(e.target.value)}
+                            ></textarea>
+                            <div className="grid grid-cols-2 gap-3">
+                                <button
+                                    onClick={() => updateStatusMutation.mutate({ status: 'Approved', comment: adminComment })}
+                                    className="flex items-center justify-center gap-2 bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200"
+                                >
+                                    <Check size={16} /> Approve
+                                </button>
+                                <button
+                                    onClick={() => updateStatusMutation.mutate({ status: 'Rejected', comment: adminComment })}
+                                    className="flex items-center justify-center gap-2 bg-white text-red-500 border border-red-100 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-red-50 transition-all"
+                                >
+                                    <X size={16} /> Reject
+                                </button>
                             </div>
                         </div>
                     )}
 
-                    {/* Customer Info */}
-                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <div className="flex items-center gap-2 mb-4">
-                            <User size={16} className="text-gray-400" />
-                            <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Customer</h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500">
-                                {returnRequest.customer.name.charAt(0)}
-                            </div>
-                            <div>
-                                <p className="text-xs font-black text-gray-900">{returnRequest.customer.name}</p>
-                                <p className="text-[10px] font-bold text-gray-400">{returnRequest.customer.phone}</p>
-                                <p className="text-[10px] font-bold text-gray-400">{returnRequest.customer.email}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Pickup Address */}
-                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <div className="flex items-center gap-2 mb-4">
-                            <MapPin size={16} className="text-gray-400" />
-                            <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Pickup Address</h3>
-                        </div>
-                        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                            <p className="text-xs font-bold text-gray-800 leading-relaxed mb-3">
-                                {returnRequest.address.line1}<br />
-                                {returnRequest.address.city}, {returnRequest.address.state} - {returnRequest.address.pincode}
+                    {/* APPROVAL REASON (If Approved) */}
+                    {ret.status === 'Approved' && (
+                        <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 shadow-sm">
+                            <h3 className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2 flex items-center gap-1">
+                                <CheckCircle2 size={12} /> Approval Note
+                            </h3>
+                            <p className="text-xs font-bold text-emerald-700 leading-relaxed">
+                                {ret.adminComment || "No note provided."}
                             </p>
-                            <span className="inline-flex items-center gap-1 text-[9px] font-black text-blue-500 bg-blue-50 px-2 py-1 rounded border border-blue-100">
-                                <Truck size={8} /> Shiprocket API Integration
-                            </span>
+                        </div>
+                    )}
+
+                    {/* REJECTION REASON (If Rejected) */}
+                    {ret.status === 'Rejected' && (
+                        <div className="bg-red-50 p-4 rounded-2xl border border-red-100 shadow-sm">
+                            <h3 className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-2 flex items-center gap-1">
+                                <XCircle size={12} /> Rejection Reason
+                            </h3>
+                            <p className="text-xs font-bold text-red-700 leading-relaxed">
+                                {ret.adminComment || "No reason provided."}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* 2. Customer & Pickup Details */}
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
+
+                        {/* Customer Info */}
+                        <div>
+                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <User size={14} /> Customer
+                            </h3>
+                            <div className="flex items-center gap-4 p-2 -ml-2 rounded-xl transition-all">
+                                <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center font-black text-sm text-gray-400 uppercase border border-gray-200 shrink-0">
+                                    {ret.userName?.charAt(0)}
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <h3 className="font-bold text-footerBg text-sm truncate">{ret.userName}</h3>
+                                    <p className="text-xs text-gray-500 flex items-center gap-1.5 mt-1 truncate">
+                                        <Phone size={12} /> {ret.phone}
+                                    </p>
+                                    <p className="text-xs text-gray-500 flex items-center gap-1.5 mt-0.5 truncate">
+                                        <Mail size={12} /> {ret.email}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="w-full h-px bg-gray-50"></div>
+
+                        {/* Pickup Address */}
+                        <div>
+                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <MapPin size={14} /> Pickup Address
+                            </h3>
+                            <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-2">
+                                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                                    {ret.address?.line1}<br />
+                                    <span className="block mt-1 font-bold text-gray-700">
+                                        {ret.address?.city}, {ret.address?.state} - {ret.address?.pincode}
+                                    </span>
+                                </p>
+                                <p className="text-[9px] font-bold text-blue-400 mt-2 flex items-center gap-1">
+                                    <Truck size={10} /> Shiprocket API Integration
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Timeline */}
-                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <div className="flex items-center gap-2 mb-6">
-                            <Clock size={16} className="text-gray-400" />
-                            <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">Return Timeline</h3>
-                        </div>
-                        <div className="space-y-6 relative pl-2">
-                            {getTimeline().map((step, i, arr) => (
-                                <div key={i} className="relative flex items-start gap-4 z-10">
-                                    {i !== arr.length - 1 && (
-                                        <div className={`absolute left-[9px] top-6 bottom-[-24px] w-[2px] ${step.completed ? 'bg-emerald-100' : 'bg-gray-100'} -z-10`}></div>
-                                    )}
-
-                                    <div className={`w-5 h-5 rounded-full flex items-center justify-center border-2 shrink-0 ${step.isError
-                                            ? 'bg-red-500 border-red-500 text-white'
-                                            : step.completed
-                                                ? 'bg-emerald-500 border-emerald-500 text-white'
-                                                : 'bg-white border-gray-200 text-gray-300'
-                                        }`}>
-                                        {step.isError ? <X size={10} strokeWidth={4} /> : step.completed && <CheckCircle2 size={10} strokeWidth={4} />}
+                    {/* 7. Return Timeline */}
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <h3 className="text-xs font-black text-footerBg uppercase tracking-widest mb-6 flex items-center gap-2">
+                            <Clock size={16} /> Return Timeline
+                        </h3>
+                        <div className="space-y-6 relative">
+                            <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-100"></div>
+                            {ret.timeline?.map((step, idx) => (
+                                <div key={idx} className={`relative flex items-start gap-4 ${step.done ? 'opacity-100' : 'opacity-40'}`}>
+                                    <div className={`w-6 h-6 rounded-full flex items-center justify-center z-10 border-2 ${step.done ? 'bg-primary border-primary text-white' : 'bg-white border-gray-200 text-gray-300'}`}>
+                                        {step.done ? <Check size={12} strokeWidth={4} /> : <div className="w-2 h-2 rounded-full bg-gray-200"></div>}
                                     </div>
-                                    <div>
-                                        <p className={`text-[10px] font-black uppercase tracking-widest ${step.isError ? 'text-red-600' : 'text-gray-900'}`}>{step.status}</p>
-                                        <p className="text-[9px] font-bold text-gray-400 mt-0.5 uppercase tracking-widest">{step.date}</p>
+                                    <div className="-mt-1">
+                                        <p className="text-xs font-bold text-footerBg">{step.status}</p>
+                                        {step.date && <p className="text-[9px] font-medium text-gray-400 uppercase tracking-wide mt-0.5">{step.date}</p>}
                                     </div>
                                 </div>
                             ))}
                         </div>
+                    </div>
+
+                    {/* 8. Logistics Info (If Approved) */}
+                    {(ret.status === 'Approved' || ret.status === 'Completed' || ret.status === 'Refunded') && (
+                        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm border-l-4 border-l-blue-500">
+                            <h3 className="text-xs font-black text-footerBg uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <Truck size={16} /> Return Pickup Details
+                            </h3>
+                            <div className="space-y-3">
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-gray-500">Partner</span>
+                                    <span className="font-bold text-footerBg">{ret.courier?.partner}</span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-gray-500">Return AWB</span>
+                                    <span className="font-mono font-bold text-footerBg select-all">{ret.courier?.awb}</span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-gray-500">Pickup Scheduled</span>
+                                    <span className="font-bold text-footerBg">{ret.courier?.pickupDate}</span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-gray-500">Pickup Status</span>
+                                    <span className="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded text-[10px] uppercase tracking-wide">{ret.courier?.status}</span>
+                                </div>
+                                <button className="w-full mt-2 py-2 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-100 transition-colors">
+                                    Track Status
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 10. Notifications */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <button className="flex items-center justify-center gap-2 py-3 bg-green-50 text-green-600 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-green-100 transition-all border border-green-100">
+                            <Send size={14} /> WhatsApp
+                        </button>
+                        <button className="flex items-center justify-center gap-2 py-3 bg-gray-50 text-gray-600 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-gray-100 transition-all border border-gray-100">
+                            <Mail size={14} /> Email Log
+                        </button>
                     </div>
 
                 </div>

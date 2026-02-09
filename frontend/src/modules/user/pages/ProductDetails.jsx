@@ -430,12 +430,18 @@ const ProductDetails = () => {
 
 
                             <AccordionItem
-                                title="Returns"
-                                isOpen={openSection === 'returns'}
-                                onClick={() => toggleSection('returns')}
+                                title="Styling Tips"
+                                isOpen={openSection === 'styling'}
+                                onClick={() => toggleSection('styling')}
                             >
-                                <p>Easy 30-day returns. If you are not completely satisfied with your purchase, you can return it for a full refund or exchange. Condition applies.</p>
+                                {product.stylingTips ? (
+                                    <div className="prose prose-sm max-w-none text-gray-600" dangerouslySetInnerHTML={{ __html: product.stylingTips }} />
+                                ) : (
+                                    <p>Pair this versatile piece with both western and ethnic wear to elevate your look.</p>
+                                )}
                             </AccordionItem>
+
+
                         </div>
 
                         <div className="grid grid-cols-3 gap-2 md:gap-4 bg-[#FDF5F6] p-4 md:p-6 rounded-2xl mt-2 border border-[#EBCDD0]/50">

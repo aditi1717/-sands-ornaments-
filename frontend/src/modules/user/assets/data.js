@@ -118,7 +118,8 @@ export const products = [
         images: [prodRingMain, catRings, spotlightMain, spotlightHover],
         rating: 4.5,
         reviews: 120,
-        isNew: true
+        isNew: true,
+        stylingTips: "<p><strong>Office Chic:</strong> Pair this ring with a crisp white shirt and tailored trousers for a sophisticated work look.</p><p><strong>Evening Glam:</strong> Stack it with other silver bands to create a statement piece for your night out.</p>"
     },
     {
         id: 2,
