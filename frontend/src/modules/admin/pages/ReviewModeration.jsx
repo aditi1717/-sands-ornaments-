@@ -3,9 +3,10 @@ import {
     Star, Search, CheckCircle2,
     XCircle, Trash2, Eye, EyeOff,
     MessageSquare, User, Package, Calendar,
-    ChevronRight, MoreHorizontal
+    ChevronRight, MoreHorizontal, Clock
 } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
+import AdminStatsCard from '../components/AdminStatsCard';
 
 const ReviewModeration = () => {
     // Mock Reviews Data
@@ -88,11 +89,36 @@ const ReviewModeration = () => {
     };
 
     return (
-        <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6 animate-in fade-in duration-500 pb-20 font-sans">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-1">
+        <div className="max-w-[1400px] mx-auto space-y-3 md:space-y-4 animate-in fade-in duration-500 pb-20 font-sans">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 px-1">
                 <PageHeader
                     title="Reviews"
                     subtitle="Manage product feedback"
+                />
+            </div>
+
+            {/* Quick Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <AdminStatsCard
+                    label="All Reviews"
+                    value={reviews.length}
+                    icon={MessageSquare}
+                    color="text-blue-600"
+                    bgColor="bg-blue-50"
+                />
+                <AdminStatsCard
+                    label="Pending"
+                    value={reviews.filter(r => r.status === 'Pending').length}
+                    icon={Clock}
+                    color="text-amber-600"
+                    bgColor="bg-amber-50"
+                />
+                <AdminStatsCard
+                    label="Approved"
+                    value={reviews.filter(r => r.status === 'Approved').length}
+                    icon={CheckCircle2}
+                    color="text-emerald-600"
+                    bgColor="bg-emerald-50"
                 />
             </div>
 
@@ -130,17 +156,17 @@ const ReviewModeration = () => {
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead>
-                            <tr className="bg-white text-gray-500 uppercase tracking-widest text-[9px] md:text-[11px] font-bold border-b border-gray-100">
-                                <th className="px-4 md:px-6 py-3 md:py-4">Review</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4">Customer</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4">Product</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4 w-[40%]">Comment</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4 text-center">Status</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4 text-right">Actions</th>
+                        <thead className="bg-white border-b border-gray-200">
+                            <tr>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Review</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Customer</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Product</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs w-[40%]">Comment</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs text-center">Status</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50 uppercase tracking-tighter text-[10px] md:text-sm">
+                        <tbody className="divide-y divide-gray-100 uppercase tracking-tighter text-[10px] md:text-[11px] text-gray-900">
                             {filteredReviews.map((rev) => (
                                 <tr key={rev.id} className="hover:bg-gray-50/30 transition-colors group">
                                     <td className="px-4 md:px-6 py-3 md:py-4">

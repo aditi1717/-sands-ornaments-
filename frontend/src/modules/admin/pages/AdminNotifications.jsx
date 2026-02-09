@@ -3,7 +3,7 @@ import {
     Bell, ShoppingBag, UserPlus, Star,
     AlertTriangle, Check, Trash2,
     Filter, MoreVertical, Clock, Package,
-    CheckCircle2
+    CheckCircle2, Eye, X
 } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
 
@@ -48,7 +48,7 @@ const AdminNotifications = () => {
         }
     ]);
 
-    const [filter, setFilter] = useState('All');
+
 
     const markAsRead = (id) => {
         setNotifications(notifications.map(n =>
@@ -64,127 +64,130 @@ const AdminNotifications = () => {
         setNotifications(notifications.filter(n => n.id !== id));
     };
 
-    const filteredNotifications = notifications.filter(n =>
-        filter === 'All' || n.type === filter
-    );
-
     const typeIcons = {
-        'Order': <ShoppingBag className="w-5 h-5 text-blue-500" />,
-        'Inventory': <AlertTriangle className="w-5 h-5 text-red-500" />,
-        'Review': <Star className="w-5 h-5 text-amber-500" />,
-        'User': <UserPlus className="w-5 h-5 text-green-500" />
+        'Order': <ShoppingBag className="w-4 h-4 text-blue-600" />,
+        'Inventory': <AlertTriangle className="w-4 h-4 text-red-600" />,
+        'Review': <Star className="w-4 h-4 text-amber-600" />,
+        'User': <UserPlus className="w-4 h-4 text-green-600" />
     };
 
     const priorityStyles = {
-        'Urgent': 'bg-red-50 text-red-600 border-red-100',
-        'High': 'bg-orange-50 text-orange-600 border-orange-100',
-        'Medium': 'bg-blue-50 text-blue-600 border-blue-100',
-        'Low': 'bg-gray-50 text-gray-500 border-gray-100'
+        'Urgent': 'bg-red-100 text-red-700 border-red-200',
+        'High': 'bg-orange-100 text-orange-700 border-orange-200',
+        'Medium': 'bg-blue-100 text-blue-700 border-blue-200',
+        'Low': 'bg-gray-100 text-gray-700 border-gray-200'
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6 md:p-8">
-            <div className="max-w-[1000px] mx-auto space-y-8 animate-in fade-in duration-500 pb-20">
+        <div className="min-h-screen bg-gray-50 p-6 md:p-8 font-sans">
+            <div className="max-w-[1200px] mx-auto space-y-6 animate-in fade-in duration-500 pb-20">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <PageHeader
-                        title="Admin Notifications"
-                        subtitle="Stay updated with store activities and system alerts"
+                        title="Notifications"
+                        subtitle="Manage system alerts & updates"
                     />
                     <div className="flex gap-3">
                         <button
                             onClick={markAllAsRead}
-                            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-all shadow-sm"
+                            className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-gray-800 transition-all shadow-sm"
                         >
-                            <CheckCircle2 className="w-4 h-4 text-green-500" />
-                            Mark all as read
+                            <CheckCircle2 className="w-4 h-4" />
+                            Mark all read
                         </button>
                     </div>
                 </div>
 
-                {/* Filters */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-                    {['All', 'Order', 'Inventory', 'Review', 'User'].map(f => (
-                        <button
-                            key={f}
-                            onClick={() => setFilter(f)}
-                            className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all ${filter === f
-                                    ? 'bg-[#3E2723] text-white border-[#3E2723]'
-                                    : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
-                                }`}
-                        >
-                            {f}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Notifications List */}
-                <div className="space-y-3">
-                    {filteredNotifications.map((notif) => (
-                        <div
-                            key={notif.id}
-                            className={`p-5 rounded-2xl border transition-all flex items-start gap-4 ${notif.isRead
-                                    ? 'bg-white/60 border-gray-100 opacity-75'
-                                    : 'bg-white border-gray-200 shadow-sm ring-1 ring-[#3E2723]/5'
-                                }`}
-                        >
-                            <div className={`p-3 rounded-xl ${notif.isRead ? 'bg-gray-50' : 'bg-white border border-gray-50 shadow-sm'}`}>
-                                {typeIcons[notif.type]}
-                            </div>
-
-                            <div className="flex-1 space-y-1">
-                                <div className="flex items-center justify-between gap-4">
-                                    <div className="flex items-center gap-2">
-                                        <h4 className={`text-sm font-semibold ${notif.isRead ? 'text-gray-600' : 'text-gray-900'}`}>
-                                            {notif.title}
-                                        </h4>
-                                        {!notif.isRead && (
-                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
-                                        )}
-                                    </div>
-                                    <span className="text-[11px] font-medium text-gray-400 flex items-center gap-1">
-                                        <Clock className="w-3 h-3" />
-                                        {notif.time}
-                                    </span>
-                                </div>
-                                <p className={`text-sm ${notif.isRead ? 'text-gray-400' : 'text-gray-600'} font-medium leading-relaxed`}>
-                                    {notif.message}
-                                </p>
-                                <div className="flex items-center gap-3 pt-1">
-                                    <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${priorityStyles[notif.priority]}`}>
-                                        {notif.priority}
-                                    </span>
-                                    <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-tighter">
-                                        {notif.type}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-1">
-                                {!notif.isRead && (
-                                    <button
-                                        onClick={() => markAsRead(notif.id)}
-                                        className="p-2 hover:bg-blue-50 text-gray-300 hover:text-blue-600 rounded-lg transition-all"
-                                        title="Mark as read"
+                {/* Notifications Table */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200">
+                                    <th className="p-4 text-[10px] font-black text-gray-500 uppercase tracking-widest w-16 text-center">Type</th>
+                                    <th className="p-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Notification Details</th>
+                                    <th className="p-4 text-[10px] font-black text-gray-500 uppercase tracking-widest w-24">Priority</th>
+                                    <th className="p-4 text-[10px] font-black text-gray-500 uppercase tracking-widest w-32">Time</th>
+                                    <th className="p-4 text-[10px] font-black text-gray-500 uppercase tracking-widest w-24 text-center">Status</th>
+                                    <th className="p-4 text-[10px] font-black text-gray-500 uppercase tracking-widest w-24 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {notifications.map((notif) => (
+                                    <tr
+                                        key={notif.id}
+                                        className={`group hover:bg-gray-50 transition-colors ${!notif.isRead ? 'bg-[#FDFBF7]' : ''}`}
                                     >
-                                        <Check className="w-5 h-5" />
-                                    </button>
-                                )}
-                                <button
-                                    onClick={() => deleteNotification(notif.id)}
-                                    className="p-2 hover:bg-red-50 text-gray-300 hover:text-red-500 rounded-lg transition-all"
-                                    title="Delete notification"
-                                >
-                                    <Trash2 className="w-5 h-5" />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                                        <td className="p-4 text-center align-top pt-5">
+                                            <div className="bg-white p-2 rounded-lg border border-gray-100 shadow-sm inline-flex items-center justify-center">
+                                                {typeIcons[notif.type]}
+                                            </div>
+                                        </td>
+                                        <td className="p-4 align-top pt-5">
+                                            <div className="space-y-1">
+                                                <h4 className={`text-sm font-bold ${!notif.isRead ? 'text-black' : 'text-gray-600'}`}>
+                                                    {notif.title}
+                                                </h4>
+                                                <p className="text-xs text-gray-500 font-medium leading-relaxed max-w-md">
+                                                    {notif.message}
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td className="p-4 align-top pt-5">
+                                            <span className={`px-2 py-1 rounded-md text-[10px] font-bold border ${priorityStyles[notif.priority]}`}>
+                                                {notif.priority}
+                                            </span>
+                                        </td>
+                                        <td className="p-4 align-top pt-5">
+                                            <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-400">
+                                                <Clock className="w-3.5 h-3.5" />
+                                                <span>{notif.time}</span>
+                                            </div>
+                                        </td>
+                                        <td className="p-4 text-center align-top pt-5">
+                                            {notif.isRead ? (
+                                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 text-gray-500 text-[10px] font-bold uppercase tracking-wide">
+                                                    Read
+                                                </span>
+                                            ) : (
+                                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wide animate-pulse">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                                    New
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="p-4 text-right align-top pt-5">
+                                            <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                {!notif.isRead && (
+                                                    <button
+                                                        onClick={() => markAsRead(notif.id)}
+                                                        className="p-2 bg-white border border-gray-200 rounded-lg text-gray-400 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm"
+                                                        title="Mark as read"
+                                                    >
+                                                        <Check className="w-4 h-4" />
+                                                    </button>
+                                                )}
+                                                <button
+                                                    onClick={() => deleteNotification(notif.id)}
+                                                    className="p-2 bg-white border border-gray-200 rounded-lg text-gray-400 hover:text-red-600 hover:border-red-200 transition-all shadow-sm"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
-                    {filteredNotifications.length === 0 && (
-                        <div className="p-20 text-center bg-white rounded-3xl border border-dashed border-gray-200">
-                            <Bell className="w-12 h-12 text-gray-200 mx-auto mb-4" />
-                            <h3 className="text-gray-400 font-semibold">No notifications in {filter}</h3>
-                            <p className="text-sm text-gray-300">You're all caught up!</p>
+                    {notifications.length === 0 && (
+                        <div className="p-20 text-center">
+                            <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Bell className="w-6 h-6 text-gray-300" />
+                            </div>
+                            <h3 className="text-gray-900 font-bold text-lg mb-1">No notifications found</h3>
+                            <p className="text-sm text-gray-400">You're all caught up!</p>
                         </div>
                     )}
                 </div>

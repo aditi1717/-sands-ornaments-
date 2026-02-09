@@ -156,7 +156,7 @@ const SubCategoriesPage = () => {
             </div>
 
             {/* Filters Bar */}
-            <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
                 <div className="relative w-full md:w-96">
                     <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
@@ -187,7 +187,7 @@ const SubCategoriesPage = () => {
             {/* Compact Category Groups */}
             <div className="space-y-6">
                 {Object.values(groupedSubs).map(({ category, subs }) => (
-                    <div key={category.id} className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden transition-all hover:border-primary/20">
+                    <div key={category.id} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden transition-all hover:border-primary/20">
                         <div className="bg-gray-50/50 px-6 py-4 flex items-center justify-between border-b border-gray-100">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 bg-white rounded-xl border border-gray-100 flex items-center justify-center p-1.5 shadow-sm">
@@ -211,14 +211,14 @@ const SubCategoriesPage = () => {
 
                         <div className="p-0">
                             <table className="w-full text-left border-collapse">
-                                <thead className="bg-white">
+                                <thead className="bg-white border-b border-gray-100">
                                     <tr>
-                                        <th className="px-6 py-3 text-[9px] font-black text-gray-300 uppercase tracking-widest">Sub-category</th>
-                                        <th className="px-6 py-3 text-[9px] font-black text-gray-300 uppercase tracking-widest">Status</th>
-                                        <th className="px-6 py-3 text-[9px] font-black text-gray-300 uppercase tracking-widest text-right">Actions</th>
+                                        <th className="px-6 py-3 text-gray-800 font-bold uppercase tracking-widest text-[10px]">Sub-category</th>
+                                        <th className="px-6 py-3 text-gray-800 font-bold uppercase tracking-widest text-[10px]">Status</th>
+                                        <th className="px-6 py-3 text-gray-800 font-bold uppercase tracking-widest text-[10px] text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-50">
+                                <tbody className="divide-y divide-gray-50 text-gray-900">
                                     {subs.map((sub) => (
                                         <tr key={sub.id} className="group hover:bg-gray-50/30 transition-all">
                                             <td className="px-6 py-2.5">

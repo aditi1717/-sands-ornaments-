@@ -116,17 +116,30 @@ const Login = () => {
                     {loginStep === 1 ? (
                         <form onSubmit={handleSendOtp} className="space-y-4">
                             {isSignup && (
-                                <div className="space-y-1">
-                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Full Name</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={fullName}
-                                        onChange={(e) => setFullName(e.target.value)}
-                                        className="w-full h-12 bg-white border border-[#EBCDD0] rounded-xl px-4 text-black font-medium placeholder:text-gray-300 focus:border-[#D39A9F] focus:ring-1 focus:ring-[#D39A9F] outline-none transition-all"
-                                        placeholder="Enter your name"
-                                    />
-                                </div>
+                                <>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Full Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={fullName}
+                                            onChange={(e) => setFullName(e.target.value)}
+                                            className="w-full h-12 bg-white border border-[#EBCDD0] rounded-xl px-4 text-black font-medium placeholder:text-gray-300 focus:border-[#D39A9F] focus:ring-1 focus:ring-[#D39A9F] outline-none transition-all"
+                                            placeholder="Enter your name"
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Email Address</label>
+                                        <input
+                                            type="email"
+                                            required
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="w-full h-12 bg-white border border-[#EBCDD0] rounded-xl px-4 text-black font-medium placeholder:text-gray-300 focus:border-[#D39A9F] focus:ring-1 focus:ring-[#D39A9F] outline-none transition-all"
+                                            placeholder="Enter your email"
+                                        />
+                                    </div>
+                                </>
                             )}
                             <div className="space-y-1">
                                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Mobile Number</label>
@@ -215,17 +228,30 @@ const Login = () => {
                         {loginStep === 1 ? (
                             <form onSubmit={handleSendOtp} className="space-y-6">
                                 {isSignup && (
-                                    <div className="animate-in slide-in-from-top-4 fade-in duration-300">
-                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Full Name</label>
-                                        <input
-                                            type="text"
-                                            required
-                                            value={fullName}
-                                            onChange={(e) => setFullName(e.target.value)}
-                                            className="w-full border-b border-gray-300 px-0 py-3 text-black placeholder:text-gray-300 focus:outline-none focus:border-[#D39A9F] transition-all bg-transparent"
-                                            placeholder="John Doe"
-                                        />
-                                    </div>
+                                    <>
+                                        <div className="animate-in slide-in-from-top-4 fade-in duration-300">
+                                            <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Full Name</label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={fullName}
+                                                onChange={(e) => setFullName(e.target.value)}
+                                                className="w-full border-b border-gray-300 px-0 py-3 text-black placeholder:text-gray-300 focus:outline-none focus:border-[#D39A9F] transition-all bg-transparent"
+                                                placeholder="John Doe"
+                                            />
+                                        </div>
+                                        <div className="animate-in slide-in-from-top-4 fade-in duration-300">
+                                            <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Email Address</label>
+                                            <input
+                                                type="email"
+                                                required
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                className="w-full border-b border-gray-300 px-0 py-3 text-black placeholder:text-gray-300 focus:outline-none focus:border-[#D39A9F] transition-all bg-transparent"
+                                                placeholder="john@example.com"
+                                            />
+                                        </div>
+                                    </>
                                 )}
 
                                 <div>

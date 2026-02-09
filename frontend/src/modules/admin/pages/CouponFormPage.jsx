@@ -18,6 +18,7 @@ import {
 import { useShop } from '../../../context/ShopContext';
 import { PRODUCTS as mockProducts } from '../../../mockData/data'; // Fallback / Helper
 import PageHeader from '../components/common/PageHeader';
+import { FormSection, Input, Select, TextArea } from '../components/common/FormControls';
 
 const CouponFormPage = () => {
     const { id } = useParams();
@@ -133,31 +134,24 @@ const CouponFormPage = () => {
                 action={handleSaveAction}
             />
 
-            <form className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <form className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Left: Core Logic */}
-                <div className="lg:col-span-8 space-y-8">
+                <div className="lg:col-span-8 space-y-6">
                     {/* 1. Core Settings */}
-                    <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-8">
-                        <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
-                            <Info size={18} className="text-gray-400" />
-                            Core Settings
-                        </h3>
-
-                        <div className="space-y-6">
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Promotional Code</label>
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        name="code"
-                                        value={formData.code}
-                                        onChange={handleChange}
-                                        placeholder="e.g., WELCOME50"
-                                        className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-sm font-black tracking-widest outline-none focus:bg-white focus:border-footerBg transition-all uppercase"
-                                    />
+                    <FormSection title="Core Settings" icon={<Info size={18} className="text-gray-400" />}>
+                        <div className="space-y-5">
+                            <div className="flex flex-col gap-1.5">
+                                <Input
+                                    label="Promotional Code"
+                                    name="code"
+                                    value={formData.code}
+                                    onChange={handleChange}
+                                    placeholder="e.g., WELCOME50"
+                                />
+                                <div className="text-right">
                                     <button
                                         type="button"
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-footerBg font-black text-[10px] uppercase tracking-widest hover:underline"
+                                        className="text-xs font-semibold text-[#3E2723] hover:underline"
                                         onClick={() => setFormData({ ...formData, code: `SALE${Math.floor(Math.random() * 900) + 100}` })}
                                     >
                                         Auto-Generate
@@ -165,57 +159,46 @@ const CouponFormPage = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Discount Type</label>
-                                    <select
-                                        name="type"
-                                        value={formData.type}
-                                        onChange={handleChange}
-                                        className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-sm font-bold outline-none focus:bg-white focus:border-footerBg transition-all cursor-pointer"
-                                    >
-                                        <option value="flat">Flat Amount (₹)</option>
-                                        <option value="percentage">Percentage (%)</option>
-                                        <option value="free_shipping">Free Shipping</option>
-                                    </select>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Discount Value</label>
-                                    <input
-                                        type="number"
-                                        name="value"
-                                        value={formData.value}
-                                        onChange={handleChange}
-                                        disabled={formData.type === 'free_shipping'}
-                                        placeholder={formData.type === 'percentage' ? 'e.g., 20' : 'e.g., 500'}
-                                        className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-sm font-bold outline-none focus:bg-white focus:border-primary transition-all"
-                                    />
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <Select
+                                    label="Discount Type"
+                                    name="type"
+                                    value={formData.type}
+                                    onChange={handleChange}
+                                    options={[
+                                        { value: 'flat', label: 'Flat Amount (₹)' },
+                                        { value: 'percentage', label: 'Percentage (%)' },
+                                        { value: 'free_shipping', label: 'Free Shipping' }
+                                    ]}
+                                />
+                                <Input
+                                    label="Discount Value"
+                                    type="number"
+                                    name="value"
+                                    value={formData.value}
+                                    onChange={handleChange}
+                                    disabled={formData.type === 'free_shipping'}
+                                    placeholder={formData.type === 'percentage' ? 'e.g., 20' : 'e.g., 500'}
+                                />
                             </div>
 
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Campaign Description</label>
-                                <textarea
-                                    name="description"
-                                    value={formData.description}
-                                    onChange={handleChange}
-                                    rows="3"
-                                    placeholder="Explain the offer to customers..."
-                                    className="w-full bg-gray-50 border border-transparent rounded-3xl p-6 text-sm font-semibold outline-none focus:bg-white focus:border-primary transition-all"
-                                ></textarea>
-                            </div>
+                            <TextArea
+                                label="Campaign Description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                rows="3"
+                                placeholder="Explain the offer to customers..."
+                            />
                         </div>
-                    </div>
+                    </FormSection>
 
                     {/* 2. Coupon Scope (Unified) */}
-                    <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-8">
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
-                                <ShieldCheck size={18} className="text-gray-400" />
-                                Coupon Scope
-                            </h3>
+                    <FormSection title="Coupon Scope" icon={<ShieldCheck size={18} className="text-gray-400" />}>
+                        <div className="flex items-center justify-between mb-4">
+                            <span className="text-xs text-gray-500">Define where this coupon applies.</span>
                             {formData.targetItems.length > 0 && (
-                                <span className="text-[10px] font-bold text-primary bg-primary/5 px-2 py-1 rounded">
+                                <span className="text-[10px] font-bold text-white bg-[#3E2723] px-2 py-1 rounded">
                                     {formData.targetItems.length} items selected
                                 </span>
                             )}
@@ -223,7 +206,7 @@ const CouponFormPage = () => {
 
                         <div className="space-y-6">
                             {/* Scope Tabs */}
-                            <div className="flex p-1 bg-gray-50 rounded-2xl space-x-1 overflow-x-auto">
+                            <div className="flex p-1 bg-gray-100 rounded-lg space-x-1 overflow-x-auto">
                                 {[
                                     { id: 'all', label: 'All Orders' },
                                     { id: 'new_user', label: 'New Users' },
@@ -244,9 +227,9 @@ const CouponFormPage = () => {
                                                     setFormData({ ...formData, applicabilityType: scope.id, userEligibility: 'all', targetItems: [] });
                                                 }
                                             }}
-                                            className={`flex-1 py-3 px-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${isActive
-                                                ? 'bg-white text-footerBg shadow-sm'
-                                                : 'text-gray-400 hover:text-gray-600'
+                                            className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all whitespace-nowrap ${isActive
+                                                ? 'bg-white text-[#3E2723] shadow-sm'
+                                                : 'text-gray-500 hover:text-gray-700'
                                                 }`}
                                         >
                                             {scope.label}
@@ -256,14 +239,14 @@ const CouponFormPage = () => {
                             </div>
 
                             {/* Scope Content */}
-                            <div className="border border-gray-100 rounded-2xl overflow-hidden min-h-[150px] max-h-[400px] overflow-y-auto p-4 bg-gray-50/50">
+                            <div className="border border-gray-200 rounded-lg overflow-hidden min-h-[150px] max-h-[400px] overflow-y-auto p-4 bg-gray-50">
                                 {formData.userEligibility === 'new' && (
                                     <div className="h-full flex flex-col items-center justify-center text-center py-8 space-y-2">
-                                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-2">
+                                        <div className="w-12 h-12 bg-[#3E2723]/10 rounded-full flex items-center justify-center text-[#3E2723] mb-2">
                                             <ShieldCheck size={24} />
                                         </div>
-                                        <p className="text-sm font-bold text-footerBg">New Users Only</p>
-                                        <p className="text-xs text-gray-400 max-w-xs">This coupon will only work for customers placing their first order.</p>
+                                        <p className="text-sm font-bold text-gray-800">New Users Only</p>
+                                        <p className="text-xs text-gray-500 max-w-xs">This coupon will only work for customers placing their first order.</p>
                                     </div>
                                 )}
 
@@ -272,16 +255,16 @@ const CouponFormPage = () => {
                                         <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2">
                                             <CheckCircle2 size={24} />
                                         </div>
-                                        <p className="text-sm font-bold text-footerBg">Entire Order</p>
-                                        <p className="text-xs text-gray-400 max-w-xs">This coupon applies to the total cart value for all users.</p>
+                                        <p className="text-sm font-bold text-gray-800">Entire Order</p>
+                                        <p className="text-xs text-gray-500 max-w-xs">This coupon applies to the total cart value for all users.</p>
                                     </div>
                                 )}
 
                                 {formData.applicabilityType === 'category' && formData.userEligibility !== 'new' && (
                                     <div className="space-y-2">
                                         {CATEGORIES.map(cat => (
-                                            <label key={cat.id} className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100 cursor-pointer hover:border-primary/30 transition-all">
-                                                <div className={`w-5 h-5 rounded border flex items-center justify-center ${formData.targetItems.includes(cat.id) ? 'bg-primary border-primary' : 'border-gray-300'}`}>
+                                            <label key={cat.id} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-[#3E2723]/30 transition-all">
+                                                <div className={`w-5 h-5 rounded border flex items-center justify-center ${formData.targetItems.includes(cat.id) ? 'bg-[#3E2723] border-[#3E2723]' : 'border-gray-300'}`}>
                                                     {formData.targetItems.includes(cat.id) && <CheckCircle2 size={12} className="text-white" />}
                                                 </div>
                                                 <input
@@ -290,7 +273,7 @@ const CouponFormPage = () => {
                                                     checked={formData.targetItems.includes(cat.id)}
                                                     onChange={() => toggleTargetItem(cat.id)}
                                                 />
-                                                <span className="text-sm font-bold text-gray-700 uppercase tracking-wide">{cat.name}</span>
+                                                <span className="text-sm font-medium text-gray-700">{cat.name}</span>
                                             </label>
                                         ))}
                                     </div>
@@ -299,8 +282,8 @@ const CouponFormPage = () => {
                                 {formData.applicabilityType === 'product' && formData.userEligibility !== 'new' && (
                                     <div className="space-y-2">
                                         {(products || []).length > 0 ? (products || []).map(p => (
-                                            <label key={p.id} className="flex items-center gap-3 p-2 bg-white rounded-xl border border-gray-100 cursor-pointer hover:border-primary/30 transition-all">
-                                                <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 ${formData.targetItems.includes(p.id) ? 'bg-primary border-primary' : 'border-gray-300'}`}>
+                                            <label key={p.id} className="flex items-center gap-3 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-[#3E2723]/30 transition-all">
+                                                <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 ${formData.targetItems.includes(p.id) ? 'bg-[#3E2723] border-[#3E2723]' : 'border-gray-300'}`}>
                                                     {formData.targetItems.includes(p.id) && <CheckCircle2 size={12} className="text-white" />}
                                                 </div>
                                                 <img src={p.image} className="w-8 h-8 object-contain mix-blend-multiply" alt="" />
@@ -311,8 +294,8 @@ const CouponFormPage = () => {
                                                     onChange={() => toggleTargetItem(p.id)}
                                                 />
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="text-xs font-bold text-gray-700 truncate">{p.name}</div>
-                                                    <div className="text-[9px] text-gray-400">{p.id} • {p.category}</div>
+                                                    <div className="text-xs font-semibold text-gray-800 truncate">{p.name}</div>
+                                                    <div className="text-[10px] text-gray-500">{p.id} • {p.category}</div>
                                                 </div>
                                             </label>
                                         )) : (
@@ -322,107 +305,79 @@ const CouponFormPage = () => {
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </FormSection>
                 </div>
 
                 {/* Right: Validity & Targets */}
-                <div className="lg:col-span-4 space-y-8">
-                    <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-6">
-                        <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
-                            <Calendar size={18} className="text-gray-400" />
-                            Validity Period
-                        </h3>
-
+                <div className="lg:col-span-4 space-y-6">
+                    <FormSection title="Validity Period" icon={<Calendar size={18} className="text-gray-400" />}>
                         <div className="space-y-4">
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 text-left">Start Date</label>
-                                <input
-                                    type="date"
-                                    name="validFrom"
-                                    value={formData.validFrom}
-                                    onChange={handleChange}
-                                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all"
-                                />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 text-left">Expiry Date</label>
-                                <input
-                                    type="date"
-                                    name="validUntil"
-                                    value={formData.validUntil}
-                                    onChange={handleChange}
-                                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all"
-                                />
-                            </div>
+                            <Input
+                                label="Start Date"
+                                type="date"
+                                name="validFrom"
+                                value={formData.validFrom}
+                                onChange={handleChange}
+                            />
+                            <Input
+                                label="Expiry Date"
+                                type="date"
+                                name="validUntil"
+                                value={formData.validUntil}
+                                onChange={handleChange}
+                            />
                         </div>
-                    </div>
+                    </FormSection>
 
                     {/* Usage Restraints */}
-                    <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-6 text-left">
-                        <h3 className="text-sm font-black text-footerBg uppercase tracking-widest flex items-center gap-2">
-                            <Settings size={18} className="text-gray-400" />
-                            Limits & Caps
-                        </h3>
-
+                    <FormSection title="Limits & Caps" icon={<Settings size={18} className="text-gray-400" />}>
                         <div className="space-y-4">
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Min Order (₹)</label>
-                                <input
-                                    type="number"
-                                    name="minOrderValue"
-                                    value={formData.minOrderValue}
-                                    onChange={handleChange}
-                                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all"
-                                />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Max Discount (₹)</label>
-                                <input
-                                    type="number"
-                                    name="maxDiscount"
-                                    value={formData.maxDiscount}
-                                    onChange={handleChange}
-                                    disabled={formData.type === 'flat'}
-                                    className="w-full bg-gray-50 border border-transparent rounded-2xl p-4 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all disabled:opacity-50"
-                                />
-                            </div>
+                            <Input
+                                label="Min Order (₹)"
+                                type="number"
+                                name="minOrderValue"
+                                value={formData.minOrderValue}
+                                onChange={handleChange}
+                            />
+                            <Input
+                                label="Max Discount (₹)"
+                                type="number"
+                                name="maxDiscount"
+                                value={formData.maxDiscount}
+                                onChange={handleChange}
+                                disabled={formData.type === 'flat'}
+                            />
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest ml-1">Total Limit</label>
-                                    <input
-                                        type="number"
-                                        name="usageLimit"
-                                        value={formData.usageLimit}
-                                        onChange={handleChange}
-                                        className="w-full bg-gray-50 border border-transparent rounded-2xl p-3 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest ml-1">User Limit</label>
-                                    <input
-                                        type="number"
-                                        name="perUserLimit"
-                                        value={formData.perUserLimit}
-                                        onChange={handleChange}
-                                        className="w-full bg-gray-50 border border-transparent rounded-2xl p-3 text-xs font-bold outline-none focus:bg-white focus:border-footerBg transition-all"
-                                    />
-                                </div>
+                                <Input
+                                    label="Total Limit"
+                                    type="number"
+                                    name="usageLimit"
+                                    value={formData.usageLimit}
+                                    onChange={handleChange}
+                                />
+                                <Input
+                                    label="User Limit"
+                                    type="number"
+                                    name="perUserLimit"
+                                    value={formData.perUserLimit}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
 
-                        <div className="h-px bg-gray-50 my-6"></div>
+                        <div className="h-px bg-gray-100 my-6"></div>
 
-                        <div className="flex items-center justify-between p-2">
-                            <span className="text-[10px] font-black text-footerBg uppercase tracking-widest">Coupon Active</span>
+                        <div className="flex items-center justify-between p-1">
+                            <span className="text-xs font-bold text-gray-700 uppercase tracking-wide">Coupon Active</span>
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, active: !formData.active })}
-                                className={`w-12 h-6 rounded-full transition-all relative ${formData.active ? 'bg-footerBg' : 'bg-gray-200'}`}
+                                className={`w-11 h-6 rounded-full transition-all relative ${formData.active ? 'bg-[#3E2723]' : 'bg-gray-200'}`}
                             >
                                 <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${formData.active ? 'right-1' : 'left-1'}`}></div>
                             </button>
                         </div>
-                    </div>
+                    </FormSection>
                 </div>
             </form>
         </div>

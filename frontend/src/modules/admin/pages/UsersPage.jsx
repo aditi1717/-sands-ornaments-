@@ -90,27 +90,36 @@ const UsersPage = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-left">
                 <div>
-                    <h1 className="text-xl font-black text-footerBg uppercase tracking-tight">User CRM</h1>
-                    <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-[0.2em]">Manage customer profiles and account security</p>
-                </div>
-                <div className="flex gap-2">
-                    <div className="bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2">
-                        <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
-                        <span className="text-[10px] font-bold text-footerBg uppercase tracking-widest">{users.filter(u => !u.isBlocked).length} Active Residents</span>
-                    </div>
+                    <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">User CRM</h1>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Manage customer profiles and account security</p>
                 </div>
             </div>
 
             {/* Quick Stats Overview */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                {stats.map((stat, i) => (
-                    <div key={i} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                        <div className={`w-12 h-12 bg-gray-50 text-footerBg rounded-2xl flex items-center justify-center border border-gray-100`}>
-                            <stat.icon size={24} />
-                        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                {[
+                    {
+                        label: 'Active Users',
+                        value: users.filter(u => !u.isBlocked).length,
+                        icon: ShieldCheck,
+                        color: 'bg-emerald-50 text-emerald-600',
+                        border: 'border-emerald-100'
+                    },
+                    {
+                        label: 'Disabled Users',
+                        value: users.filter(u => u.isBlocked).length,
+                        icon: ShieldOff,
+                        color: 'bg-red-50 text-red-600',
+                        border: 'border-red-100'
+                    }
+                ].map((stat, i) => (
+                    <div key={i} className={`bg-white p-6 rounded-3xl border ${stat.border} shadow-sm flex items-center justify-between hover:shadow-md transition-all`}>
                         <div>
-                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-left">{stat.label}</p>
-                            <p className="text-2xl font-black text-footerBg text-left">{stat.value}</p>
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{stat.label}</p>
+                            <p className="text-4xl font-black text-gray-900">{stat.value}</p>
+                        </div>
+                        <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center`}>
+                            <stat.icon size={28} strokeWidth={2} />
                         </div>
                     </div>
                 ))}
@@ -141,9 +150,6 @@ const UsersPage = () => {
                             </button>
                         ))}
                     </div>
-                    <button className="p-2.5 bg-gray-50 text-gray-500 rounded-xl border border-gray-100 hover:bg-white hover:text-primary transition-all">
-                        <Filter size={20} />
-                    </button>
                 </div>
             </div>
 
@@ -166,48 +172,48 @@ const UsersPage = () => {
                                 <tr key={user.id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="px-6 py-3.5">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-gray-50 text-footerBg rounded-xl flex items-center justify-center font-black text-sm border border-gray-100 group-hover:bg-footerBg group-hover:text-white transition-all">
+                                            <div className="w-10 h-10 bg-[#3E2723]/5 text-[#3E2723] rounded-full flex items-center justify-center font-bold text-sm border border-[#3E2723]/10">
                                                 {user.name?.charAt(0) || 'U'}
                                             </div>
                                             <div>
-                                                <p className="font-bold text-footerBg">{user.name || 'Anonymous'}</p>
-                                                <p className="text-[10px] text-gray-400 font-medium">ID: #{user.id?.slice(-6)}</p>
+                                                <p className="font-bold text-gray-900 text-sm">{user.name || 'Anonymous'}</p>
+                                                <p className="text-[10px] text-gray-400 font-semibold tracking-wide mt-0.5">ID: #{user.id?.slice(-6)}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-5">
                                         <div className="space-y-1">
-                                            <div className="flex items-center gap-2 text-xs font-bold text-gray-600">
+                                            <div className="flex items-center gap-2 text-xs font-semibold text-gray-700">
                                                 <Mail size={12} className="text-gray-400" />
                                                 {user.email}
                                             </div>
-                                            <div className="flex items-center gap-2 text-[10px] font-semibold text-gray-400">
+                                            <div className="flex items-center gap-2 text-[10px] font-medium text-gray-500">
                                                 <Phone size={12} className="text-gray-400" />
                                                 {user.phone || 'No phone'}
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-5">
-                                        <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${user.isBlocked
-                                            ? 'bg-red-50 text-red-600 border border-red-100'
-                                            : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${user.isBlocked
+                                            ? 'bg-red-50 text-red-600 border-red-100'
+                                            : 'bg-emerald-50 text-emerald-600 border-emerald-100'
                                             }`}>
                                             {user.isBlocked ? 'Blocked' : 'Active'}
                                         </span>
                                     </td>
                                     <td className="px-6 py-5 text-center">
-                                        <span className="bg-gray-50 px-2.5 py-1 rounded-lg text-xs font-black text-footerBg border border-gray-100">
+                                        <span className="bg-gray-100 px-3 py-1 rounded-lg text-xs font-bold text-gray-700 border border-gray-200">
                                             {user.totalOrders}
                                         </span>
                                     </td>
                                     <td className="px-6 py-5 text-left">
-                                        <p className="font-black text-footerBg text-sm tracking-tight">₹{user.totalSpend.toLocaleString()}</p>
+                                        <p className="font-black text-gray-900 text-sm tracking-tight">₹{user.totalSpend.toLocaleString()}</p>
                                     </td>
                                     <td className="px-6 py-5">
                                         <div className="flex items-center justify-end gap-2">
                                             <button
                                                 onClick={() => navigate(`/admin/users/${user.id}`)}
-                                                className="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
+                                                className="p-2 text-gray-400 hover:text-[#3E2723] hover:bg-[#3E2723]/10 rounded-lg transition-all"
                                                 title="View Details"
                                             >
                                                 <Eye size={18} />

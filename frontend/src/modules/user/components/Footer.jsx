@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Facebook, Twitter, Instagram, Youtube, Truck, Mail, Phone, MapPin, Heart, ShieldCheck, Star } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/sands-logo.png'; // Using the official logo
@@ -7,28 +7,60 @@ const Footer = () => {
     const location = useLocation();
     const isOrderSuccess = location.pathname === '/order-success';
 
-    if (isOrderSuccess) return null;
+    const [settings, setSettings] = useState({
+        footerTagline: 'Timeless Elegance,',
+        footerSubTagline: 'Handcrafted for You.',
+        footerDescription: 'Every piece at Sands tell a story of heritage and modern Grace. Join our community of silver lovers and celebrate life\'s most precious moments.',
+        address: '123 Silver Arcade, Heritage Marg, Jaipur',
+        phone: '+91 98765 43210',
+        email: 'support@sandsornaments.com',
 
-    const footerLinks = {
-        customerCare: [
+        footerColumn1Title: 'Experience',
+        footerColumn2Title: 'Policies',
+        footerColumn3Title: 'Our World',
+
+        footerExperienceLinks: [
             { name: "Easy Returns", path: "/returns" },
             { name: "Contact Us", path: "/contact" },
             { name: "FAQs", path: "/help" },
             { name: "Blogs", path: "/blogs" },
         ],
-        policies: [
+        footerPoliciesLinks: [
             { name: "Shipping Policy", path: "/shipping-policy" },
             { name: "Privacy Policy", path: "/privacy" },
             { name: "Cancellation Policy", path: "/cancellation-policy" },
             { name: "Terms & Conditions", path: "/terms" },
         ],
-        extra: [
+        footerWorldLinks: [
             { name: "About Us", path: "/about" },
             { name: "Jewellery Care Guide", path: "/care-guide" },
             { name: "Store Locator", path: "/stores" },
             { name: "Our Craft", path: "/craft" },
-        ]
-    };
+        ],
+        socialLinks: {
+            facebook: '#',
+            twitter: '#',
+            instagram: '#',
+            youtube: '#'
+        },
+        footerDeliveryText: 'Safe & Insured Express Worldwide Delivery',
+        footerCopyrightText: `Sands Ornaments Pvt Ltd. All Rights Reserved.`
+    });
+
+    useEffect(() => {
+        const loadSettings = () => {
+            const saved = localStorage.getItem('siteSettings');
+            if (saved) {
+                setSettings(prev => ({ ...prev, ...JSON.parse(saved) }));
+            }
+        };
+        loadSettings();
+
+        window.addEventListener('storage', loadSettings);
+        return () => window.removeEventListener('storage', loadSettings);
+    }, []);
+
+    if (isOrderSuccess) return null;
 
     return (
         <footer className="relative bg-white pt-8 pb-4 overflow-hidden">
@@ -48,11 +80,11 @@ const Footer = () => {
                         </Link>
                         <div className="space-y-1.5">
                             <h3 className="text-xl font-display text-[#4A1015] leading-tight">
-                                Timeless Elegance, <br />
-                                <span className="italic font-serif text-[#C9A24D]">Handcrafted for You.</span>
+                                {settings.footerTagline} <br />
+                                <span className="italic font-serif text-[#C9A24D]">{settings.footerSubTagline}</span>
                             </h3>
                             <p className="text-gray-500 font-serif text-sm leading-relaxed max-w-sm">
-                                Every piece at Sands tell a story of heritage and modern Grace. Join our community of silver lovers and celebrate life's most precious moments.
+                                {settings.footerDescription}
                             </p>
                         </div>
 
@@ -82,11 +114,11 @@ const Footer = () => {
                     {/* Links Grid */}
                     <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
                         <div className="space-y-2">
-                            <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">Experience</h4>
+                            <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">{settings.footerColumn1Title}</h4>
                             <ul className="space-y-1.5">
-                                {footerLinks.customerCare.map(link => (
-                                    <li key={link.name}>
-                                        <Link to={link.path} className="text-xs text-gray-500 hover:text-[#4A1015] transition-all hover:pl-2 flex items-center gap-2 group">
+                                {settings.footerExperienceLinks?.map((link, idx) => (
+                                    <li key={idx}>
+                                        <Link to={link.path} className="text-xs text-gray-600 font-medium hover:text-[#4A1015] transition-all hover:pl-2 flex items-center gap-2 group">
                                             <span className="w-1 h-1 bg-[#C9A24D] rounded-full opacity-0 group-hover:opacity-100 transition-all"></span>
                                             {link.name}
                                         </Link>
@@ -96,11 +128,11 @@ const Footer = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">Policies</h4>
+                            <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">{settings.footerColumn2Title}</h4>
                             <ul className="space-y-1.5">
-                                {footerLinks.policies.map(link => (
-                                    <li key={link.name}>
-                                        <Link to={link.path} className="text-xs text-gray-500 hover:text-[#4A1015] transition-all hover:pl-2 flex items-center gap-2 group">
+                                {settings.footerPoliciesLinks?.map((link, idx) => (
+                                    <li key={idx}>
+                                        <Link to={link.path} className="text-xs text-gray-600 font-medium hover:text-[#4A1015] transition-all hover:pl-2 flex items-center gap-2 group">
                                             <span className="w-1 h-1 bg-[#C9A24D] rounded-full opacity-0 group-hover:opacity-100 transition-all"></span>
                                             {link.name}
                                         </Link>
@@ -110,11 +142,11 @@ const Footer = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">Our World</h4>
+                            <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.25em] text-[10px] border-b border-[#EBCDD0] pb-1 inline-block">{settings.footerColumn3Title}</h4>
                             <ul className="space-y-1.5">
-                                {footerLinks.extra.map(link => (
-                                    <li key={link.name}>
-                                        <Link to={link.path} className="text-xs text-gray-500 hover:text-[#4A1015] transition-all hover:pl-2 flex items-center gap-2 group">
+                                {settings.footerWorldLinks?.map((link, idx) => (
+                                    <li key={idx}>
+                                        <Link to={link.path} className="text-xs text-gray-600 font-medium hover:text-[#4A1015] transition-all hover:pl-2 flex items-center gap-2 group">
                                             <span className="w-1 h-1 bg-[#C9A24D] rounded-full opacity-0 group-hover:opacity-100 transition-all"></span>
                                             {link.name}
                                         </Link>
@@ -129,23 +161,23 @@ const Footer = () => {
                         <div className="space-y-3">
                             <h4 className="font-display text-[#4A1015] font-bold uppercase tracking-[0.2em] text-[10px]">Connect Directly</h4>
                             <div className="space-y-2">
-                                <a href="mailto:support@sandsornaments.com" className="flex items-center gap-3 group">
+                                <a href={`mailto:${settings.email}`} className="flex items-center gap-3 group">
                                     <div className="w-8 h-8 bg-[#4A1015] text-white rounded-lg flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
                                         <Mail className="w-3.5 h-3.5" />
                                     </div>
-                                    <span className="text-xs font-medium text-gray-700 hover:text-[#4A1015] transition-colors">support@sandsornaments.com</span>
+                                    <span className="text-xs font-medium text-gray-700 hover:text-[#4A1015] transition-colors">{settings.email}</span>
                                 </a>
-                                <a href="tel:+919876543210" className="flex items-center gap-3 group">
+                                <a href={`tel:${settings.phone}`} className="flex items-center gap-3 group">
                                     <div className="w-8 h-8 bg-[#4A1015] text-white rounded-lg flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
                                         <Phone className="w-3.5 h-3.5" />
                                     </div>
-                                    <span className="text-xs font-medium text-gray-700 hover:text-[#4A1015] transition-colors">+91 98765 43210</span>
+                                    <span className="text-xs font-medium text-gray-700 hover:text-[#4A1015] transition-colors">{settings.phone}</span>
                                 </a>
                                 <div className="flex items-start gap-3 group">
                                     <div className="w-8 h-8 bg-[#4A1015] text-white rounded-lg flex items-center justify-center group-hover:bg-[#C9A24D] transition-all duration-500">
                                         <MapPin className="w-3.5 h-3.5" />
                                     </div>
-                                    <span className="text-xs font-serif italic text-gray-500 leading-tight">123 Silver Arcade, Heritage Marg, Jaipur</span>
+                                    <span className="text-xs font-serif italic text-gray-500 leading-tight">{settings.address}</span>
                                 </div>
                             </div>
                         </div>
@@ -155,12 +187,12 @@ const Footer = () => {
                             <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">Social Gallery</p>
                             <div className="flex gap-3">
                                 {[
-                                    { Icon: Facebook, link: "#" },
-                                    { Icon: Twitter, link: "#" },
-                                    { Icon: Instagram, link: "#" },
-                                    { Icon: Youtube, link: "#" }
+                                    { Icon: Facebook, link: settings.socialLinks?.facebook },
+                                    { Icon: Twitter, link: settings.socialLinks?.twitter },
+                                    { Icon: Instagram, link: settings.socialLinks?.instagram },
+                                    { Icon: Youtube, link: settings.socialLinks?.youtube }
                                 ].map((social, i) => (
-                                    <a key={i} href={social.link} className="w-8 h-8 border border-gray-200 rounded-md flex items-center justify-center text-gray-500 hover:border-[#4A1015] hover:bg-[#4A1015] hover:text-white hover:-translate-y-1 transition-all duration-500 shadow-sm">
+                                    <a key={i} href={social.link || '#'} target="_blank" rel="noreferrer" className="w-8 h-8 border border-gray-200 rounded-md flex items-center justify-center text-gray-500 hover:border-[#4A1015] hover:bg-[#4A1015] hover:text-white hover:-translate-y-1 transition-all duration-500 shadow-sm">
                                         <social.Icon className="w-3.5 h-3.5" />
                                     </a>
                                 ))}
@@ -169,11 +201,11 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Fraud Disclaimer */}
+                {/* Fraud Disclaimer (Uses global fraud warning if available, else static) */}
                 <div className="mb-4 border border-red-100 bg-red-50/50 rounded-lg p-3 flex items-start gap-3 md:items-center justify-center max-w-4xl mx-auto">
                     <ShieldCheck className="w-4 h-4 text-red-500 shrink-0 mt-0.5 md:mt-0" />
                     <p className="text-[10px] text-gray-500 font-medium leading-relaxed md:text-center text-left">
-                        <span className="font-bold text-[#4A1015]">BEWARE OF FRAUD:</span> Sands Ornaments will NEVER ask for OTPs, passwords, or sensitive financial information via unsolicited calls, WhatsApp, or emails. Please stay vigilant against fraudulent activities.
+                        {settings.fraudWarning || "BEWARE OF FRAUD: Sands Ornaments will NEVER ask for OTPs, passwords, or sensitive financial information via unsolicited calls, WhatsApp, or emails."}
                     </p>
                 </div>
 
@@ -181,12 +213,12 @@ const Footer = () => {
                 <div className="pt-4 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-center gap-4 bg-[#4A1015]/5 px-6 py-2 rounded-full border border-[#4A1015]/10">
                         <Truck className="w-4 h-4 text-[#4A1015]" />
-                        <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#4A1015]">Safe & Insured Express Worldwide Delivery</span>
+                        <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#4A1015]">{settings.footerDeliveryText}</span>
                     </div>
 
                     <div className="flex flex-col items-center md:items-end gap-2">
                         <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-medium">
-                            &copy; {new Date().getFullYear()} Sands Ornaments Pvt Ltd. All Rights Reserved.
+                            &copy; {new Date().getFullYear()} {settings.footerCopyrightText}
                         </p>
                         <p className="text-[9px] text-gray-300 font-serif italic">Designed with love for the Modern Muse</p>
                     </div>

@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import {
     User, Search, Mail, Phone, Calendar,
     MoreHorizontal, Eye, UserX, UserCheck,
-    Download, ArrowUpRight, Shield, ShoppingBag, Heart
+    Download, ArrowUpRight, Shield, ShoppingBag, Heart,
+    ShieldCheck, ShieldOff, UserPlus, Users
 } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
+import AdminStatsCard from '../components/AdminStatsCard';
 
 const UserManagement = () => {
     const navigate = useNavigate();
@@ -61,16 +63,37 @@ const UserManagement = () => {
     );
 
     return (
-        <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6 animate-in fade-in duration-500 pb-20">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-1">
+        <div className="max-w-[1400px] mx-auto space-y-3 md:space-y-4 animate-in fade-in duration-500 pb-20">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 px-1">
                 <PageHeader
                     title="User Management"
                     subtitle="Manage registrations & access"
                 />
-                <button className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#3E2723] text-white rounded-xl text-xs md:text-sm font-bold shadow-sm hover:bg-[#5D4037] transition-all active:scale-95">
-                    <Download className="w-4 h-4" />
-                    <span>Export Users</span>
-                </button>
+            </div>
+
+            {/* Quick Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <AdminStatsCard
+                    label="Total Users"
+                    value={users.length}
+                    icon={Users}
+                    color="text-blue-600"
+                    bgColor="bg-blue-50"
+                />
+                <AdminStatsCard
+                    label="Active Users"
+                    value={users.filter(u => u.status === 'Active').length}
+                    icon={ShieldCheck}
+                    color="text-emerald-600"
+                    bgColor="bg-emerald-50"
+                />
+                <AdminStatsCard
+                    label="Disabled Users"
+                    value={users.filter(u => u.status !== 'Active').length}
+                    icon={ShieldOff}
+                    color="text-red-600"
+                    bgColor="bg-red-50"
+                />
             </div>
 
             {/* Filters Row */}
@@ -91,17 +114,17 @@ const UserManagement = () => {
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead>
-                            <tr className="bg-white text-gray-500 uppercase tracking-widest text-[9px] md:text-[11px] font-bold border-b border-gray-100">
-                                <th className="px-4 md:px-6 py-3 md:py-4">Customer</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4">Joined On</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4">Orders</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4">Total Spent</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4">Status</th>
-                                <th className="px-4 md:px-6 py-3 md:py-4 text-right">Actions</th>
+                        <thead className="bg-white border-b border-gray-200">
+                            <tr>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Customer</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Joined On</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Orders</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Total Spent</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs">Status</th>
+                                <th className="px-4 md:px-6 py-4 text-gray-800 font-bold uppercase tracking-widest text-[10px] md:text-xs text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50 uppercase tracking-tighter text-[10px] md:text-sm">
+                        <tbody className="divide-y divide-gray-100 uppercase tracking-tighter text-[10px] md:text-[11px] text-gray-900">
                             {filteredUsers.map((user) => (
                                 <tr key={user.id} className="hover:bg-gray-50/50 transition-colors group">
                                     <td className="px-4 md:px-6 py-3 md:py-4">
@@ -110,7 +133,7 @@ const UserManagement = () => {
                                                 {user.name.charAt(0)}
                                             </div>
                                             <div className="min-w-0">
-                                                <p className="font-bold text-gray-900 truncate">{user.name}</p>
+                                                <p className="font-bold text-black truncate">{user.name}</p>
                                                 <p className="text-[9px] md:text-[11px] text-gray-400 font-bold truncate lowercase">{user.email}</p>
                                             </div>
                                         </div>

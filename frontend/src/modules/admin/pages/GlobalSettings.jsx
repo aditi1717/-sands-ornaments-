@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Save, Truck, AlertTriangle, MapPin, Phone, Mail, Globe, Check, Edit3, RefreshCw, Repeat, CreditCard, Shield, Bell, Plus, Trash2, Tag, Gift, Star, Zap, Headset, Upload, X, ChevronDown } from 'lucide-react';
+import {
+    Save, Truck, AlertTriangle, MapPin, Phone, Mail, Globe, Check, Edit3,
+    RefreshCw, Repeat, CreditCard, Shield, Bell, Plus, Trash2, Tag, Gift,
+    Star, Zap, Headset, Upload, X, ChevronDown, Facebook, Twitter, Instagram, Youtube, Layout
+} from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
 
 const GlobalSettings = () => {
@@ -27,10 +31,49 @@ const GlobalSettings = () => {
                 { id: 4, icon: 'Headset', text: 'Dedicated Support Team' }
             ],
             fraudWarning: 'BEWARE OF FRAUD: Sands Ornaments never asks for confidential banking details over phone or email.',
-            address: '123, Silver Street, Jewellery Market, Mumbai - 400002',
+            address: '123 Silver Arcade, Heritage Marg, Jaipur',
             phone: '+91 98765 43210',
             email: 'support@sandsornaments.com',
             website: 'www.sandsornaments.com',
+
+            // Footer Settings
+            footerTagline: 'Timeless Elegance,',
+            footerSubTagline: 'Handcrafted for You.',
+            footerDescription: 'Every piece at Sands tell a story of heritage and modern Grace. Join our community of silver lovers and celebrate life\'s most precious moments.',
+
+            footerColumn1Title: 'Experience',
+            footerColumn2Title: 'Policies',
+            footerColumn3Title: 'Our World',
+
+            footerExperienceLinks: [
+                { id: 1, name: "Easy Returns", path: "/returns" },
+                { id: 2, name: "Contact Us", path: "/contact" },
+                { id: 3, name: "FAQs", path: "/help" },
+                { id: 4, name: "Blogs", path: "/blogs" },
+            ],
+            footerPoliciesLinks: [
+                { id: 1, name: "Shipping Policy", path: "/shipping-policy" },
+                { id: 2, name: "Privacy Policy", path: "/privacy" },
+                { id: 3, name: "Cancellation Policy", path: "/cancellation-policy" },
+                { id: 4, name: "Terms & Conditions", path: "/terms" },
+            ],
+            footerWorldLinks: [
+                { id: 1, name: "About Us", path: "/about" },
+                { id: 2, name: "Jewellery Care Guide", path: "/care-guide" },
+                { id: 3, name: "Store Locator", path: "/stores" },
+                { id: 4, name: "Our Craft", path: "/craft" },
+            ],
+
+            socialLinks: {
+                facebook: '#',
+                twitter: '#',
+                instagram: '#',
+                youtube: '#'
+            },
+
+            footerDeliveryText: 'Safe & Insured Express Worldwide Delivery',
+            footerCopyrightText: 'Sands Ornaments Pvt Ltd. All Rights Reserved.',
+
             ...initial
         };
     });
@@ -51,6 +94,17 @@ const GlobalSettings = () => {
         setSettings(prev => ({ ...prev, [field]: value }));
     };
 
+    const handleNestedChange = (parentField, key, value) => {
+        setSettings(prev => ({
+            ...prev,
+            [parentField]: {
+                ...prev[parentField],
+                [key]: value
+            }
+        }));
+    };
+
+    // Announcement Handlers
     const handleAnnouncementChange = (id, field, value) => {
         setSettings(prev => ({
             ...prev,
@@ -72,6 +126,31 @@ const GlobalSettings = () => {
         setSettings(prev => ({
             ...prev,
             announcementItems: prev.announcementItems.filter(item => item.id !== id)
+        }));
+    };
+
+    // Generic Link List Handlers (for Footer)
+    const handleLinkChange = (listName, id, field, value) => {
+        setSettings(prev => ({
+            ...prev,
+            [listName]: prev[listName].map(item =>
+                item.id === id ? { ...item, [field]: value } : item
+            )
+        }));
+    };
+
+    const addLink = (listName) => {
+        const newId = Math.max(...settings[listName].map(i => i.id), 0) + 1;
+        setSettings(prev => ({
+            ...prev,
+            [listName]: [...prev[listName], { id: newId, name: 'New Link', path: '/' }]
+        }));
+    };
+
+    const removeLink = (listName, id) => {
+        setSettings(prev => ({
+            ...prev,
+            [listName]: prev[listName].filter(item => item.id !== id)
         }));
     };
 
@@ -245,69 +324,30 @@ const GlobalSettings = () => {
                             <div key={item.id} className="flex items-center gap-3 p-2 bg-gray-50 border border-gray-200 rounded-lg animate-in slide-in-from-left-2 duration-300">
                                 {/* Leading: Icon Select OR Image Preview */}
                                 <div className="shrink-0 flex items-center gap-2">
-                                    {item.image ? (
-                                        <div className="relative w-10 h-10 bg-white rounded-md border border-gray-200 flex items-center justify-center overflow-hidden group">
-                                            <img src={item.image} alt="Icon" className="w-full h-full object-contain" />
-                                            {isEditing && (
-                                                <button
-                                                    onClick={() => handleAnnouncementChange(item.id, 'image', null)}
-                                                    className="absolute inset-0 bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                                                    title="Remove Image"
-                                                >
-                                                    <X className="w-4 h-4" />
-                                                </button>
-                                            )}
+                                    <div className="relative">
+                                        <select
+                                            className="w-28 pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3E2723]/10 appearance-none cursor-pointer"
+                                            value={item.icon || 'Truck'}
+                                            onChange={(e) => handleAnnouncementChange(item.id, 'icon', e.target.value)}
+                                            disabled={!isEditing}
+                                        >
+                                            <option value="Truck">Truck</option>
+                                            <option value="Shield">Secure</option>
+                                            <option value="RefreshCw">Return</option>
+                                            <option value="Headset">Support</option>
+                                            <option value="Tag">Offer</option>
+                                            <option value="Gift">Gift</option>
+                                            <option value="Star">Star</option>
+                                            <option value="Bell">Alert</option>
+                                            <option value="Zap">New</option>
+                                        </select>
+                                        <div className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                            <Tag className="w-4 h-4" />
                                         </div>
-                                    ) : (
-                                        <div className="flex gap-2">
-                                            <div className="relative">
-                                                <select
-                                                    className="w-28 pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3E2723]/10 appearance-none cursor-pointer"
-                                                    value={item.icon || 'Truck'}
-                                                    onChange={(e) => handleAnnouncementChange(item.id, 'icon', e.target.value)}
-                                                    disabled={!isEditing}
-                                                >
-                                                    <option value="Truck">Truck</option>
-                                                    <option value="Shield">Secure</option>
-                                                    <option value="RefreshCw">Return</option>
-                                                    <option value="Headset">Support</option>
-                                                    <option value="Tag">Offer</option>
-                                                    <option value="Gift">Gift</option>
-                                                    <option value="Star">Star</option>
-                                                    <option value="Bell">Alert</option>
-                                                    <option value="Zap">New</option>
-                                                </select>
-                                                <div className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                                                    <Tag className="w-4 h-4" />
-                                                </div>
-                                                <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                                                    <ChevronDown className="w-3 h-3" />
-                                                </div>
-                                            </div>
-
-                                            {/* Upload Button */}
-                                            <div className="relative w-9 h-9 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-[#3E2723] hover:border-[#3E2723] transition-colors cursor-pointer overflow-hidden" title="Upload Custom Image">
-                                                <input
-                                                    type="file"
-                                                    accept="image/*"
-                                                    className="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                                                    onChange={(e) => {
-                                                        const file = e.target.files[0];
-                                                        if (file) {
-                                                            const reader = new FileReader();
-                                                            reader.onloadend = () => {
-                                                                handleAnnouncementChange(item.id, 'image', reader.result);
-                                                                handleAnnouncementChange(item.id, 'type', 'image');
-                                                            };
-                                                            reader.readAsDataURL(file);
-                                                        }
-                                                    }}
-                                                    disabled={!isEditing}
-                                                />
-                                                <Upload className="w-4 h-4" />
-                                            </div>
+                                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                            <ChevronDown className="w-3 h-3" />
                                         </div>
-                                    )}
+                                    </div>
                                 </div>
 
                                 {/* Text Input */}
@@ -332,11 +372,6 @@ const GlobalSettings = () => {
                                 )}
                             </div>
                         ))}
-                        {settings.announcementItems.length === 0 && (
-                            <div className="text-center py-6 text-gray-400 text-sm italic bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                                No items. Add one now.
-                            </div>
-                        )}
                     </div>
                 </div>
 
@@ -408,6 +443,152 @@ const GlobalSettings = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Footer Configuration Section */}
+                <div className="lg:col-span-2 bg-white p-6 md:p-8 rounded-2xl border border-gray-200 shadow-sm space-y-8">
+                    <div>
+                        <h3 className="text-xl font-serif font-bold text-[#3E2723]">Footer Configuration</h3>
+                        <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mt-1">Fully customize the website footer content</p>
+                    </div>
+
+                    {/* Footer Brand Identity */}
+                    <div className="space-y-4 pt-4 border-t border-gray-100">
+                        <h4 className="flex items-center gap-2 font-bold text-[#3E2723]"><Layout className="w-4 h-4" /> Brand Identity</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Footer Tagline</label>
+                                    <input
+                                        className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 disabled:text-gray-500"
+                                        value={settings.footerTagline || ''}
+                                        onChange={(e) => handleChange('footerTagline', e.target.value)}
+                                        disabled={!isEditing}
+                                        placeholder="timeless Elegance,"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Footer Sub-Tagline</label>
+                                    <input
+                                        className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 disabled:text-gray-500"
+                                        value={settings.footerSubTagline || ''}
+                                        onChange={(e) => handleChange('footerSubTagline', e.target.value)}
+                                        disabled={!isEditing}
+                                        placeholder="Handcrafted for You."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Brand Description</label>
+                                <textarea
+                                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 disabled:text-gray-500 h-32 resize-none leading-relaxed"
+                                    value={settings.footerDescription || ''}
+                                    onChange={(e) => handleChange('footerDescription', e.target.value)}
+                                    disabled={!isEditing}
+                                    placeholder="Company description..."
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Footer Links Columns */}
+                    <div className="space-y-4 pt-4 border-t border-gray-100">
+                        <h4 className="flex items-center gap-2 font-bold text-[#3E2723]"><Layout className="w-4 h-4" /> Footer Links</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {['footerExperienceLinks', 'footerPoliciesLinks', 'footerWorldLinks'].map((listName, idx) => (
+                                <div key={listName} className="bg-gray-50 p-4 rounded-xl space-y-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                        {isEditing ? (
+                                            <input
+                                                className="font-bold text-[#3E2723] uppercase text-xs bg-white border border-gray-200 rounded px-2 py-1 w-32 focus:outline-none focus:ring-1 focus:ring-[#3E2723]/30"
+                                                value={settings[`footerColumn${idx + 1}Title`] || (idx === 0 ? 'Experience' : idx === 1 ? 'Policies' : 'Our World')}
+                                                onChange={(e) => handleChange(`footerColumn${idx + 1}Title`, e.target.value)}
+                                                placeholder="Column Title"
+                                            />
+                                        ) : (
+                                            <h5 className="text-xs font-bold text-[#3E2723] uppercase">
+                                                {settings[`footerColumn${idx + 1}Title`] || (idx === 0 ? 'Experience' : idx === 1 ? 'Policies' : 'Our World')}
+                                            </h5>
+                                        )}
+                                        {isEditing && <button onClick={() => addLink(listName)} className="p-1 hover:bg-white rounded-full transition-colors"><Plus className="w-3 h-3" /></button>}
+                                    </div>
+                                    <div className="space-y-2">
+                                        {settings[listName] && settings[listName].map(link => (
+                                            <div key={link.id} className="flex gap-2">
+                                                <input
+                                                    className="w-1/2 p-2 text-xs font-bold text-gray-700 bg-white border border-gray-200 rounded-lg disabled:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#3E2723]/30"
+                                                    value={link.name}
+                                                    onChange={(e) => handleLinkChange(listName, link.id, 'name', e.target.value)}
+                                                    disabled={!isEditing}
+                                                    placeholder="Link Name"
+                                                />
+                                                <input
+                                                    className="w-1/2 p-2 text-xs font-bold text-gray-700 bg-white border border-gray-200 rounded-lg disabled:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#3E2723]/30"
+                                                    value={link.path}
+                                                    onChange={(e) => handleLinkChange(listName, link.id, 'path', e.target.value)}
+                                                    disabled={!isEditing}
+                                                    placeholder="/path"
+                                                />
+                                                {isEditing && (
+                                                    <button onClick={() => removeLink(listName, link.id)} className="text-gray-400 hover:text-red-500">
+                                                        <X className="w-3 h-3" />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Social & Bottom Bar */}
+                    <div className="space-y-4 pt-4 border-t border-gray-100">
+                        <h4 className="flex items-center gap-2 font-bold text-[#3E2723]"><Layout className="w-4 h-4" /> Social & Bottom Bar</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Social Media Links</label>
+                                {[
+                                    { icon: Facebook, key: 'facebook', label: 'Facebook URL' },
+                                    { icon: Twitter, key: 'twitter', label: 'Twitter URL' },
+                                    { icon: Instagram, key: 'instagram', label: 'Instagram URL' },
+                                    { icon: Youtube, key: 'youtube', label: 'YouTube URL' }
+                                ].map((social) => (
+                                    <div key={social.key} className="flex items-center gap-3">
+                                        <social.icon className="w-4 h-4 text-gray-400" />
+                                        <input
+                                            className="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs font-bold text-gray-900 disabled:text-gray-500"
+                                            value={settings.socialLinks?.[social.key] || ''}
+                                            onChange={(e) => handleNestedChange('socialLinks', social.key, e.target.value)}
+                                            disabled={!isEditing}
+                                            placeholder={social.label}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Delivery Text</label>
+                                    <input
+                                        className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 disabled:text-gray-500"
+                                        value={settings.footerDeliveryText || ''}
+                                        onChange={(e) => handleChange('footerDeliveryText', e.target.value)}
+                                        disabled={!isEditing}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Copyright Text</label>
+                                    <input
+                                        className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 disabled:text-gray-500"
+                                        value={settings.footerCopyrightText || ''}
+                                        onChange={(e) => handleChange('footerCopyrightText', e.target.value)}
+                                        disabled={!isEditing}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

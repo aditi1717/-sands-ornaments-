@@ -16,10 +16,11 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useShop } from '../../../context/ShopContext';
 import Pagination from '../components/Pagination';
+import AdminStatsCard from '../components/AdminStatsCard';
 
 const ProductListPage = () => {
     const navigate = useNavigate();
-    const { products, deleteProduct } = useShop();
+    const { products, deleteProduct, updateProduct } = useShop();
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('All');
 
@@ -70,8 +71,8 @@ const ProductListPage = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-xl font-black text-footerBg uppercase tracking-tight">Product Inventory</h1>
-                    <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-[0.2em]">Manage your premium dry fruit catalog</p>
+                    <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">Product Inventory</h1>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Manage your premium dry fruit catalog</p>
                 </div>
                 <button
                     onClick={() => navigate('/admin/products/add')}
@@ -82,38 +83,32 @@ const ProductListPage = () => {
             </div>
 
             {/* Stats Overview */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-50 text-footerBg rounded-2xl flex items-center justify-center">
-                        <Package size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total SKUs</p>
-                        <p className="text-2xl font-black text-footerBg">{products.reduce((acc, p) => acc + (p.variants?.length || 0), 0)}</p>
-                    </div>
-                </div>
-                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-50 text-footerBg rounded-2xl flex items-center justify-center">
-                        <CheckCircle2 size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">In Stock</p>
-                        <p className="text-2xl font-black text-footerBg">{products.filter(p => p.variants?.some(v => (v.stock || 0) > 0)).length}</p>
-                    </div>
-                </div>
-                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-50 text-footerBg rounded-2xl flex items-center justify-center">
-                        <AlertCircle size={24} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Low Stock</p>
-                        <p className="text-2xl font-black text-footerBg">{products.filter(p => p.variants?.some(v => (v.stock || 0) < 10)).length}</p>
-                    </div>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <AdminStatsCard
+                    label="Total SKUs"
+                    value={products.reduce((acc, p) => acc + (p.variants?.length || 0), 0)}
+                    icon={Package}
+                    color="text-blue-600"
+                    bgColor="bg-blue-50"
+                />
+                <AdminStatsCard
+                    label="Active Products"
+                    value={products.filter(p => p.isActive !== false).length}
+                    icon={CheckCircle2}
+                    color="text-emerald-600"
+                    bgColor="bg-emerald-50"
+                />
+                <AdminStatsCard
+                    label="Low Stock Alert"
+                    value={products.filter(p => p.variants?.some(v => (v.stock || 0) < 10)).length}
+                    icon={AlertCircle}
+                    color="text-amber-600"
+                    bgColor="bg-amber-50"
+                />
             </div>
 
             {/* Search & Filters */}
-            <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="bg-white p-3 md:p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
                 <div className="relative w-full md:w-96">
                     <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
@@ -137,21 +132,21 @@ const ProductListPage = () => {
                 </div>
             </div>
 
-            {/* Product Table */}
-            <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+            {/* Product Table Container */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="border-b border-gray-50 bg-gray-50/50 text-left">
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Product Info</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Category</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Pricing (Base)</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-center">Variants</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Stock Status</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-right">Actions</th>
+                        <thead className="bg-white border-b border-gray-200">
+                            <tr>
+                                <th className="px-6 py-4 text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-widest">Product Info</th>
+                                <th className="px-6 py-4 text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-widest">Category</th>
+                                <th className="px-6 py-4 text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-widest text-left">Pricing</th>
+                                <th className="px-6 py-4 text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-widest text-center">Variants</th>
+                                <th className="px-6 py-4 text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-widest text-center">Status</th>
+                                <th className="px-6 py-4 text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-widest text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-gray-100 uppercase tracking-tighter text-[10px] md:text-[11px] text-gray-900">
                             {paginatedProducts.map((product) => {
                                 const status = getStockStatus(product.variants);
                                 const bestVariant = product.variants?.[0];
@@ -164,8 +159,8 @@ const ProductListPage = () => {
                                                     <img src={product.image} alt="" className="w-full h-full object-contain" />
                                                 </div>
                                                 <div>
-                                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-0.5">{product.brand}</p>
-                                                    <p className="font-bold text-footerBg text-sm line-clamp-1">{product.name}</p>
+                                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">{product.brand}</p>
+                                                    <p className="font-bold text-black text-sm line-clamp-1">{product.name}</p>
                                                     <div className="flex items-center gap-2 mt-1">
                                                         <span className="px-2 py-0.5 bg-gray-50 text-[8px] font-black text-gray-400 uppercase rounded tracking-widest border border-gray-100">{product.tag || 'Standard'}</span>
                                                     </div>
@@ -181,7 +176,7 @@ const ProductListPage = () => {
                                         <td className="px-6 py-5 text-left">
                                             {bestVariant ? (
                                                 <div className="space-y-0.5 text-left">
-                                                    <p className="font-black text-footerBg text-sm">₹{bestVariant.price}</p>
+                                                    <p className="font-bold text-gray-900 text-sm">₹{bestVariant.price}</p>
                                                     <p className="text-[10px] font-bold text-gray-400 line-through">₹{bestVariant.mrp}</p>
                                                 </div>
                                             ) : (
@@ -193,10 +188,21 @@ const ProductListPage = () => {
                                                 {product.variants?.length || 0}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <span className={`px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${status.color}`}>
-                                                {status.label}
-                                            </span>
+                                        <td className="px-6 py-5 text-center">
+                                            <button
+                                                onClick={() => {
+                                                    const currentStatus = product.isActive !== false; // Default to true if undefined
+                                                    updateProduct(product.id, { isActive: !currentStatus });
+                                                }}
+                                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${product.isActive !== false ? 'bg-[#3E2723]' : 'bg-gray-200'}`}
+                                            >
+                                                <span
+                                                    className={`${product.isActive !== false ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow-sm`}
+                                                />
+                                            </button>
+                                            <p className="text-[9px] font-bold text-gray-400 mt-1 uppercase tracking-wider">
+                                                {product.isActive !== false ? 'Active' : 'Hidden'}
+                                            </p>
                                         </td>
                                         <td className="px-6 py-5">
                                             <div className="flex items-center justify-end gap-2">

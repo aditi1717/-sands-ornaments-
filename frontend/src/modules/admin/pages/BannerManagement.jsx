@@ -253,7 +253,7 @@ const BannerManagement = () => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
                     <div className="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
                         <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-[#FDFBF7]">
-                            <h3 className="text-xl font-bold text-gray-900">
+                            <h3 className="text-xl font-bold text-black">
                                 {editingBanner ? 'Edit Homepage Slide' : 'Add New Homepage Slide'}
                             </h3>
                             <button onClick={() => setIsBannerModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400">
@@ -265,12 +265,12 @@ const BannerManagement = () => {
                             {/* Left Side: Primary Content */}
                             <div className="space-y-6">
                                 <div className="space-y-4">
-                                    <h4 className="text-xs font-bold text-[#8D6E63] uppercase tracking-widest border-b border-[#F5F0EB] pb-2 flex items-center gap-2">
+                                    <h4 className="text-xs font-bold text-black uppercase tracking-widest border-b border-[#F5F0EB] pb-2 flex items-center gap-2">
                                         <Layout className="w-4 h-4" />
                                         Primary Display Settings
                                     </h4>
                                     <div className="space-y-2">
-                                        <label className="text-[11px] font-bold text-gray-400 uppercase tracking-tighter">Main Large Background Image URL</label>
+                                        <label className="text-[11px] font-bold text-black uppercase tracking-tighter">Main Large Background Image URL</label>
                                         <input
                                             className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-[#3E2723]/10"
                                             value={formData.image}
@@ -281,7 +281,7 @@ const BannerManagement = () => {
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <label className="text-[11px] font-bold text-gray-400">Badge Text</label>
+                                            <label className="text-[11px] font-bold text-black">Badge Text</label>
                                             <input
                                                 className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold"
                                                 value={formData.badge}
@@ -290,7 +290,7 @@ const BannerManagement = () => {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[11px] font-bold text-gray-400">Main Heading</label>
+                                            <label className="text-[11px] font-bold text-black">Main Heading</label>
                                             <input
                                                 className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold"
                                                 value={formData.title}
@@ -300,7 +300,7 @@ const BannerManagement = () => {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[11px] font-bold text-gray-400">Description</label>
+                                        <label className="text-[11px] font-bold text-black">Description</label>
                                         <textarea
                                             className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold h-24 resize-none"
                                             value={formData.description}
@@ -312,12 +312,12 @@ const BannerManagement = () => {
 
                                 {/* Primary Button Settings - Normalized */}
                                 <div className="space-y-4 pt-4 border-t border-[#F5F0EB]">
-                                    <h4 className="text-[11px] font-bold text-[#8D6E63] uppercase flex items-center gap-2">
+                                    <h4 className="text-[11px] font-bold text-black uppercase flex items-center gap-2">
                                         <MousePointer2 className="w-4 h-4" /> Main Action Button
                                     </h4>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400">Button Label</label>
+                                            <label className="text-[10px] font-bold text-black">Button Label</label>
                                             <input
                                                 className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-semibold"
                                                 value={formData.btnText}
@@ -326,7 +326,7 @@ const BannerManagement = () => {
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400">Button Destination (Link)</label>
+                                            <label className="text-[10px] font-bold text-black">Button Destination (Link)</label>
                                             <input
                                                 className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-semibold"
                                                 value={formData.link}
@@ -341,13 +341,13 @@ const BannerManagement = () => {
                             {/* Right Side: Dual Image & Secondary Card */}
                             <div className="space-y-8">
                                 <div className="space-y-6">
-                                    <h4 className="text-xs font-bold text-[#8D6E63] uppercase tracking-widest border-b border-[#F5F0EB] pb-2 flex items-center gap-2">
+                                    <h4 className="text-xs font-bold text-black uppercase tracking-widest border-b border-[#F5F0EB] pb-2 flex items-center gap-2">
                                         <ImageIcon className="w-4 h-4" />
                                         Floating Spotlight Card
                                     </h4>
 
                                     <div className="space-y-2">
-                                        <label className="text-[11px] font-bold text-gray-400 uppercase tracking-tighter">Small Secondary Item Image URL</label>
+                                        <label className="text-[11px] font-bold text-black uppercase tracking-tighter">Small Secondary Item Image URL</label>
                                         <input
                                             className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold"
                                             value={formData.cardImage}
@@ -359,7 +359,7 @@ const BannerManagement = () => {
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400">Card Heading</label>
+                                            <label className="text-[10px] font-bold text-black">Card Heading</label>
                                             <input
                                                 className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-semibold"
                                                 value={formData.secondaryTitle}
@@ -367,7 +367,7 @@ const BannerManagement = () => {
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400">Card Link</label>
+                                            <label className="text-[10px] font-bold text-black">Card Link</label>
                                             <input
                                                 className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-semibold"
                                                 value={formData.secondaryLink}
@@ -379,12 +379,12 @@ const BannerManagement = () => {
 
                                 {/* Visibility Schedule */}
                                 <div className="bg-[#FDFBF7] p-6 rounded-2xl border border-[#F5F0EB] space-y-4">
-                                    <div className="flex items-center gap-2 text-[11px] font-bold text-[#8D6E63] uppercase">
+                                    <div className="flex items-center gap-2 text-[11px] font-bold text-black uppercase">
                                         <Calendar className="w-4 h-4" /> Visibility Schedule
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400">Start Date</label>
+                                            <label className="text-[10px] font-bold text-black">Start Date</label>
                                             <input
                                                 className="w-full p-2.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold"
                                                 value={formData.startDate}
@@ -393,7 +393,7 @@ const BannerManagement = () => {
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400">End Date</label>
+                                            <label className="text-[10px] font-bold text-black">End Date</label>
                                             <input
                                                 className="w-full p-2.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold"
                                                 value={formData.endDate}
@@ -434,7 +434,7 @@ const BannerManagement = () => {
                                 <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
                                     <Bell className="w-5 h-5 text-amber-600" />
                                 </div>
-                                <h3 className="text-lg font-semibold text-gray-900">Push Notification Blast</h3>
+                                <h3 className="text-lg font-semibold text-black">Push Notification Blast</h3>
                             </div>
                             <button onClick={() => setIsNotificationModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 transition-all">
                                 <X className="w-5 h-5" />
@@ -442,7 +442,7 @@ const BannerManagement = () => {
                         </div>
                         <form onSubmit={handleSendNotification} className="p-6 space-y-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 px-1">Target Audience</label>
+                                <label className="text-xs font-semibold text-black px-1">Target Audience</label>
                                 <select
                                     className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#3E2723]/10"
                                     value={notificationData.target}
@@ -455,7 +455,7 @@ const BannerManagement = () => {
                                 </select>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 px-1">Notification Title</label>
+                                <label className="text-xs font-semibold text-black px-1">Notification Title</label>
                                 <input
                                     type="text"
                                     placeholder="e.g. Flash Sale Live! ⚡"
@@ -466,7 +466,7 @@ const BannerManagement = () => {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 px-1">Message Content</label>
+                                <label className="text-xs font-semibold text-black px-1">Message Content</label>
                                 <textarea
                                     placeholder="Enter the message you want to send..."
                                     className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#3E2723]/10 min-h-[120px] resize-none"

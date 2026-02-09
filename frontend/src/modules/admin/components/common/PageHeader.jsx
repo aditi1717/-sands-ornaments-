@@ -11,14 +11,14 @@ const PageHeader = ({ title, subtitle, action, backPath }) => {
                 {backPath && (
                     <button
                         onClick={() => navigate(backPath)}
-                        className="w-9 h-9 md:w-11 md:h-11 flex items-center justify-center bg-white rounded-full hover:bg-gray-50 transition-all text-gray-500 shadow-sm md:shadow-md border border-gray-100"
+                        className="w-9 h-9 md:w-11 md:h-11 flex items-center justify-center bg-white rounded-full hover:bg-gray-50 transition-all text-gray-900 shadow-sm md:shadow-md border border-gray-100"
                     >
                         <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                 )}
                 <div>
-                    <h1 className="text-lg md:text-xl font-bold text-gray-800 tracking-tight">{title}</h1>
-                    {subtitle && <p className="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mt-0.5 md:mt-1">{subtitle}</p>}
+                    <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">{title}</h1>
+                    {subtitle && <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">{subtitle}</p>}
                 </div>
             </div>
 

@@ -73,8 +73,8 @@ const BannerListPage = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-gray-900 tracking-tight">Banner Management</h1>
-                    <p className="text-gray-500 mt-2 font-medium">Manage your homepage sliders and promotional banners</p>
+                    <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">Banner Management</h1>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Manage your homepage sliders and promotional banners</p>
                 </div>
             </div>
 

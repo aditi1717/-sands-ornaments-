@@ -1,8 +1,14 @@
+// Imports from lucide-react were modified, so I should ensure I include the correct imports at the top
+// But the replace_file_content cannot edit two blocks at once if non-contiguous AND allow_multiple=false unless I replace a big chunk.
+// I will split this into two calls or use multi_replacement. The chunk is large (imports + JSX + Logic). I will rewrite a contiguous large chunk.
+// I will replace from imports to end of render.
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit2, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Edit2, Trash2, Eye, EyeOff, Box, CheckCircle, AlertCircle } from 'lucide-react';
 import PageHeader from '../../components/common/PageHeader';
 import DataTable from '../../components/common/DataTable';
+import AdminStatsCard from '../../components/AdminStatsCard';
 
 const CategoryPage = () => {
     const navigate = useNavigate();
@@ -27,16 +33,22 @@ const CategoryPage = () => {
         ));
     };
 
+    const toggleStatus = (id) => {
+        setCategories(categories.map(cat =>
+            cat.id === id ? { ...cat, status: cat.status === 'Active' ? 'Hidden' : 'Active' } : cat
+        ));
+    };
+
     const columns = [
         {
             header: 'Category',
             render: (item) => (
-                <div className="flex items-center gap-4 text-gray-700">
+                <div className="flex items-center gap-4 text-gray-900">
                     <div className="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 overflow-hidden shrink-0">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
-                        <p className="font-bold text-gray-800">{item.name}</p>
+                        <p className="font-bold text-black text-sm">{item.name}</p>
                     </div>
                 </div>
             )
@@ -44,7 +56,7 @@ const CategoryPage = () => {
         {
             header: 'Products',
             render: (item) => (
-                <span className="font-medium text-gray-600">{item.count}</span>
+                <span className="font-bold text-sm text-gray-800">{item.count}</span>
             )
         },
         {
@@ -52,10 +64,10 @@ const CategoryPage = () => {
             render: (item) => (
                 <button
                     onClick={() => toggleVisibility(item.id, 'showInCollection')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full font-bold transition-all ${item.showInCollection ? 'bg-[#8D6E63]/10 text-[#8D6E63]' : 'bg-gray-50 text-gray-400'
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${item.showInCollection ? 'bg-[#8D6E63]/10 text-[#8D6E63]' : 'bg-gray-100 text-gray-600'
                         }`}
                 >
-                    {item.showInCollection ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                    {item.showInCollection ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
                     {item.showInCollection ? 'Shown' : 'Hidden'}
                 </button>
             )
@@ -65,10 +77,10 @@ const CategoryPage = () => {
             render: (item) => (
                 <button
                     onClick={() => toggleVisibility(item.id, 'showInNavbar')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full font-bold transition-all ${item.showInNavbar ? 'bg-[#8D6E63]/10 text-[#8D6E63]' : 'bg-gray-50 text-gray-400'
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${item.showInNavbar ? 'bg-[#8D6E63]/10 text-[#8D6E63]' : 'bg-gray-100 text-gray-600'
                         }`}
                 >
-                    {item.showInNavbar ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                    {item.showInNavbar ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
                     {item.showInNavbar ? 'Shown' : 'Hidden'}
                 </button>
             )
@@ -76,12 +88,16 @@ const CategoryPage = () => {
         {
             header: 'Status',
             render: (item) => (
-                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.status === 'Active'
-                    ? 'bg-green-50 text-green-700 border border-green-100'
-                    : 'bg-gray-100 text-gray-500 border border-gray-200'
-                    }`}>
+                <button
+                    onClick={() => toggleStatus(item.id)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all ${item.status === 'Active'
+                        ? 'bg-green-50 text-green-700 border-green-200'
+                        : 'bg-orange-50 text-orange-700 border-orange-200'
+                        }`}
+                >
+                    {item.status === 'Active' ? <CheckCircle className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
                     {item.status}
-                </span>
+                </button>
             )
         },
         {
@@ -90,21 +106,21 @@ const CategoryPage = () => {
             render: (item) => (
                 <div className="flex items-center justify-end gap-2">
                     <button
-                        onClick={() => navigate(`/admin/categories/edit/${item.id}`)}
-                        className="p-2 text-gray-400 hover:text-[#8D6E63] hover:bg-[#8D6E63]/5 rounded-lg transition-all"
-                        title="View Products"
+                        onClick={() => navigate(`/admin/categories/view/${item.id}`)}
+                        className="p-2 text-gray-600 hover:text-[#8D6E63] hover:bg-[#8D6E63]/5 rounded-lg transition-all"
+                        title="View Category"
                     >
                         <Eye className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => navigate(`/admin/categories/edit/${item.id}`)}
-                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                        className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
                     >
                         <Edit2 className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => handleDelete(item.id)}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                        className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>
@@ -124,6 +140,27 @@ const CategoryPage = () => {
         }
     ];
 
+    const stats = [
+        {
+            label: 'Total Categories',
+            value: categories.length,
+            icon: Box,
+            color: 'bg-blue-50 text-blue-600'
+        },
+        {
+            label: 'Active Categories',
+            value: categories.filter(c => c.status === 'Active').length,
+            icon: CheckCircle,
+            color: 'bg-green-50 text-green-600'
+        },
+        {
+            label: 'Hidden Categories',
+            value: categories.filter(c => c.status === 'Hidden').length,
+            icon: EyeOff,
+            color: 'bg-orange-50 text-orange-600'
+        }
+    ];
+
     return (
         <div className="space-y-6">
             <PageHeader
@@ -134,6 +171,20 @@ const CategoryPage = () => {
                     onClick: () => navigate('/admin/categories/new')
                 }}
             />
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {stats.map((stat, index) => (
+                    <AdminStatsCard
+                        key={index}
+                        label={stat.label}
+                        value={stat.value}
+                        icon={stat.icon}
+                        color={stat.color.split(' ').find(c => c.startsWith('text-'))}
+                        bgColor={stat.color.split(' ').find(c => c.startsWith('bg-'))}
+                    />
+                ))}
+            </div>
 
             <DataTable
                 columns={columns}

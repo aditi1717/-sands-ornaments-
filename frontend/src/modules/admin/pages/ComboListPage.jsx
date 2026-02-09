@@ -88,8 +88,8 @@ const ComboListPage = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-xl font-black text-footerBg uppercase tracking-tight">Combo Categories</h1>
-                    <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-[0.2em]">Manage all combo types</p>
+                    <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">Combo Categories</h1>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Manage all combo types</p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}

@@ -1,188 +1,320 @@
 import React, { useState } from 'react';
-import {
-    Search, AlertCircle, CheckCircle2, Clock,
-    Inbox, Trash2, Mail, User
-} from 'lucide-react';
+import { Eye, Trash2, Mail, Calendar, Inbox, AlertCircle, ShoppingBag, FileText, CheckCircle2 } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
-import { useShop } from '../../../context/ShopContext';
+import DataTable from '../components/common/DataTable';
+import AdminStatsCard from '../components/AdminStatsCard';
 
 const SupportManagement = () => {
-    const { supportTickets, updateTicketStatus, deleteTicket } = useShop();
-    const [filterStatus, setFilterStatus] = useState('All');
+    // Mock Data mimicking the "Create Support Ticket" form
+    const [tickets, setTickets] = useState([
+        {
+            id: 'TKT-2024-001',
+            subject: 'Refund not received for returned item',
+            category: 'Payment & Refunds',
+            orderId: '1735123456',
+            message: 'I returned the "Polki Ruby Necklace" 5 days ago, and the app says return delivered, but I have not received the refund in my account yet.',
+            userName: 'Priya Sharma',
+            userEmail: 'priya.s@example.com',
+            status: 'Unread',
+            date: '2024-10-26T10:30:00',
+        },
+        {
+            id: 'TKT-2024-002',
+            subject: 'Wrong size delivered',
+            category: 'Order Issues',
+            orderId: '1735987654',
+            message: 'I ordered size 2.4 bangles but received 2.6. Please arrange for an exchange.',
+            userName: 'Rahul Verma',
+            userEmail: 'rahul.v@example.com',
+            status: 'Unread',
+            date: '2024-10-25T15:45:00',
+        },
+        {
+            id: 'TKT-2024-003',
+            subject: 'General enquiry about bridal sets',
+            category: 'General Enquiry',
+            orderId: '',
+            message: 'Do you provide customization for bridal sets? I want a specific color combination.',
+            userName: 'Sneha Patel',
+            userEmail: 'sneha.p@example.com',
+            status: 'Read',
+            date: '2024-10-24T11:20:00',
+        },
+        {
+            id: 'TKT-2024-004',
+            subject: 'Payment failed but money deducted',
+            category: 'Payment Issue',
+            orderId: '1735112233',
+            message: 'My UPI transaction failed on the checkout page, but the amount was debited from my bank.',
+            userName: 'Amit Kumar',
+            userEmail: 'amit.k@example.com',
+            status: 'Unread',
+            date: '2024-10-23T18:10:00',
+        },
+        {
+            id: 'TKT-2024-005',
+            subject: 'Change delivery address',
+            category: 'Shipping',
+            orderId: '1735445566',
+            message: 'I accidentally put my old address. Please update it to the new one before shipping.',
+            userName: 'Kavita Singh',
+            userEmail: 'kavita.s@example.com',
+            status: 'Read',
+            date: '2024-10-22T09:00:00',
+        }
+    ]);
+
     const [searchTerm, setSearchTerm] = useState('');
-
-    // Process supportTickets
-    const processedTickets = supportTickets.map(t => ({
-        ...t,
-        priority: t.priority || 'Medium',
-        time: new Date(t.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        displayDate: new Date(t.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })
-    }));
-
-    const handleStatusChange = (id, newStatus) => {
-        updateTicketStatus(id, newStatus);
-    };
+    const [statusFilter, setStatusFilter] = useState('All');
+    const [selectedTicket, setSelectedTicket] = useState(null);
 
     const handleDelete = (id) => {
-        if (window.confirm('Delete this support ticket safely?')) {
-            deleteTicket(id);
+        if (window.confirm('Delete this ticket?')) {
+            setTickets(prev => prev.filter(t => t.id !== id));
         }
     };
 
-    const filteredTickets = processedTickets.filter(t => {
-        const matchesStatus = filterStatus === 'All' || t.status === filterStatus;
-        const matchesSearch = (t.userName?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-            (t.subject?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-            (t.id?.toLowerCase() || '').includes(searchTerm.toLowerCase());
-        return matchesStatus && matchesSearch;
+    const handleStatusChange = (id, newStatus) => {
+        setTickets(prev => prev.map(t => t.id === id ? { ...t, status: newStatus } : t));
+    };
+
+    const filteredTickets = tickets.filter(t => {
+        const matchesSearch = t.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            t.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            t.id.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = statusFilter === 'All' || t.status === statusFilter;
+        return matchesSearch && matchesStatus;
     });
 
-    const priorityColors = {
-        'Urgent': 'text-red-700 bg-red-50 border-red-100',
-        'High': 'text-orange-700 bg-orange-50 border-orange-100',
-        'Medium': 'text-blue-700 bg-blue-50 border-blue-100',
-        'Low': 'text-gray-700 bg-gray-50 border-gray-100'
-    };
+    // Stats
+    const totalTickets = tickets.length;
+    const unreadTickets = tickets.filter(t => t.status === 'Unread').length;
+    const readTickets = tickets.filter(t => t.status === 'Read').length;
 
-    const statusIcons = {
-        'Open': <AlertCircle className="w-3.5 h-3.5 text-red-500" />,
-        'In Progress': <Clock className="w-3.5 h-3.5 text-blue-500" />,
-        'Resolved': <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-    };
+    const columns = [
+        {
+            header: 'Date',
+            render: (item) => (
+                <div className="flex flex-col">
+                    <span className="text-xs font-bold text-gray-900">{new Date(item.date).toLocaleDateString()}</span>
+                    <span className="text-[10px] text-gray-500">{new Date(item.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                </div>
+            )
+        },
+        {
+            header: 'User',
+            render: (item) => (
+                <div>
+                    <p className="text-xs font-bold text-gray-900">{item.userName}</p>
+                </div>
+            )
+        },
+        {
+            header: 'Subject',
+            render: (item) => (
+                <div>
+                    <p className="text-sm font-bold text-black line-clamp-1">{item.subject}</p>
+                    <span className="text-[10px] font-bold text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">{item.category}</span>
+                </div>
+            )
+        },
+        {
+            header: 'Status',
+            align: 'center',
+            render: (item) => (
+                <select
+                    value={item.status}
+                    onClick={(e) => e.stopPropagation()}
+                    onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                    className={`text-[10px] font-bold uppercase tracking-wider bg-transparent border-none focus:ring-0 cursor-pointer ${item.status === 'Unread' ? 'text-red-600' : 'text-green-600'
+                        }`}
+                >
+                    <option value="Unread">Unread</option>
+                    <option value="Read">Read</option>
+                </select>
+            )
+        },
+        {
+            header: 'Actions',
+            align: 'right',
+            render: (item) => (
+                <div className="flex items-center justify-end gap-2">
+                    <button
+                        onClick={() => setSelectedTicket(item)}
+                        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-[#3E2723] hover:bg-[#3E2723]/5 rounded-lg transition-all"
+                        title="View Details"
+                    >
+                        <Eye className="w-4 h-4" />
+                    </button>
+                    <button
+                        onClick={() => handleDelete(item.id)}
+                        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                        title="Delete Ticket"
+                    >
+                        <Trash2 className="w-4 h-4" />
+                    </button>
+                </div>
+            )
+        }
+    ];
+
+    const filters = [
+        {
+            options: [
+                { label: 'All', value: 'All' },
+                { label: 'Unread', value: 'Unread' },
+                { label: 'Read', value: 'Read' }
+            ],
+            onChange: (val) => setStatusFilter(val)
+        }
+    ];
 
     return (
         <div className="max-w-[1400px] mx-auto w-full flex flex-col h-[calc(100vh-80px)] md:h-[calc(100vh-100px)] animate-in fade-in duration-500 pb-10">
             <PageHeader
-                title="Support Inbox"
-                subtitle="Manage customer queries and tickets"
+                title="Support Tickets"
+                subtitle="Track and resolve customer support requests"
             />
 
-            <div className="mt-6 flex flex-col h-full bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                {/* Toolbar */}
-                <div className="p-4 border-b border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4 bg-gray-50/50">
-                    <div className="relative w-full md:w-96">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                            type="text"
-                            placeholder="Search by name, subject, or ID..."
-                            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#3E2723]/10 font-medium"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-                    <div className="flex gap-2 w-full md:w-auto overflow-x-auto scrollbar-hide">
-                        {['All', 'Open', 'In Progress', 'Resolved'].map(s => (
-                            <button
-                                key={s}
-                                onClick={() => setFilterStatus(s)}
-                                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap ${filterStatus === s
-                                        ? 'bg-[#3E2723] text-white shadow-md'
-                                        : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
-                                    }`}
-                            >
-                                {s}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Table Header */}
-                <div className="grid grid-cols-12 gap-4 p-4 bg-gray-50 border-b border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                    <div className="col-span-1">Date</div>
-                    <div className="col-span-2">Customer</div>
-                    <div className="col-span-2">Subject</div>
-                    <div className="col-span-4">Message</div>
-                    <div className="col-span-1 text-center">Priority</div>
-                    <div className="col-span-1 text-center">Status</div>
-                    <div className="col-span-1 text-right">Actions</div>
-                </div>
-
-                {/* Table Body */}
-                <div className="flex-1 overflow-y-auto">
-                    {filteredTickets.map(ticket => (
-                        <div key={ticket.id} className="grid grid-cols-12 gap-4 p-4 border-b border-gray-100 items-start hover:bg-gray-50/50 transition-colors group">
-                            {/* Date */}
-                            <div className="col-span-1 space-y-1">
-                                <p className="text-xs font-bold text-gray-900">{ticket.displayDate}</p>
-                                <p className="text-[10px] text-gray-400 font-medium">{ticket.time}</p>
-                            </div>
-
-                            {/* Customer */}
-                            <div className="col-span-2 space-y-1">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 rounded-full bg-[#3E2723]/10 flex items-center justify-center text-[#3E2723] text-xs font-bold">
-                                        {(ticket.userName || 'U').charAt(0)}
-                                    </div>
-                                    <p className="text-xs font-bold text-gray-900 truncate">{ticket.userName || 'Guest'}</p>
-                                </div>
-                                <div className="flex items-center gap-1.5 text-gray-500">
-                                    <Mail className="w-3 h-3" />
-                                    <p className="text-[10px] truncate max-w-[120px]">{ticket.userEmail || 'No Email'}</p>
-                                </div>
-                            </div>
-
-                            {/* Subject */}
-                            <div className="col-span-2">
-                                <p className="text-xs font-bold text-gray-800 line-clamp-2">{ticket.subject}</p>
-                                <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider font-bold">{ticket.category}</p>
-                            </div>
-
-                            {/* Message (Details) */}
-                            <div className="col-span-4">
-                                <div className="bg-gray-50 p-3 rounded-lg border border-gray-100 text-xs text-gray-600 leading-relaxed font-medium">
-                                    {ticket.message}
-                                </div>
-                                {ticket.orderId && (
-                                    <span className="inline-block mt-2 px-2 py-0.5 bg-blue-50 text-blue-700 text-[9px] font-bold rounded border border-blue-100 uppercase tracking-widest">
-                                        #{ticket.orderId}
-                                    </span>
-                                )}
-                            </div>
-
-                            {/* Priority */}
-                            <div className="col-span-1 flex justify-center">
-                                <span className={`px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest border ${priorityColors[ticket.priority]}`}>
-                                    {ticket.priority}
-                                </span>
-                            </div>
-
-                            {/* Status */}
-                            <div className="col-span-1 flex justify-center">
-                                <select
-                                    value={ticket.status}
-                                    onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
-                                    className={`text-[9px] font-bold uppercase tracking-wide bg-transparent border-none focus:ring-0 cursor-pointer ${ticket.status === 'Open' ? 'text-red-600' :
-                                            ticket.status === 'In Progress' ? 'text-blue-600' :
-                                                'text-green-600'
-                                        }`}
-                                >
-                                    <option value="Open">Open</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Resolved">Resolved</option>
-                                </select>
-                            </div>
-
-                            {/* Actions */}
-                            <div className="col-span-1 flex justify-end">
-                                <button
-                                    onClick={() => handleDelete(ticket.id)}
-                                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                                    title="Delete Ticket"
-                                >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-
-                    {filteredTickets.length === 0 && (
-                        <div className="flex flex-col items-center justify-center py-20 opacity-50">
-                            <Inbox className="w-12 h-12 text-gray-300 mb-4" />
-                            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">No tickets found</p>
-                        </div>
-                    )}
-                </div>
+            {/* 3 Stats Cards: All, Unread, Read */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 mb-8 shrink-0">
+                <AdminStatsCard
+                    label="Total Tickets"
+                    value={totalTickets}
+                    icon={Inbox}
+                    color="text-gray-600"
+                    bgColor="bg-gray-50"
+                />
+                <AdminStatsCard
+                    label="Unread"
+                    value={unreadTickets}
+                    icon={AlertCircle}
+                    color="text-red-500"
+                    bgColor="bg-red-50"
+                />
+                <AdminStatsCard
+                    label="Read"
+                    value={readTickets}
+                    icon={CheckCircle2}
+                    color="text-green-500"
+                    bgColor="bg-green-50"
+                />
             </div>
+
+            <DataTable
+                columns={columns}
+                data={filteredTickets}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                searchPlaceholder="Search tickets..."
+                filters={filters}
+            />
+
+            {/* Ticket Details Modal */}
+            {selectedTicket && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden border border-gray-100 animate-in slide-in-from-bottom-5 duration-300">
+                        {/* Header */}
+                        <div className="bg-[#3E2723] px-6 py-4 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="bg-white/10 p-2 rounded-lg">
+                                    <FileText className="w-5 h-5 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-white text-lg">Ticket Details</h3>
+                                    <p className="text-[#D7CCC8] text-xs font-medium">{selectedTicket.id}</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setSelectedTicket(null)}
+                                className="text-white/60 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-lg"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 18 18" /></svg>
+                            </button>
+                        </div>
+
+                        <div className="p-6 overflow-y-auto max-h-[70vh] space-y-6">
+                            {/* Subject & Status */}
+                            <div className="flex items-start justify-between gap-4 pb-6 border-b border-gray-100">
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-900 mb-1">{selectedTicket.subject}</h2>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">{selectedTicket.category}</span>
+                                    </div>
+                                </div>
+                                <div className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider border ${selectedTicket.status === 'Unread' ? 'text-red-700 bg-red-50 border-red-100' :
+                                    'text-green-700 bg-green-50 border-green-100'
+                                    }`}>
+                                    {selectedTicket.status}
+                                </div>
+                            </div>
+
+                            {/* Info Grid */}
+                            <div className="space-y-4">
+                                {/* Row 1: User & Order */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    {/* User */}
+                                    <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Submitted By</label>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-[#3E2723] flex items-center justify-center text-white text-sm font-bold">
+                                                {selectedTicket.userName.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-bold text-gray-900">{selectedTicket.userName}</p>
+                                                <p className="text-xs text-gray-500 font-medium">{selectedTicket.userEmail}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Order ID */}
+                                    <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Order Information</label>
+                                        <div className="flex items-center gap-2 h-10">
+                                            {selectedTicket.orderId ? (
+                                                <>
+                                                    <ShoppingBag className="w-5 h-5 text-[#3E2723]" />
+                                                    <div>
+                                                        <p className="text-sm font-bold text-gray-900">Order #{selectedTicket.orderId}</p>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <span className="text-sm text-gray-400 italic font-medium">Not linked to a specific order</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Message Body */}
+                                <div>
+                                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Detailed Message</label>
+                                    <div className="bg-gray-50 p-5 rounded-xl border border-gray-100 text-sm text-gray-800 font-medium leading-relaxed">
+                                        {selectedTicket.message}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Timeline/Meta */}
+                            <div className="flex items-center justify-between text-[11px] font-medium text-gray-400 pt-4 border-t border-gray-100">
+                                <div className="flex items-center gap-2">
+                                    <Calendar className="w-3.5 h-3.5" />
+                                    <span>Submitted on: {new Date(selectedTicket.date).toLocaleString()}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
+                            <button
+                                onClick={() => setSelectedTicket(null)}
+                                className="px-5 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all w-full md:w-auto"
+                            >
+                                Close Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -48,26 +48,22 @@ const ProductManagement = () => {
             )
         }] : []),
         {
-            header: 'Product',
+            header: 'Product Name',
+            render: (item) => (
+                <div className="flex items-center py-1">
+                    <span className="font-semibold text-gray-900 text-[13px] tracking-tight">{item.name}</span>
+                </div>
+            )
+        },
+        {
+            header: 'Category',
             render: (item) => {
-                // Support both old format (category/subcategory) and new format (categories array)
                 const categories = item.categories || (item.category ? [{ category: item.category, subcategory: item.subcategory }] : []);
-
+                const primary = categories[0] || { category: 'Uncategorized', subcategory: '' };
                 return (
-                    <div className="flex items-center gap-2 md:gap-4 text-gray-700">
-                        <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-gray-100 border border-gray-200 overflow-hidden shrink-0 shadow-sm">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div className="min-w-0">
-                            <p className="font-bold text-gray-800 tracking-tight text-[10px] md:text-sm truncate">{item.name}</p>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                                {categories.map((cat, idx) => (
-                                    <span key={idx} className="text-[7px] md:text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-none bg-gray-50 px-1.5 py-0.5 rounded">
-                                        {cat.category}{cat.subcategory ? ` › ${cat.subcategory}` : ''}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+                    <div className="min-w-[140px] flex flex-col justify-center">
+                        <span className="font-medium text-gray-900 text-xs">{primary.category}</span>
+                        {primary.subcategory && <span className="text-[10px] text-gray-500 mt-0.5">{primary.subcategory}</span>}
                     </div>
                 );
             }
@@ -75,83 +71,90 @@ const ProductManagement = () => {
         {
             header: 'Price',
             render: (item) => {
-                const firstVariant = item.variants && item.variants[0];
+                const price = item.variants?.[0]?.price || '0';
+                return <span className="font-semibold text-gray-900 text-xs tabular-nums">₹{price}</span>;
+            }
+        },
+        {
+            header: 'Stock',
+            render: (item) => {
+                const totalStock = (item.variants || []).reduce((sum, v) => sum + (v.stock || 0), 0);
+                const inStock = totalStock > 0;
                 return (
-                    <div className="flex flex-col">
-                        <span className="font-bold text-gray-800">₹{firstVariant?.price || '0'}</span>
-                        {item.variants?.length > 1 && (
-                            <span className="text-[8px] text-gray-400 font-bold uppercase tracking-tighter">
-                                +{item.variants.length - 1} more variants
-                            </span>
-                        )}
+                    <div className="min-w-[100px]">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${inStock
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-100'
+                            : 'bg-red-50 text-red-800 border-red-100'
+                            }`}>
+                            {inStock ? 'In Stock' : 'Out of Stock'}
+                        </span>
                     </div>
                 );
             }
         },
         {
-            header: 'Inventory',
-            render: (item) => {
-                const totalStock = (item.variants || []).reduce((sum, v) => sum + (v.stock || 0), 0);
-                const totalSold = (item.variants || []).reduce((sum, v) => sum + (v.sold || 0), 0);
-
-                return (
-                    <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2">
-                            <span className={`text-[10px] font-bold px-2 py-1 rounded-md border ${totalStock === 0 ? 'bg-gray-100 text-gray-500 border-gray-200' :
-                                totalStock < 10 ? 'bg-amber-50 text-amber-700 border-amber-100' :
-                                    'bg-emerald-50 text-emerald-700 border-emerald-100'
-                                }`}>
-                                Left: {totalStock}
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold px-2 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-100">
-                                Sold: {totalSold}
-                            </span>
-                        </div>
-                    </div>
-                );
-            }
+            header: 'Rating',
+            render: (item) => (
+                <div className="flex items-center gap-1 min-w-[60px]">
+                    <span className="text-amber-500 text-xs">★</span>
+                    <span className="font-bold text-gray-900 text-xs">4.2</span>
+                </div>
+            )
         },
         {
             header: 'Status',
             render: (item) => {
                 const isActive = item.active !== false;
+                const toggleStatus = (e) => {
+                    e.stopPropagation();
+                    // Mock toggle logic - in reality would call API
+                    item.active = !isActive;
+                    // Force update would happen via state change usually
+                };
+
                 return (
-                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${isActive
-                        ? 'bg-green-50 text-green-700 border border-green-100'
-                        : 'bg-red-50 text-red-700 border border-red-100'
-                        }`}>
-                        {isActive ? 'Active' : 'Hidden'}
-                    </span>
+                    <div className="min-w-[80px]">
+                        <button
+                            onClick={toggleStatus}
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all hover:scale-105 active:scale-95 ${isActive
+                                ? 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200'
+                                : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200'
+                                }`}>
+                            {isActive ? 'Active' : 'Inactive'}
+                        </button>
+                    </div>
                 );
             }
+        },
+        {
+            header: 'Date',
+            render: () => <span className="text-gray-900 text-xs font-semibold">20/01/2024</span>
         },
         ...(!isSelectMode ? [{
             header: 'Actions',
             align: 'right',
             render: (item) => (
-                <div className="flex items-center justify-end gap-1 md:gap-2">
+                <div className="flex items-center justify-end gap-3 min-w-[100px]">
                     <button
                         onClick={() => navigate(`/admin/products/view/${item.id}`)}
-                        className="p-1.1 md:p-2 text-gray-400 hover:text-[#8D6E63] hover:bg-[#8D6E63]/5 rounded-lg transition-all"
+                        className="p-1 text-gray-700 hover:text-black transition-colors"
                         title="View Details"
                     >
-                        <Eye className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <Eye className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => navigate(`/admin/products/edit/${item.id}`)}
-                        className="p-1.5 md:p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                        className="p-1 text-gray-700 hover:text-black transition-colors"
                         title="Edit"
                     >
-                        <Edit2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <Edit2 className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => handleDelete(item.id)}
-                        className="p-1.5 md:p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                        className="p-1 text-gray-700 hover:text-red-700 transition-colors"
                         title="Delete"
                     >
-                        <Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <Trash2 className="w-4 h-4" />
                     </button>
                 </div>
             )

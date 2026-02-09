@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useShop } from '../../../context/ShopContext';
 import Pagination from '../components/Pagination';
 import DataTable from '../components/common/DataTable';
+import AdminStatsCard from '../components/AdminStatsCard';
 
 const CouponListPage = () => {
     const navigate = useNavigate();
@@ -62,74 +63,91 @@ const CouponListPage = () => {
 
     const columns = [
         {
-            header: 'Coupon Details',
-            render: (coupon) => {
-                const desc = coupon.desc || coupon.description;
-                return (
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-primary/5 text-primary rounded-lg flex items-center justify-center font-medium border border-primary/10 shrink-0">
-                            <Ticket size={14} strokeWidth={2} />
-                        </div>
-                        <div>
-                            <p className="font-bold text-gray-800 text-xs tracking-wide">{coupon.code}</p>
-                            <p className="text-[9px] text-gray-400 mt-0.5 max-w-[150px] truncate">{desc}</p>
-                        </div>
-                    </div>
-                );
-            }
-        },
-        {
-            header: 'Discount',
-            render: (coupon) => {
-                const amount = coupon.amount !== undefined ? coupon.amount : coupon.value;
-                const minOrder = coupon.minOrder !== undefined ? coupon.minOrder : coupon.minOrderValue;
-                return (
-                    <div>
-                        <div className="flex items-center gap-1.5 font-bold text-gray-800 text-xs">
-                            <Percent size={10} className="text-emerald-500" />
-                            {coupon.type === 'percentage' ? `${amount}%` : `₹${amount}`} OFF
-                        </div>
-                        <p className="text-[9px] text-gray-400 mt-0.5">Min Order: ₹{minOrder}</p>
-                    </div>
-                );
-            }
-        },
-        {
-            header: 'Validity',
+            key: 'code',
+            header: 'Coupon Code',
             render: (coupon) => (
-                <div>
-                    <p className="text-[10px] font-medium text-gray-700">Ends {new Date(coupon.validUntil).toLocaleDateString()}</p>
-                    <p className="text-[9px] text-gray-400 mt-0.5">Starts {new Date(coupon.validFrom).toLocaleDateString()}</p>
+                <div className="flex items-center gap-4 normal-case">
+                    <div className="w-10 h-10 bg-[#3E2723]/5 text-[#3E2723] rounded-full flex items-center justify-center border border-[#3E2723]/10 shrink-0">
+                        <Ticket size={18} strokeWidth={2} />
+                    </div>
+                    <div>
+                        <p className="font-bold text-gray-900 text-sm tracking-wide uppercase">{coupon.code}</p>
+                        <p className="text-xs text-gray-500 mt-0.5 max-w-[200px] truncate normal-case">{coupon.desc || coupon.description}</p>
+                    </div>
                 </div>
             )
         },
         {
+            key: 'discount',
+            header: 'Discount Value',
+            render: (coupon) => {
+                const amount = coupon.amount !== undefined ? coupon.amount : coupon.value;
+                const minOrder = coupon.minOrder !== undefined ? coupon.minOrder : coupon.minOrderValue;
+                return (
+                    <div className="normal-case">
+                        <div className="flex items-center gap-1.5 font-bold text-gray-900 text-sm">
+                            {coupon.type === 'percentage' ? (
+                                <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-xs border border-emerald-100">
+                                    {amount}% OFF
+                                </span>
+                            ) : (
+                                <span className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded text-xs border border-blue-100">
+                                    ₹{amount} OFF
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1 font-medium">Min Order: <span className="text-gray-900">₹{minOrder}</span></p>
+                    </div>
+                );
+            }
+        },
+        {
+            key: 'validity',
+            header: 'Validity Period',
+            render: (coupon) => (
+                <div className="space-y-1 normal-case">
+                    <p className="text-xs font-semibold text-gray-900 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                        Ends {new Date(coupon.validUntil).toLocaleDateString()}
+                    </p>
+                    <p className="text-xs text-gray-500 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        Starts {new Date(coupon.validFrom).toLocaleDateString()}
+                    </p>
+                </div>
+            )
+        },
+        {
+            key: 'status',
             header: 'Status',
             render: (coupon) => {
                 const status = getCouponStatus(coupon);
                 return (
-                    <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider border ${status.color}`}>
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-sm ${status.color}`}>
                         {status.label}
                     </span>
                 );
             }
         },
         {
+            key: 'actions',
             header: 'Actions',
             align: 'right',
             render: (coupon) => (
                 <div className="flex items-center justify-end gap-2">
                     <button
                         onClick={() => navigate(`/admin/coupons/edit/${coupon.id}`)}
-                        className="p-1.5 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
+                        className="p-2 text-gray-500 hover:text-[#3E2723] hover:bg-[#3E2723]/5 rounded-lg transition-all"
+                        title="Edit Coupon"
                     >
-                        <Edit2 size={14} />
+                        <Edit2 size={16} />
                     </button>
                     <button
                         onClick={() => handleDelete(coupon.id)}
-                        className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                        title="Delete Coupon"
                     >
-                        <Trash2 size={14} />
+                        <Trash2 size={16} />
                     </button>
                 </div>
             )
@@ -141,8 +159,8 @@ const CouponListPage = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-xl font-black text-[#3E2723] uppercase tracking-tight">Marketing</h1>
-                    <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-[0.2em]">Manage discount codes</p>
+                    <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">Marketing</h1>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Manage discount codes</p>
                 </div>
                 <button
                     onClick={() => navigate('/admin/coupons/add')}
@@ -153,29 +171,32 @@ const CouponListPage = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                    { label: 'Total Coupons', value: (coupons || []).length, icon: Ticket },
-                    { label: 'Active Now', value: (coupons || []).filter(c => c.active).length, icon: Activity },
-                    { label: 'Redemptions', value: (coupons || []).reduce((acc, c) => acc + (c.usageCount || 0), 0), icon: Users },
-                    {
-                        label: 'Expiring Soon', value: (coupons || []).filter(c => {
-                            if (!c.validUntil) return false;
-                            const daysLeft = (new Date(c.validUntil) - new Date()) / (1000 * 60 * 60 * 24);
-                            return daysLeft > 0 && daysLeft < 7;
-                        }).length, icon: Clock
-                    },
-                ].map((stat, i) => (
-                    <div key={i} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-                        <div className="flex items-center gap-3 mb-2">
-                            <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500">
-                                <stat.icon size={16} />
-                            </div>
-                            <span className="text-xl font-black text-footerBg">{stat.value}</span>
-                        </div>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">{stat.label}</p>
-                    </div>
-                ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <AdminStatsCard
+                    label="Total Coupons"
+                    value={(coupons || []).length}
+                    icon={Ticket}
+                    color="text-blue-600"
+                    bgColor="bg-blue-50"
+                />
+                <AdminStatsCard
+                    label="Active Campaigns"
+                    value={(coupons || []).filter(c => c.active).length}
+                    icon={Activity}
+                    color="text-emerald-600"
+                    bgColor="bg-emerald-50"
+                />
+                <AdminStatsCard
+                    label="Expiring Soon"
+                    value={(coupons || []).filter(c => {
+                        if (!c.validUntil) return false;
+                        const daysLeft = (new Date(c.validUntil) - new Date()) / (1000 * 60 * 60 * 24);
+                        return daysLeft > 0 && daysLeft < 7;
+                    }).length}
+                    icon={Clock}
+                    color="text-amber-600"
+                    bgColor="bg-amber-50"
+                />
             </div>
 
             <DataTable
